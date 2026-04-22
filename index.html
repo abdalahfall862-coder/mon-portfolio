@@ -1,29 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>محمد</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Mohamed</title>
+    <script src="script.js" defer></script>
+    <style>
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        @media (min-width: 1024px) {
+            .main-content { margin-left: 280px; }
+        }
+
+        #sidebar { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .timeline-line { width: 2px; background: linear-gradient(to bottom, #3b82f6, #f1f5f9); }
+    </style>
 </head>
-<body>
-    <!-- section barre de navigation -->
-    <nav class="bg-gray-800 text-white p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-xl font-bold">محمد</a>
-            <div>
-                <a href="#home" class="px-3 py-2 hover:bg-gray-700 rounded">Home</a>
-                <a href="#about" class="px-3 py-2 hover:bg-gray-700 rounded">About</a>
-                <a href="#services" class="px-3 py-2 hover:bg-gray-700 rounded">Services</a>
-                <a href="#contact" class="px-3 py-2 hover:bg-gray-700 rounded">Contact</a>
-            </div>
+<body class="bg-white text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-700 overflow-x-hidden">
+
+    <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-slate-900 text-white z-[100] transform -translate-x-full lg:translate-x-0 flex flex-col p-10 shadow-2xl">
+        <div class="mb-12">
+            <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase">Mohamed-Abdalah-Fall</h1>
+            <p class="text-[10px] text-slate-500 font-bold tracking-[0.2em] mt-1">Developpeur <br>Full-stack</p>
         </div>
 
+        <nav class="flex-1">
+            <ul class="space-y-8 font-bold text-xs uppercase tracking-[0.2em]">
+                <li>
+                    <a href="#accueil" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition">
+                        <span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>
+                        Accueil
+                    </a>
+                </li>
+                <li>
+                    <a href="#projets" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition">
+                        <span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>
+                        Projets
+                    </a>
+                </li>
+                <li>
+                    <a href="#parcours" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition">
+                        <span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>
+                        Parcours
+                    </a>
+                </li>
+                <li>
+                    <a href="#contact" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition">
+                        <span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
+        <div class="mt-auto">
+            <p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Dakar, Sénégal</p>
+        </div>
+    </aside>
 
+    <button id="menu-btn" class="fixed top-6 right-6 z-[110] lg:hidden bg-blue-600 text-white p-4 rounded-2xl shadow-xl active:scale-90 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+    </button>
 
+    <main class="main-content">
+        
+        <section id="accueil" class="min-h-screen flex items-center px-8 md:px-20">
+            <div class="max-w-4xl">
+                <h1 class="reveal text-6xl md:text-9xl font-black mb-8 leading-none tracking-tighter">
+                    Développeur <br><span class="text-blue-600">Full-stack</span> 
+                </h1>
+                <p class="reveal text-xl md:text-2xl text-slate-500 max-w-2xl mb-12 font-light">
+                    Je m'appelle Mohamed Abdalah Fall. Je conçois des solutions web performantes avec une attention particulière au design et à l'architecture.
+                </p>
+                <div class="reveal flex gap-6">
+                    <a href="#projets" class="px-10 py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-blue-600 transition shadow-xl">Mes projets</a>
+                </div>
+            </div>
+        </section>
 
+        <section id="projets" class="py-32 px-8 md:px-20 bg-slate-50">
+            <div class="container mx-auto">
+                <h2 class="reveal text-4xl font-black mb-20 flex items-center">
+                    <span class="w-12 h-1.5 bg-blue-600 mr-6"></span> Mes Réalisations
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
+                    <article class="reveal group bg-white p-5 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all">
+                        <div class="h-56 bg-slate-900 rounded-[1.8rem] mb-6 flex items-center justify-center text-blue-500 overflow-hidden relative">
+                            <span class="font-black text-xl italic underline z-10">TaskMaster S-G-T</span>
+                            <div class="absolute inset-0 bg-blue-600/10 group-hover:scale-110 transition-transform"></div>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 px-2">Task-manager</h3>
+                        <p class="text-slate-500 mb-6 px-2 font-light text-sm">Gestionnaire de tâches avec dashboard analytics et Firebase Auth.</p>
+                        <div class="flex gap-2 px-2">
+                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase">Firebase</span>                        </div>
+                    </article>
 
+                    <article class="reveal group bg-white p-5 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                        <div class="h-56 bg-orange-500 rounded-[1.8rem] mb-6 flex items-center justify-center text-white overflow-hidden relative">
+                            <span class="font-black text-xl italic z-10">Gusto Gourmet</span>
+                            <div class="absolute inset-0 bg-black/10 group-hover:scale-110 transition-transform"></div>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 px-2">Restaurant Web</h3>
+                        <p class="text-slate-500 mb-6 px-2 font-light text-sm">Plateforme vitrine gastronomique avec système de réservation fluide.</p>
+                        <div class="flex gap-2 px-2">
+                            <span class="text-[10px] font-black bg-orange-50 text-orange-600 px-4 py-2 rounded-lg uppercase">Tailwind</span>
+                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase">UI/UX</span>
+                        </div>
+                    </article>
+
+                    <article class="reveal group bg-white p-5 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                        <div class="h-56 bg-blue-600 rounded-[1.8rem] mb-6 flex items-center justify-center text-white overflow-hidden relative">
+                            <span class="font-black text-xl z-10">Portfolio 2026</span>
+                            <div class="absolute inset-0 bg-white/10 group-hover:scale-110 transition-transform"></div>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 px-2">Portfolio Pro</h3>
+                        <p class="text-slate-500 mb-6 px-2 font-light text-sm">Design minimaliste et sidebar intuitive optimisée pour la navigation.</p>
+                        <div class="flex gap-2 px-2">
+                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase">JavaScript</span>
+                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase">Responsive</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="parcours" class="py-32 px-8 md:px-20">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="reveal text-4xl font-black mb-20 text-center uppercase tracking-widest">Mon Parcours</h2>
+                <div class="relative">
+                    <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full timeline-line"></div>
+
+                    <div class="reveal relative flex flex-col md:flex-row items-center mb-24">
+                        <div class="flex-1 md:text-right md:pr-16 pl-12 md:pl-0">
+                            <h3 class="text-2xl font-bold text-blue-600">Développeur Full-Stack</h3>
+                            <span class="text-xs font-black text-slate-400">2025 - AUJOURD'HUI</span>
+                            <p class="mt-4 text-slate-500 font-light leading-relaxed">Expertise renforcée en intégration Firebase et architectures Node.js.</p>
+                        </div>
+                        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-blue-600 border-4 border-white rounded-full z-10 shadow-lg"></div>
+                        <div class="flex-1 hidden md:block"></div>
+                    </div>
+
+                    <div class="reveal relative flex flex-col md:flex-row items-center mb-24">
+                        <div class="flex-1 hidden md:block"></div>
+                        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-slate-900 border-4 border-white rounded-full z-10 shadow-lg"></div>
+                        <div class="flex-1 md:text-left md:pl-16 pl-12">
+                            <h3 class="text-2xl font-bold text-slate-900">Freelance & Projets</h3>
+                            <span class="text-xs font-black text-slate-400">2024 - 2025</span>
+                            <p class="mt-4 text-slate-500 font-light leading-relaxed">Développement de TaskMaster et de solutions web pour restaurateurs locaux.</p>
+                        </div>
+                    </div>
+
+                    <div class="reveal relative flex flex-col md:flex-row items-center">
+                        <div class="flex-1 md:text-right md:pr-16 pl-12 md:pl-0">
+                            <h3 class="text-2xl font-bold text-slate-900">Formation Intensive</h3>
+                            <span class="text-xs font-black text-slate-400">2023 - 2024</span>
+                            <p class="mt-4 text-slate-500 font-light leading-relaxed">Maîtrise fondamentale des langages du web et de l'algorithmie.</p>
+                        </div>
+                        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-slate-300 border-4 border-white rounded-full z-10 shadow-lg"></div>
+                        <div class="flex-1 hidden md:block"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-32 px-8 md:px-20 bg-slate-900 text-white overflow-hidden relative">
+            <div class="max-w-4xl mx-auto relative z-10 text-center">
+                <h2 class="reveal text-4xl md:text-7xl font-black mb-12 leading-tight">Collaborons.</h2>
+                <form id="contact-form" class="reveal space-y-8 max-w-xl mx-auto text-left">
+                    <div class="border-b border-slate-700 py-2">
+                        <input type="text" placeholder="VOTRE NOM" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest">
+                    </div>
+                    <div class="border-b border-slate-700 py-2">
+                        <input type="email" placeholder="VOTRE EMAIL" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest">
+                    </div>
+                    <div class="border-b border-slate-700 py-2">
+                        <textarea placeholder="VOTRE PROJET" rows="2" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-blue-600 transition-all active:scale-95">Envoyer l'idée</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="py-12 px-8 md:px-20 text-slate-400 text-[10px] font-bold uppercase tracking-widest flex justify-between">
+            <p> 2026 Mohamed Abdalah Fall</p>
+        </footer>
+    </main>
 
 </body>
 </html>
