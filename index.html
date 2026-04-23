@@ -22,41 +22,21 @@
 
     <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-slate-900 text-white z-[100] transform -translate-x-full lg:translate-x-0 flex flex-col p-10 shadow-2xl">
         <div class="mb-12">
-            <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase">Mohamed-Abdalah-Fall</h1>
-            <p class="text-[10px] text-slate-500 font-bold tracking-[0.2em] mt-1">Developpeur <br>Full-stack</p>
+            <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase">Mohamed.Dev</h1>
+            <p class="text-[10px] text-slate-500 font-bold tracking-[0.2em] mt-1 uppercase">Développeur <br>Full-stack</p>
         </div>
 
         <nav class="flex-1">
             <ul class="space-y-8 font-bold text-xs uppercase tracking-[0.2em]">
-                <li>
-                    <a href="#accueil" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition">
-                        <span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>
-                        Accueil
-                    </a>
-                </li>
-                <li>
-                    <a href="#projets" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition">
-                        <span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>
-                        Projets
-                    </a>
-                </li>
-                <li>
-                    <a href="#parcours" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition">
-                        <span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>
-                        Parcours
-                    </a>
-                </li>
-                <li>
-                    <a href="#contact" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition">
-                        <span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>
-                        Contact
-                    </a>
-                </li>
+                <li><a href="#accueil" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Accueil</a></li>
+                <li><a href="#projets" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Projets</a></li>
+                <li><a href="#parcours" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Parcours</a></li>
+                <li><a href="#contact" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Contact</a></li>
             </ul>
         </nav>
 
         <div class="mt-auto">
-            <p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Dakar, Sénégal</p>
+            <p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest text-center">Dakar, Sénégal</p>
         </div>
     </aside>
 
@@ -77,7 +57,7 @@
                     Je m'appelle Mohamed Abdalah Fall. Je conçois des solutions web performantes avec une attention particulière au design et à l'architecture.
                 </p>
                 <div class="reveal flex gap-6">
-                    <a href="#projets" class="px-10 py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-blue-600 transition shadow-xl">Mes projets</a>
+                    <a href="#projets" class="px-10 py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-blue-600 transition shadow-xl text-center">Mes projets</a>
                 </div>
             </div>
         </section>
@@ -90,39 +70,28 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
                     <article class="reveal group bg-white p-5 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all">
-                        <div class="h-56 bg-slate-900 rounded-[1.8rem] mb-6 flex items-center justify-center text-blue-500 overflow-hidden relative">
-                            <span class="font-black text-xl italic underline z-10">TaskMaster S-G-T</span>
-                            <div class="absolute inset-0 bg-blue-600/10 group-hover:scale-110 transition-transform"></div>
+                        <div class="h-56 rounded-[1.8rem] mb-6 overflow-hidden relative bg-slate-200">
+                            <img src="assets/Capture d’écran_22-4-2026_152438_127.0.0.1.jpeg" alt="Task-manager" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
                         </div>
                         <h3 class="text-2xl font-bold mb-2 px-2">Task-manager</h3>
-                        <p class="text-slate-500 mb-6 px-2 font-light text-sm">Gestionnaire de tâches avec dashboard analytics et Firebase Auth.</p>
-                        <div class="flex gap-2 px-2">
-                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase">Firebase</span>                        </div>
-                    </article>
-
-                    <article class="reveal group bg-white p-5 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
-                        <div class="h-56 bg-orange-500 rounded-[1.8rem] mb-6 flex items-center justify-center text-white overflow-hidden relative">
-                            <span class="font-black text-xl italic z-10">Gusto Gourmet</span>
-                            <div class="absolute inset-0 bg-black/10 group-hover:scale-110 transition-transform"></div>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2 px-2">Restaurant Web</h3>
-                        <p class="text-slate-500 mb-6 px-2 font-light text-sm">Plateforme vitrine gastronomique avec système de réservation fluide.</p>
-                        <div class="flex gap-2 px-2">
-                            <span class="text-[10px] font-black bg-orange-50 text-orange-600 px-4 py-2 rounded-lg uppercase">Tailwind</span>
-                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase">UI/UX</span>
+                        <p class="text-slate-500 mb-6 px-2 font-light text-sm leading-relaxed">Gestionnaire de tâches avec dashboard analytics et Firebase Auth.</p>
+                        <div class="flex flex-wrap gap-2 px-2">
+                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">Firebase</span>
+                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">HTML/Tailwind</span>
                         </div>
                     </article>
 
-                    <article class="reveal group bg-white p-5 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
-                        <div class="h-56 bg-blue-600 rounded-[1.8rem] mb-6 flex items-center justify-center text-white overflow-hidden relative">
-                            <span class="font-black text-xl z-10">Portfolio 2026</span>
-                            <div class="absolute inset-0 bg-white/10 group-hover:scale-110 transition-transform"></div>
+                    <article class="reveal group bg-white p-5 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all">
+                        <div class="h-56 rounded-[1.8rem] mb-6 overflow-hidden relative bg-slate-200">
+                            <img src="assets/Capture d’écran_23-4-2026_111551_127.0.0.1.jpeg" alt="Portfolio Pro" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
                         </div>
                         <h3 class="text-2xl font-bold mb-2 px-2">Portfolio Pro</h3>
-                        <p class="text-slate-500 mb-6 px-2 font-light text-sm">Design minimaliste et sidebar intuitive optimisée pour la navigation.</p>
-                        <div class="flex gap-2 px-2">
-                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase">JavaScript</span>
-                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase">Responsive</span>
+                        <p class="text-slate-500 mb-6 px-2 font-light text-sm leading-relaxed">Design minimaliste et navigation optimisée pour l'expérience utilisateur.</p>
+                        <div class="flex flex-wrap gap-2 px-2">
+                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">JavaScript</span>
+                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">Responsive</span>
                         </div>
                     </article>
                 </div>
@@ -138,8 +107,8 @@
                     <div class="reveal relative flex flex-col md:flex-row items-center mb-24">
                         <div class="flex-1 md:text-right md:pr-16 pl-12 md:pl-0">
                             <h3 class="text-2xl font-bold text-blue-600">Développeur Full-Stack</h3>
-                            <span class="text-xs font-black text-slate-400">2025 - AUJOURD'HUI</span>
-                            <p class="mt-4 text-slate-500 font-light leading-relaxed">Expertise renforcée en intégration Firebase et architectures Node.js.</p>
+                            <span class="text-xs font-black text-slate-400 tracking-tighter uppercase">2025 - Présent</span>
+                            <p class="mt-4 text-slate-500 font-light leading-relaxed text-sm">Expertise renforcée en intégration Firebase et architectures JS modernes.</p>
                         </div>
                         <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-blue-600 border-4 border-white rounded-full z-10 shadow-lg"></div>
                         <div class="flex-1 hidden md:block"></div>
@@ -149,20 +118,30 @@
                         <div class="flex-1 hidden md:block"></div>
                         <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-slate-900 border-4 border-white rounded-full z-10 shadow-lg"></div>
                         <div class="flex-1 md:text-left md:pl-16 pl-12">
-                            <h3 class="text-2xl font-bold text-slate-900">Freelance & Projets</h3>
-                            <span class="text-xs font-black text-slate-400">2024 - 2025</span>
-                            <p class="mt-4 text-slate-500 font-light leading-relaxed">Développement de TaskMaster et de solutions web pour restaurateurs locaux.</p>
+                            <h3 class="text-2xl font-bold text-slate-900">DEXCHANGE-GROUP</h3>
+                            <span class="text-xs font-black text-slate-400 tracking-tighter uppercase">Formation 2026</span>
+                            <p class="mt-4 text-slate-500 font-light leading-relaxed text-sm">Maîtrise approfondie des langages web et de l'algorithmie appliquée.</p>
                         </div>
                     </div>
 
-                    <div class="reveal relative flex flex-col md:flex-row items-center">
+                    <div class="reveal relative flex flex-col md:flex-row items-center mb-24">
                         <div class="flex-1 md:text-right md:pr-16 pl-12 md:pl-0">
-                            <h3 class="text-2xl font-bold text-slate-900">Formation Intensive</h3>
-                            <span class="text-xs font-black text-slate-400">2023 - 2024</span>
-                            <p class="mt-4 text-slate-500 font-light leading-relaxed">Maîtrise fondamentale des langages du web et de l'algorithmie.</p>
+                            <h3 class="text-2xl font-bold text-slate-900">Freelance & Projets</h3>
+                            <span class="text-xs font-black text-slate-400 tracking-tighter uppercase">2024 - 2025</span>
+                            <p class="mt-4 text-slate-500 font-light leading-relaxed text-sm">Création de TaskMaster et de vitrines digitales pour des commerces locaux.</p>
                         </div>
-                        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-slate-300 border-4 border-white rounded-full z-10 shadow-lg"></div>
+                        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-slate-500 border-4 border-white rounded-full z-10 shadow-lg"></div>
                         <div class="flex-1 hidden md:block"></div>
+                    </div>
+
+                    <div class="reveal relative flex flex-col md:flex-row items-center">
+                        <div class="flex-1 hidden md:block"></div>
+                        <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-slate-300 border-4 border-white rounded-full z-10 shadow-lg"></div>
+                        <div class="flex-1 md:text-left md:pl-16 pl-12">
+                            <h3 class="text-2xl font-bold text-slate-900">UNCHK</h3>
+                            <span class="text-xs font-black text-slate-400 tracking-tighter uppercase">2024 - Présent</span>
+                            <p class="mt-4 text-slate-500 font-light leading-relaxed text-sm">Initiation académique aux sciences informatiques et au développement Web.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,24 +149,25 @@
 
         <section id="contact" class="py-32 px-8 md:px-20 bg-slate-900 text-white overflow-hidden relative">
             <div class="max-w-4xl mx-auto relative z-10 text-center">
-                <h2 class="reveal text-4xl md:text-7xl font-black mb-12 leading-tight">Collaborons.</h2>
+                <h2 class="reveal text-4xl md:text-6xl font-black mb-12 leading-tight">Parlez-moi de votre projet.</h2>
                 <form id="contact-form" class="reveal space-y-8 max-w-xl mx-auto text-left">
                     <div class="border-b border-slate-700 py-2">
-                        <input type="text" placeholder="VOTRE NOM" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest">
+                        <input type="text" placeholder="VOTRE NOM" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase">
                     </div>
                     <div class="border-b border-slate-700 py-2">
-                        <input type="email" placeholder="VOTRE EMAIL" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest">
+                        <input type="email" placeholder="VOTRE EMAIL" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase">
                     </div>
                     <div class="border-b border-slate-700 py-2">
-                        <textarea placeholder="VOTRE PROJET" rows="2" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest"></textarea>
+                        <textarea placeholder="VOTRE PROJET" rows="2" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-blue-600 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-blue-600 transition-all active:scale-95">Envoyer l'idée</button>
+                    <button type="submit" class="w-full bg-blue-600 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-blue-600 transition-all active:scale-95 shadow-2xl">Soumettre...</button>
                 </form>
             </div>
         </section>
 
-        <footer class="py-12 px-8 md:px-20 text-slate-400 text-[10px] font-bold uppercase tracking-widest flex justify-between">
-            <p> 2026 Mohamed Abdalah Fall</p>
+        <footer class="py-12 px-8 md:px-20 text-slate-400 text-[10px] font-bold uppercase tracking-widest flex justify-between items-center border-t border-slate-100">
+            <p>© 2026 Mohamed Abdalah Fall</p>
+            <p class="text-blue-500">Dakar, Sénégal</p>
         </footer>
     </main>
 
