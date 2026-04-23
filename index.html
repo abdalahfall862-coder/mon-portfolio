@@ -5,24 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Mohamed</title>
-    <script src="script.js" defer></script>
-    <style>
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        @media (min-width: 1024px) {
-            .main-content { margin-left: 280px; }
-        }
-
-        #sidebar { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .timeline-line { width: 2px; background: linear-gradient(to bottom, #3b82f6, #f1f5f9); }
-    </style>
 </head>
 <body class="bg-white text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-700 overflow-x-hidden">
 
-    <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-slate-900 text-white z-[100] transform -translate-x-full lg:translate-x-0 flex flex-col p-10 shadow-2xl">
+    <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-slate-900 text-white z-[100] transform -translate-x-full transition-transform duration-300 flex flex-col p-10 shadow-2xl">
         <div class="mb-12">
-            <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase">Mohamed.Dev</h1>
+            <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase">Mohamed-Abdalah-Fall</h1>
             <p class="text-[10px] text-slate-500 font-bold tracking-[0.2em] mt-1 uppercase">Développeur <br>Full-stack</p>
         </div>
 
@@ -40,7 +28,7 @@
         </div>
     </aside>
 
-    <button id="menu-btn" class="fixed top-6 right-6 z-[110] lg:hidden bg-blue-600 text-white p-4 rounded-2xl shadow-xl active:scale-90 transition">
+    <button id="menu-btn" class="fixed top-6 right-6 z-[110] lg:hidden bg-gray-600 text-white p-4 rounded-2xl shadow-xl active:scale-90 transition hover:bg-blue-600">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
         </svg>
@@ -102,7 +90,7 @@
             <div class="max-w-4xl mx-auto">
                 <h2 class="reveal text-4xl font-black mb-20 text-center uppercase tracking-widest">Mon Parcours</h2>
                 <div class="relative">
-                    <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full timeline-line"></div>
+                    <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full timeline-line-  "></div>
 
                     <div class="reveal relative flex flex-col md:flex-row items-center mb-24">
                         <div class="flex-1 md:text-right md:pr-16 pl-12 md:pl-0">
@@ -152,24 +140,26 @@
                 <h2 class="reveal text-4xl md:text-6xl font-black mb-12 leading-tight">Parlez-moi de votre projet.</h2>
                 <form id="contact-form" class="reveal space-y-8 max-w-xl mx-auto text-left">
                     <div class="border-b border-slate-700 py-2">
-                        <input type="text" placeholder="VOTRE NOM" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase">
+                        <input type="text" name="name" placeholder="VOTRE NOM" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase">
                     </div>
                     <div class="border-b border-slate-700 py-2">
-                        <input type="email" placeholder="VOTRE EMAIL" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase">
+                        <input type="email" name="email" placeholder="VOTRE EMAIL" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase">
                     </div>
                     <div class="border-b border-slate-700 py-2">
-                        <textarea placeholder="VOTRE PROJET" rows="2" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase"></textarea>
+                        <textarea name="message" placeholder="VOTRE MESSAGE" rows="2" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase"></textarea>
                     </div>
                     <button type="submit" class="w-full bg-blue-600 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-blue-600 transition-all active:scale-95 shadow-2xl">Soumettre...</button>
                 </form>
             </div>
         </section>
 
-        <footer class="py-12 px-8 md:px-20 text-slate-400 text-[10px] font-bold uppercase tracking-widest flex justify-between items-center border-t border-slate-100">
+        <footer class="py-12 px-8 md:px-10 text-slate-400 text-[10px] font-bold uppercase tracking-widest flex justify-between items-center border-t border-slate-100">
             <p>© 2026 Mohamed Abdalah Fall</p>
             <p class="text-blue-500">Dakar, Sénégal</p>
         </footer>
     </main>
+
+   <script type="module" src="script.js" defer></script>
 
 </body>
 </html>
