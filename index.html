@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Mohamed</title>
+    
 </head>
 <body class="bg-white text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-700 overflow-x-hidden">
 
+      <button id="menu-btn" class="fixed top-2 right-6 z-[110] lg:hidden bg-gray-600 text-white p-4 rounded-2xl shadow-xl active:scale-90 transition hover:bg-blue-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+    </button>
+    
     <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-slate-900 text-white z-[100] transform -translate-x-full transition-transform duration-300 flex flex-col p-10 shadow-2xl">
         <div class="mb-12">
-            <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase">Mohamed-Abdalah-Fall</h1>
+            <h1 class="text-2xl font-black text-blue-600 uppercase">Mohamed-Abdalah-Fall</h1>
             <p class="text-[10px] text-slate-500 font-bold tracking-[0.2em] mt-1 uppercase">Développeur <br>Full-stack</p>
         </div>
 
         <nav class="flex-1">
-            <ul class="space-y-8 font-bold text-xs uppercase tracking-[0.2em]">
+            <ul class="space-y-5 font-bold">
                 <li><a href="#accueil" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Accueil</a></li>
                 <li><a href="#projets" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Projets</a></li>
                 <li><a href="#parcours" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Parcours</a></li>
@@ -28,11 +35,7 @@
         </div>
     </aside>
 
-    <button id="menu-btn" class="fixed top-6 right-6 z-[110] lg:hidden bg-gray-600 text-white p-4 rounded-2xl shadow-xl active:scale-90 transition hover:bg-blue-600">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-        </svg>
-    </button>
+  
 
     <main class="main-content">
         
@@ -63,10 +66,10 @@
                             <div class="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
                         </div>
                         <h3 class="text-2xl font-bold mb-2 px-2">Task-manager</h3>
-                        <p class="text-slate-500 mb-6 px-2 font-light text-sm leading-relaxed">Gestionnaire de tâches avec dashboard analytics et Firebase Auth.</p>
+                        <p class="text-slate-500 mb-6 px-2 font-light text-sm leading-relaxed">Gestionnaire de tâches avec Firebase Auth.</p>
                         <div class="flex flex-wrap gap-2 px-2">
                             <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">Firebase</span>
-                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">HTML/Tailwind</span>
+                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">HTML/Tailwind/JavaScript</span>
                         </div>
                     </article>
 
@@ -78,7 +81,7 @@
                         <h3 class="text-2xl font-bold mb-2 px-2">Portfolio Pro</h3>
                         <p class="text-slate-500 mb-6 px-2 font-light text-sm leading-relaxed">Design minimaliste et navigation optimisée pour l'expérience utilisateur.</p>
                         <div class="flex flex-wrap gap-2 px-2">
-                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">JavaScript</span>
+                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">HTML/Tailwind/JavaScript</span>
                             <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">Responsive</span>
                         </div>
                     </article>
@@ -114,7 +117,7 @@
 
                     <div class="reveal relative flex flex-col md:flex-row items-center mb-24">
                         <div class="flex-1 md:text-right md:pr-16 pl-12 md:pl-0">
-                            <h3 class="text-2xl font-bold text-slate-900">Freelance & Projets</h3>
+                            <h3 class="text-2xl font-bold text-slate-600">Freelance & Projets</h3>
                             <span class="text-xs font-black text-slate-400 tracking-tighter uppercase">2024 - 2025</span>
                             <p class="mt-4 text-slate-500 font-light leading-relaxed text-sm">Création de TaskMaster et de vitrines digitales pour des commerces locaux.</p>
                         </div>
@@ -126,7 +129,7 @@
                         <div class="flex-1 hidden md:block"></div>
                         <div class="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-slate-300 border-4 border-white rounded-full z-10 shadow-lg"></div>
                         <div class="flex-1 md:text-left md:pl-16 pl-12">
-                            <h3 class="text-2xl font-bold text-slate-900">UNCHK</h3>
+                            <h3 class="text-2xl font-bold text-slate-300">UNCHK</h3>
                             <span class="text-xs font-black text-slate-400 tracking-tighter uppercase">2024 - Présent</span>
                             <p class="mt-4 text-slate-500 font-light leading-relaxed text-sm">Initiation académique aux sciences informatiques et au développement Web.</p>
                         </div>
@@ -143,7 +146,7 @@
                         <input type="text" name="name" placeholder="VOTRE NOM" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase">
                     </div>
                     <div class="border-b border-slate-700 py-2">
-                        <input type="email" name="email" placeholder="VOTRE EMAIL" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase">
+                        <input type="email" name="email" placeholder="VOTRE EMAIL" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest">
                     </div>
                     <div class="border-b border-slate-700 py-2">
                         <textarea name="message" placeholder="VOTRE MESSAGE" rows="2" required class="w-full bg-transparent py-2 outline-none focus:placeholder-blue-500 transition-all text-sm font-bold tracking-widest uppercase"></textarea>
