@@ -1,11 +1,23 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "my-portfolio-6f2b6.firebaseapp.com",
+  projectId: "my-portfolio-6f2b6",
+  storageBucket: "my-portfolio-6f2b6.firebasestorage.app",
+  messagingSenderId: "795983404958",
+  appId: "1:795983404958:web:d59e128e586770db9d008f"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const sidebar = document.getElementById("sidebar");
     const menuBtn = document.getElementById("menu-btn");
-
-    console.log("sidebar:", sidebar);
-    console.log("menuBtn:", menuBtn);
-
     const links = document.querySelectorAll(".sidebar-link");
     const contactForm = document.getElementById("contact-form");
 
@@ -24,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // REVEAL
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -36,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         revealObserver.observe(el)
     );
 
+    // FORMULAIRE
     if (contactForm) {
         contactForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -55,9 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            btn.innerText = "ENVOI EN COURS...";
+            btn.innerText = "ENVOI...";
             btn.disabled = true;
-            btn.classList.add("opacity-50");
 
             try {
                 await addDoc(collection(db, "messages"), {
@@ -67,18 +80,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     createdAt: new Date()
                 });
 
-                btn.innerText = " MESSAGE ENVOYÉ";
+                btn.innerText = "Envoyé";
                 contactForm.reset();
 
             } catch (error) {
                 console.error(error);
-                btn.innerText = "ERREUR";
+                btn.innerText = "❌ Erreur";
             }
 
             setTimeout(() => {
                 btn.innerText = originalText;
                 btn.disabled = false;
-                btn.classList.remove("opacity-50");
             }, 2000);
         });
     }
