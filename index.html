@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Mohamed</title>
-    
 </head>
 <body class="bg-white text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-700 overflow-x-hidden">
 
-      <button id="menu-btn" class="fixed top-2 right-6 z-[110] lg:hidden bg-gray-600 text-white p-4 rounded-2xl shadow-xl active:scale-90 transition hover:bg-blue-600">
+    <button id="menu-btn" class="fixed top-2 right-6 z-[110] lg:hidden bg-gray-600 text-white p-4 rounded-2xl shadow-xl active:scale-90 transition hover:bg-blue-600">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16m-7 6h7" />
         </svg>
@@ -24,6 +23,7 @@
         <nav class="flex-1">
             <ul class="space-y-5 font-bold">
                 <li><a href="#accueil" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Accueil</a></li>
+                <li><a href="#competences" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Compétences</a></li>
                 <li><a href="#projets" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Projets</a></li>
                 <li><a href="#parcours" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Parcours</a></li>
                 <li><a href="#contact" class="sidebar-link flex items-center group text-slate-400 hover:text-white transition"><span class="w-6 h-[2px] bg-slate-800 mr-4 group-hover:bg-blue-500 group-hover:w-10 transition-all"></span>Contact</a></li>
@@ -35,8 +35,6 @@
         </div>
     </aside>
 
-  
-
     <main class="main-content">
         
         <section id="accueil" class="min-h-screen flex items-center px-8 md:px-20">
@@ -47,6 +45,66 @@
                 <p class="reveal text-xl md:text-2xl text-slate-500 max-w-2xl mb-12 font-light">
                     Je m'appelle Mohamed Abdalah Fall. Je conçois des solutions web performantes avec une attention particulière au design et à l'architecture.
                 </p>
+            </div>
+        </section>
+
+        <!-- SECTION COMPÉTENCES  -->
+        <section id="competences" class="py-32 px-8 md:px-20 border-t border-slate-100">
+            <div class="container mx-auto">
+                <h2 class="reveal text-4xl font-black mb-20 text-center flex items-center justify-center uppercase">
+                    <span class="w-12 h-1.5 bg-blue-600 mr-6"></span> Compétences
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+                    <!-- Front-end -->
+                    <div class="reveal bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xxl transition-all">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-black text-xl mb-6">
+                            UI
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Front-End</h3>
+                        <p class="text-slate-500 text-sm font-light mb-6 leading-relaxed">Création d'interfaces fluides, responsives et centrées sur l'expérience utilisateur.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">HTML5 / CSS3</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">JavaScript ES6</span>
+                            <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black">Tailwind CSS</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">React.js</span>
+                        </div>
+                    </div>
+
+                    <!-- Back-end -->
+                    <div class="reveal bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xxl transition-all">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-black text-xl mb-6">
+                            API
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Back-End</h3>
+                        <p class="text-slate-500 text-sm font-light mb-6 leading-relaxed">Conception d'architectures d'API robustes, sécurisées et hautement scalables.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Node.js</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Express</span>
+                            <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black">TypeScript</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">TypeORM</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">JWT</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Bcrypt</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Socket.IO</span>
+                        </div>
+                    </div>
+
+                    <!-- Tools & Database -->
+                    <div class="reveal bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xxl transition-all">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-black text-xl mb-6">
+                            DB
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Données & Outils</h3>
+                        <p class="text-slate-500 text-sm font-light mb-6 leading-relaxed">Gestion de bases de données distribuées et maîtrise du versioning.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black">MongoDB</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Firebase</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Git / GitHub</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Swagger API</span>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Postman</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 

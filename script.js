@@ -13,15 +13,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-document.addEventListener("DOMContentLoaded", () => {
-
+// Fonction d'initialisation globale
+const initPortfolio = () => {
     const sidebar = document.getElementById("sidebar");
     const menuBtn = document.getElementById("menu-btn");
     const links = document.querySelectorAll(".sidebar-link");
     const contactForm = document.getElementById("contact-form");
 
-    // SIDEBAR
+    // 1. GESTION DU MENU LATÉRAL (SIDEBAR)
     if (sidebar && menuBtn) {
         menuBtn.addEventListener("click", () => {
             sidebar.classList.toggle("-translate-x-full");
@@ -36,20 +35,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // REVEAL
+    // 2. EFFET REVEAL AU SCROLL (Prend en compte l'accueil, les compétences, les projets et le parcours)
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("active");
+                // On arrête d'observer une fois l'élément affiché
+                revealObserver.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll(".reveal").forEach(el =>
-        revealObserver.observe(el)
-    );
+    document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
-    // FORMULAIRE
+    // 3. FORMULAIRE DE CONTACT FIRESTORE
     if (contactForm) {
         contactForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -80,12 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     createdAt: new Date()
                 });
 
-                btn.innerText = "Envoyé";
+                btn.innerText = "ENVOLÉ ! ✓";
                 contactForm.reset();
 
             } catch (error) {
-                console.error(error);
-                btn.innerText = "❌ Erreur";
+                console.error("Erreur Firestore :", error);
+                btn.innerText = "❌ ERREUR";
             }
 
             setTimeout(() => {
@@ -94,4 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 2000);
         });
     }
-});
+};
+
+// Sécurité pour les scripts de type "module" (déclenchement garanti)
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPortfolio);
+} else {
+    initPortfolio();
+}
