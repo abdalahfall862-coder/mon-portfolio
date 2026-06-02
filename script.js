@@ -13,6 +13,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const reveals = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("active");
+        }
+    });
+},{
+    threshold:0.15
+});
+
+reveals.forEach(el => observer.observe(el));
+
 // Fonction d'initialisation globale
 const initPortfolio = () => {
     const sidebar = document.getElementById("sidebar");

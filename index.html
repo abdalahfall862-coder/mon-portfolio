@@ -6,6 +6,95 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Mohamed</title>
 </head>
+<style>
+.reveal{
+    opacity:0;
+    transform:translateY(50px);
+    transition:all .8s ease;
+}
+
+.reveal.active{
+    opacity:1;
+    transform:translateY(0);
+}
+
+button{
+    position:relative;
+    overflow:hidden;
+    transition:all .35s ease;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(37,99,235,.25);
+}
+
+button::before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:0;
+    height:0;
+    background:rgba(255,255,255,.2);
+    border-radius:999px;
+    transform:translate(-50%,-50%);
+    transition:.5s;
+}
+
+button:hover::before{
+    width:300px;
+    height:300px;
+}
+
+.sidebar-link{
+    transition:.3s;
+}
+
+.sidebar-link:hover{
+    transform:translateX(8px);
+}
+
+article{
+    transition:.4s ease;
+}
+
+article:hover{
+    transform:translateY(-12px);
+    box-shadow:0 20px 40px rgba(0,0,0,.08);
+}
+
+.skill-tag{
+    transition:.3s;
+}
+
+.skill-tag:hover{
+    transform:translateY(-3px) scale(1.05);
+}
+
+#menu-btn:hover{
+    transform:rotate(90deg);
+}
+
+input,
+textarea{
+    transition:.3s;
+}
+
+input:focus,
+textarea:focus{
+    transform:translateY(-2px);
+}
+
+#accueil h1{
+    animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+}
+</style>
 <body class="bg-white text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-700 overflow-x-hidden">
 
     <button id="menu-btn" class="fixed top-2 right-6 z-[110] lg:hidden bg-gray-600 text-white p-4 rounded-2xl shadow-xl active:scale-90 transition hover:bg-blue-600">
@@ -64,10 +153,10 @@
                         <h3 class="text-xl font-bold mb-4">Front-End</h3>
                         <p class="text-slate-500 text-sm font-light mb-6 leading-relaxed">Création d'interfaces fluides, responsives et centrées sur l'expérience utilisateur.</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">HTML5 / CSS3</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">JavaScript ES6</span>
-                            <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black">Tailwind CSS</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">React.js</span>
+                        <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">HTML5 / CSS3</span>
+                        <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">JavaScript ES6</span>
+                        <span class="skill-tag text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black shadow-sm hover:shadow-md">Tailwind CSS</span>
+                        <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase shadow-sm hover:shadow-md">React.js</span>
                         </div>
                     </div>
 
@@ -79,13 +168,13 @@
                         <h3 class="text-xl font-bold mb-4">Back-End</h3>
                         <p class="text-slate-500 text-sm font-light mb-6 leading-relaxed">Conception d'architectures d'API robustes, sécurisées et hautement scalables.</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Node.js</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Express</span>
-                            <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black">TypeScript</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">TypeORM</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">JWT</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Bcrypt</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Socket.IO</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">Node.js</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">Express</span>
+                            <span class="skill-tag text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black hover:shadow-md">TypeScript</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">TypeORM</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">JWT</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">Bcrypt</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">Socket.IO</span>
                         </div>
                     </div>
 
@@ -97,11 +186,11 @@
                         <h3 class="text-xl font-bold mb-4">Données & Outils</h3>
                         <p class="text-slate-500 text-sm font-light mb-6 leading-relaxed">Gestion de bases de données distribuées et maîtrise du versioning.</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black">MongoDB</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Firebase</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Git / GitHub</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Swagger API</span>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase">Postman</span>
+                            <span class="skill-tag text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg uppercase font-black hover:shadow-md">MongoDB</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">Firebase</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">Git / GitHub</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">Swagger API</span>
+                            <span class="skill-tag text-[10px] font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg uppercase hover:shadow-md">Postman</span>
                         </div>
                     </div>
                 </div>
@@ -123,8 +212,8 @@
                         <h3 class="text-2xl font-bold mb-2 px-2">Task-manager</h3>
                         <p class="text-slate-500 mb-6 px-2 font-light text-sm leading-relaxed">Gestionnaire de tâches avec Firebase Auth.</p>
                         <div class="flex flex-wrap gap-2 px-2">
-                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">Firebase</span>
-                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">HTML/Tailwind/JavaScript</span>
+                            <span class="skill-tag text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">Firebase</span>
+                            <span class="skill-tag text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">HTML/Tailwind/JavaScript</span>
                         </div>
                     </article>
 
@@ -136,8 +225,8 @@
                         <h3 class="text-2xl font-bold mb-2 px-2">Portfolio Pro</h3>
                         <p class="text-slate-500 mb-6 px-2 font-light text-sm leading-relaxed">Design minimaliste et navigation optimisée pour l'expérience utilisateur.</p>
                         <div class="flex flex-wrap gap-2 px-2">
-                            <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">HTML/Tailwind/JavaScript</span>
-                            <span class="text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">Responsive</span>
+                            <span class="skill-tag text-[10px] font-black bg-blue-50 text-blue-600 px-4 py-2 rounded-lg uppercase tracking-wider">HTML/Tailwind/JavaScript</span>
+                            <span class="skill-tag text-[10px] font-black bg-slate-100 text-slate-600 px-4 py-2 rounded-lg uppercase tracking-wider">Responsive</span>
                         </div>
                     </article>
                 </div>
