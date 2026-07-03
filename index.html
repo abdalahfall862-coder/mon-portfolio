@@ -26,7 +26,7 @@
                 }
             }
         }
-    </script>  
+    </script>
     <title>Mohamed Abdalah Fall | Portfolio Premium</title>
     <style>
         /* Effet d'apparition au scroll fluide */
@@ -74,8 +74,52 @@
             border-radius: 999px;
         }
         .dark ::-webkit-scrollbar-thumb { background: #334155; }
+
+        /* Lien de nav actif */
+        .nav-link.is-active {
+            color: #fff;
+        }
+        .nav-link.is-active .nav-dot {
+            width: 2rem;
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+        }
+
+        /* Barres de compétence animées */
+        .skill-bar-fill {
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active .skill-bar-fill {
+            width: var(--fill);
+        }
+
+        /* Modale projet */
+        #project-modal {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        #project-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #project-modal .modal-panel {
+            transform: translateY(24px) scale(0.98);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #project-modal.open .modal-panel {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .animate-float, .skill-bar-fill, #project-modal, #project-modal .modal-panel {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
     </style>
-<base target="_blank">
 </head>
 <body class="liquid-bg text-slate-900 dark:text-slate-100 font-sans min-h-screen antialiased transition-colors duration-500 overflow-x-hidden">
 
@@ -90,10 +134,10 @@
             </svg>
         </button>
     </div>
-    
+
     <!-- Navigation latérale (Sidebar) -->
     <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-slate-950/95 text-white z-[130] lg:z-[100] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col p-8 border-r border-slate-900/60 backdrop-blur-xl">
-        
+
         <!-- Bouton fermer en Mobile -->
         <button id="close-btn" class="lg:hidden absolute top-6 right-6 text-slate-400 hover:text-white transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -110,11 +154,11 @@
 
         <nav class="flex-1">
             <ul class="space-y-3 text-sm font-semibold">
-                <li><a href="#accueil" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Accueil</a></li>
-                <li><a href="#competences" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Compétences</a></li>
-                <li><a href="#projets" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Projets</a></li>
-                <li><a href="#parcours" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Parcours</a></li>
-                <li><a href="#contact" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Contact</a></li>
+                <li><a href="#accueil" data-section="accueil" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Accueil</a></li>
+                <li><a href="#competences" data-section="competences" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Compétences</a></li>
+                <li><a href="#projets" data-section="projets" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Projets</a></li>
+                <li><a href="#parcours" data-section="parcours" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Parcours</a></li>
+                <li><a href="#contact" data-section="contact" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Contact</a></li>
             </ul>
         </nav>
 
@@ -128,19 +172,22 @@
 
     <!-- Contenu Principal -->
     <main class="w-full lg:w-auto lg:pl-[280px] transition-all duration-300 overflow-x-hidden">
-        
+
         <!-- ACCUEIL -->
         <section id="accueil" class="min-h-screen flex items-center px-4 sm:px-8 md:px-16 lg:px-24 py-20">
             <div class="max-w-4xl w-full">
                 <h1 class="reveal text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 sm:mb-8 leading-[1.05] tracking-tight dark:text-white animate-float break-words">
-                    Développeur <br><span class="bg-gradient-to-r from-cobalt-600 via-blue-500 to-indigo-500 bg-clip-text text-transparent">Full-stack</span> 
+                    Développeur <br><span class="bg-gradient-to-r from-cobalt-600 via-blue-500 to-indigo-500 bg-clip-text text-transparent">Full-stack</span>
                 </h1>
                 <p class="reveal text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mb-8 sm:mb-10 font-normal leading-relaxed">
-                    Je m'appelle <span class="font-bold text-slate-900 dark:text-white">Mohamed Abdalah Fall</span>. Je traduis des visions complexes en applications web fluides et architectures hautement scalables.
+                    Je m'appelle <span class="font-bold text-slate-900 dark:text-white">Mohamed Abdalah Fall</span>. Je conçois des architectures backend sécurisées et des interfaces fluides, du modèle de données jusqu'au pixel.
                 </p>
-                <div class="reveal">
+                <div class="reveal flex flex-col sm:flex-row gap-3">
                     <a href="#projets" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-cobalt-600 to-indigo-600 text-white font-bold text-sm rounded-2xl shadow-xl shadow-cobalt-600/20 hover:shadow-cobalt-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
                         Explorer mes réalisations
+                    </a>
+                    <a href="#contact" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 font-bold text-sm rounded-2xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+                        Discuter d'un projet
                     </a>
                 </div>
             </div>
@@ -149,16 +196,32 @@
         <!-- COMPÉTENCES -->
         <section id="competences" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
             <div class="max-w-6xl mx-auto">
-                <h2 class="reveal text-2xl sm:text-3xl font-black mb-12 flex items-center uppercase tracking-wide">
+                <h2 class="reveal text-2xl sm:text-3xl font-black mb-3 flex items-center uppercase tracking-wide">
                     <span class="w-8 h-1 bg-gradient-to-r from-cobalt-600 to-indigo-500 mr-4 rounded-full"></span> Compétences
                 </h2>
+                <p class="reveal text-slate-500 dark:text-slate-400 text-sm max-w-2xl mb-12 ml-12">
+                    Une stack complète, du front-end à l'infrastructure de données, avec une attention particulière portée à la sécurité et à la scalabilité.
+                </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                     <!-- Front-end -->
                     <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] border border-white/60 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-cobalt-500/10 dark:hover:shadow-cobalt-500/5 hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="w-11 h-11 bg-cobalt-100 dark:bg-cobalt-950/50 text-cobalt-600 dark:text-cobalt-400 rounded-2xl flex items-center justify-center font-black text-sm mb-5 transition-transform group-hover:scale-110">UI</div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-11 h-11 bg-cobalt-100 dark:bg-cobalt-950/50 text-cobalt-600 dark:text-cobalt-400 rounded-2xl flex items-center justify-center font-black text-sm transition-transform group-hover:scale-110">UI</div>
+                            <span class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">2+ ans</span>
+                        </div>
                         <h3 class="text-xl font-bold mb-3">Front-End</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Interfaces immersives, ultra-réactives, axées sur la fluidité et le pixel-perfect.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Interfaces immersives et réactives : composants réutilisables en React, animations pilotées par scroll, et design system Tailwind cohérent du mobile au desktop.</p>
+
+                        <div class="mb-5">
+                            <div class="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1.5">
+                                <span>Maîtrise</span><span>85%</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-200/70 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full bg-gradient-to-r from-cobalt-500 to-blue-400 rounded-full" style="--fill:85%"></div>
+                            </div>
+                        </div>
+
                         <div class="flex flex-wrap gap-2">
                             <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase tracking-wide">HTML5 / CSS3</span>
                             <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase tracking-wide">JavaScript ES6</span>
@@ -169,12 +232,25 @@
 
                     <!-- Back-end -->
                     <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] border border-white/60 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/5 hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center font-black text-sm mb-5 transition-transform group-hover:scale-110">API</div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center font-black text-sm transition-transform group-hover:scale-110">API</div>
+                            <span class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Spécialité</span>
+                        </div>
                         <h3 class="text-xl font-bold mb-3">Back-End</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Conception d'architectures serveurs robustes, sécurisées et hautement scalables.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Conception d'API REST typées et sécurisées : authentification JWT, hashing Bcrypt, validation stricte des entrées et architecture en couches (routes / services / repositories).</p>
+
+                        <div class="mb-5">
+                            <div class="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1.5">
+                                <span>Maîtrise</span><span>90%</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-200/70 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full bg-gradient-to-r from-indigo-500 to-cobalt-500 rounded-full" style="--fill:90%"></div>
+                            </div>
+                        </div>
+
                         <div class="flex flex-wrap gap-2">
                             <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Node.js</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Express</span>
+                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Express / Fastify</span>
                             <span class="text-[10px] font-extrabold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 px-2.5 py-1.5 rounded-lg uppercase tracking-wide border border-indigo-100 dark:border-indigo-900/50">TypeScript</span>
                             <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">TypeORM</span>
                             <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">JWT / Bcrypt</span>
@@ -184,9 +260,22 @@
 
                     <!-- Tools & Database -->
                     <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] border border-white/60 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 group md:col-span-2 lg:col-span-1">
-                        <div class="w-11 h-11 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center font-black text-sm mb-5 transition-transform group-hover:scale-110">DB</div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-11 h-11 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center font-black text-sm transition-transform group-hover:scale-110">DB</div>
+                            <span class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Quotidien</span>
+                        </div>
                         <h3 class="text-xl font-bold mb-3">Données & Outils</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Maîtrise du stockage persistant, des bases NoSQL et du versioning de code.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Modélisation de bases NoSQL et relationnelles, documentation d'API auto-générée avec Swagger, et workflow Git structuré (branches, PR, revue de code).</p>
+
+                        <div class="mb-5">
+                            <div class="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1.5">
+                                <span>Maîtrise</span><span>80%</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-200/70 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full bg-gradient-to-r from-blue-500 to-indigo-400 rounded-full" style="--fill:80%"></div>
+                            </div>
+                        </div>
+
                         <div class="flex flex-wrap gap-2">
                             <span class="text-[10px] font-extrabold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 px-2.5 py-1.5 rounded-lg uppercase tracking-wide border border-blue-100 dark:border-blue-900/50">MongoDB</span>
                             <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Firebase</span>
@@ -201,80 +290,94 @@
         <!-- REALISATIONS -->
         <section id="projets" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24 bg-slate-900/5 dark:bg-black/40 backdrop-blur-md">
             <div class="max-w-6xl mx-auto">
-                <h2 class="reveal text-2xl sm:text-3xl font-black mb-12 flex items-center uppercase tracking-wide">
+                <h2 class="reveal text-2xl sm:text-3xl font-black mb-3 flex items-center uppercase tracking-wide">
                     <span class="w-8 h-1 bg-gradient-to-r from-cobalt-600 to-indigo-500 mr-4 rounded-full"></span> Mes Réalisations
                 </h2>
-                
+                <p class="reveal text-slate-500 dark:text-slate-400 text-sm max-w-2xl mb-12 ml-12">
+                    Cliquez sur une carte pour ouvrir la fiche détaillée du projet : fonctionnalités, stack technique et défis rencontrés.
+                </p>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Projet 1 -->
-                    <article class="reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300">
+                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer" data-project="taskmanager" role="button" tabindex="0" aria-label="Voir les détails du projet Task-manager">
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/my-app.jpeg" alt="Task-manager" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-cobalt-600/90 px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            </div>
                         </div>
                         <div class="px-3 pb-3">
+                            <span class="text-[10px] font-extrabold text-cobalt-500 uppercase tracking-widest block mb-1">Application Web · Productivité</span>
                             <h3 class="text-xl font-bold mb-2 group-hover:text-cobalt-500 dark:group-hover:text-cobalt-400 transition-colors">Task-manager</h3>
-                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Gestionnaire de tâches intelligent avec authentification Firebase et réactivité temps réel.</p>
+                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Gestionnaire de tâches intelligent avec authentification Firebase, synchronisation en temps réel entre appareils et interface épurée pensée pour la productivité quotidienne.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[10px] font-bold bg-cobalt-50 dark:bg-cobalt-950/40 text-cobalt-600 dark:text-cobalt-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Firebase</span>
                                 <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Tailwind / JS</span>
                             </div>
-                            <a href="https://my-app-omega-one-21.vercel.app" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 text-xs font-bold text-cobalt-600 dark:text-cobalt-400 hover:text-cobalt-700 dark:hover:text-cobalt-300 transition-colors">
+                            <a href="https://my-app-omega-one-21.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-cobalt-600 dark:text-cobalt-400 hover:text-cobalt-700 dark:hover:text-cobalt-300 transition-colors">
                                 Visiter le projet →
                             </a>
                         </div>
                     </article>
 
                     <!-- Projet 2 -->
-                    <article class="reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300">
+                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer" data-project="portfolio" role="button" tabindex="0" aria-label="Voir les détails du projet Portfolio Pro">
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/cv-web.png" alt="Portfolio Pro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-indigo-600/90 px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            </div>
                         </div>
                         <div class="px-3 pb-3">
+                            <span class="text-[10px] font-extrabold text-indigo-500 uppercase tracking-widest block mb-1">Site Vitrine · UX/UI</span>
                             <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">Portfolio Pro</h3>
-                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Vitrine personnelle haut de gamme avec micro-interactions fluides et structure UX pensée pour la conversion.</p>
+                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Vitrine personnelle haut de gamme avec micro-interactions fluides, mode sombre natif et structure UX pensée pour transformer les visiteurs en opportunités.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">HTML / Tailwind</span>
                                 <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Responsive</span>
                             </div>
-                            <a href="https://mon-portfolio-ten-topaz.vercel.app" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
+                            <a href="https://mon-portfolio-ten-topaz.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
                                 Visiter le projet →
                             </a>
                         </div>
                     </article>
 
                     <!-- Projet 3 (Projet Vedette / Backend Pro) -->
-                    <article class="reveal group bg-white dark:bg-slate-900/90 p-5 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 md:col-span-2">
-    
+                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-5 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 md:col-span-2 cursor-pointer" data-project="api" role="button" tabindex="0" aria-label="Voir les détails du projet API Secure and Scalable">
+
                          <!-- Zone Image / Bannière Élargie -->
                         <div class="h-64 sm:h-72 rounded-[2rem] mb-6 overflow-hidden relative bg-slate-200 dark:bg-slate-800 shadow-inner">
                             <img src="assets/api-swagger.png" alt="Mon API - Dexchange Infrastructure" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102">
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent"></div>
-        
+
                             <!-- Badge Live d'environnement de prod -->
                             <div class="absolute top-4 right-4 flex items-center gap-2 bg-slate-950/80 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/10">
                                 <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
                                 <span class="text-[10px] font-black text-white uppercase tracking-widest">Live on Render</span>
                             </div>
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-cobalt-600/90 px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            </div>
                         </div>
-    
+
                      <!-- Contenu de la carte distribué de manière asymétrique -->
                      <div class="px-2 pb-2 grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-        
+
                      <!-- Colonne Gauche : Description Principale (Prend 2 colonnes sur large) -->
                      <div class="lg:col-span-2 space-y-4">
                        <div>
                             <span class="text-[10px] font-extrabold text-cobalt-500 uppercase tracking-widest block mb-1">Architecture Serveur & Algorithmie</span>
                             <h3 class="text-xl sm:text-2xl font-black group-hover:text-cobalt-500 dark:group-hover:text-cobalt-400 transition-colors">
-                                API Secure & Scalable 
+                                API Secure & Scalable
                             </h3>
                         </div>
-            
+
                         <p class="text-slate-600 dark:text-slate-400 font-normal text-sm sm:text-base leading-relaxed">
-                            Conception et déploiement d'une architecture backend hautement découplée et sécurisée. L'application orchestre des flux de données complexes à haute disponibilité en intégrant un typage strict et une persistance optimisée.
+                            Architecture backend découplée et sécurisée, orchestrant des flux de données complexes à haute disponibilité. Typage strict de bout en bout, authentification par rôles et documentation Swagger interactive.
                         </p>
-            
+
                         <!-- Stack Technique Spécifique -->
                         <div class="flex flex-wrap gap-1.5 pt-2">
                             <span class="text-[9px] font-extrabold bg-cobalt-50 dark:bg-cobalt-950/50 text-cobalt-600 dark:text-cobalt-400 px-2.5 py-1.5 rounded-lg border border-cobalt-100 dark:border-cobalt-900/30 uppercase">TypeScript</span>
@@ -282,16 +385,12 @@
                             <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">TypeORM</span>
                             <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">MongoDB</span>
                             <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">JWT Auth</span>
-                        </div>
-                        <a href="https://mon-api-vnhx.onrender.com/api-docs" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 text-xs font-bold text-cobalt-600 dark:text-cobalt-400 hover:text-cobalt-700 dark:hover:text-cobalt-300 transition-colors">
-                            Voir la documentation API →
-                        </a>
-                     </div>
+                        
                      </div>
                     </article>
 
                     <!-- projet 4 -->
-                    <article class="reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300">
+                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer" data-project="methshop" role="button" tabindex="0" aria-label="Voir les détails du projet Meth-Shop">
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/e-commerce.jpeg" alt="Meth-Shop E-commerce" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
@@ -299,40 +398,41 @@
                                 <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
                                 <span class="text-[10px] font-black text-white uppercase tracking-widest">Live on Vercel</span>
                             </div>
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-cobalt-600/90 px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            </div>
                         </div>
                         <div class="px-3 pb-3">
                             <span class="text-[10px] font-extrabold text-cobalt-500 uppercase tracking-widest block mb-1">E-Commerce Full-Stack</span>
                             <h3 class="text-xl font-bold mb-2 group-hover:text-cobalt-500 dark:group-hover:text-cobalt-400 transition-colors">Meth-Shop</h3>
-                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Application e-commerce complète avec catalogue produits, panier d'achat persistant, checkout sécurisé via Stripe, authentification JWT et dashboard admin. Déployée sur Vercel avec base de données MongoDB Atlas.</p>
+                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Boutique en ligne complète : catalogue filtrable, panier persistant, paiement sécurisé via Stripe, authentification JWT et dashboard admin. Déployée sur Vercel avec MongoDB Atlas.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[10px] font-extrabold bg-cobalt-50 dark:bg-cobalt-950/40 text-cobalt-600 dark:text-cobalt-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Next.js</span>
                                 <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">MongoDB Atlas</span>
                                 <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Stripe API</span>
                                 <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">JWT Auth</span>
-                                <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Tailwind CSS</span>
-                                <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Vercel</span>
                             </div>
-                            <a href="https://meth-shop.vercel.app" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 text-xs font-bold text-cobalt-600 dark:text-cobalt-400 hover:text-cobalt-700 dark:hover:text-cobalt-300 transition-colors">
+                            <a href="https://meth-shop.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-cobalt-600 dark:text-cobalt-400 hover:text-cobalt-700 dark:hover:text-cobalt-300 transition-colors">
                                 Visiter la boutique →
                             </a>
                         </div>
                     </article>
 
-
                 </div>
-            </section>
+            </div>
+        </section>
 
         <section id="parcours" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
             <div class="max-w-4xl mx-auto">
                 <h2 class="reveal text-2xl sm:text-3xl font-black mb-16 flex items-center uppercase tracking-wide">
                    <span class="w-8 h-1 bg-gradient-to-r from-cobalt-600 to-indigo-500 mr-4 rounded-full"></span> Mon Parcours
                 </h2>
-                
+
                 <div class="relative border-l-2 border-slate-300 dark:border-slate-800/80 ml-4 md:ml-6 space-y-12">
-                    
+
                     <div class="reveal relative pl-8 sm:pl-10 group">
                         <div class="absolute left-[-9px] top-1.5 w-4 h-4 bg-cobalt-500 border-4 border-white dark:border-slate-950 rounded-full z-10 ring-4 ring-cobalt-500/20 transition-transform duration-300 group-hover:scale-125"></div>
-                        
+
                         <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-2">
                             <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-cobalt-500/10 text-cobalt-600 dark:text-cobalt-400 uppercase w-max">
                                 Présent
@@ -349,7 +449,7 @@
 
                     <div class="reveal relative pl-8 sm:pl-10 group">
                         <div class="absolute left-[-9px] top-1.5 w-4 h-4 bg-indigo-500 border-4 border-white dark:border-slate-950 rounded-full z-10 ring-4 ring-indigo-500/20 transition-transform duration-300 group-hover:scale-125"></div>
-                        
+
                         <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-2">
                             <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 uppercase w-max">
                                 Spécialisation 2026
@@ -366,7 +466,7 @@
 
                     <div class="reveal relative pl-8 sm:pl-10 group">
                         <div class="absolute left-[-9px] top-1.5 w-4 h-4 bg-slate-400 border-4 border-white dark:border-slate-950 rounded-full z-10 transition-transform duration-300 group-hover:scale-125"></div>
-                        
+
                         <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-2">
                             <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-slate-500/10 text-slate-600 dark:text-slate-400 uppercase w-max">
                                 2024 - 2025
@@ -383,7 +483,7 @@
 
                     <div class="reveal relative pl-8 sm:pl-10 group">
                         <div class="absolute left-[-9px] top-1.5 w-4 h-4 bg-slate-300 dark:bg-slate-700 border-4 border-white dark:border-slate-950 rounded-full z-10 transition-transform duration-300 group-hover:scale-125"></div>
-                        
+
                         <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-2">
                             <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-slate-500/10 text-slate-600 dark:text-slate-400 uppercase w-max">
                                 2024 - Présent
@@ -417,6 +517,7 @@
                     <button type="submit" class="w-full bg-gradient-to-r from-cobalt-600 to-indigo-600 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] hover:opacity-95 transition-all active:scale-98 shadow-xl shadow-cobalt-600/10">
                         Soumettre...
                     </button>
+                    <p id="form-feedback" class="hidden text-xs font-bold text-emerald-400 text-center pt-1">Message prêt à être envoyé — merci !</p>
                 </form>
             </div>
         </section>
@@ -427,56 +528,68 @@
         </footer>
     </main>
 
-    <script>
-        const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            if (document.documentElement.classList.contains('dark')) {
-                themeToggle.innerHTML = '☀️';
-            } else {
-                themeToggle.innerHTML = '🌙';
-            }
-        });
+    <!-- MODALE / PAGE DE DÉTAIL PROJET -->
+    <div id="project-modal" class="fixed inset-0 z-[200] flex items-start sm:items-center justify-center p-0 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div id="modal-backdrop" class="absolute inset-0 bg-slate-950/70 backdrop-blur-md"></div>
+        <div class="modal-panel relative w-full sm:max-w-3xl max-h-full sm:max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 sm:rounded-[2.5rem] shadow-2xl">
+            <button id="modal-close" aria-label="Fermer la fiche projet" class="fixed sm:absolute top-4 right-4 sm:top-6 sm:right-6 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-slate-950/70 hover:bg-slate-950/90 text-white backdrop-blur-md transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
 
-        const menuBtn = document.getElementById('menu-btn');
-        const closeBtn = document.getElementById('close-btn');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebar-overlay');
-        const navLinks = document.querySelectorAll('.nav-link');
+            <div id="modal-hero" class="h-56 sm:h-72 w-full relative bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                <img id="modal-image" src="" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent"></div>
+                <div class="absolute bottom-5 left-6 right-6">
+                    <span id="modal-badge" class="text-[10px] font-extrabold text-white/80 uppercase tracking-widest block mb-1"></span>
+                    <h3 id="modal-title" class="text-2xl sm:text-3xl font-black text-white"></h3>
+                </div>
+            </div>
 
-        function openMenu() {
-            sidebar.classList.remove('-translate-x-full');
-            overlay.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
+            <div class="p-6 sm:p-10 space-y-8">
+                <div>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Aperçu</h4>
+                    <p id="modal-overview" class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed"></p>
+                </div>
 
-        function closeMenu() {
-            sidebar.classList.add('-translate-x-full');
-            overlay.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4">
+                        <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Rôle</p>
+                        <p id="modal-role" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+                    </div>
+                    <div class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4">
+                        <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Type</p>
+                        <p id="modal-type" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+                    </div>
+                    <div class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4 col-span-2 sm:col-span-2">
+                        <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Statut</p>
+                        <p id="modal-status" class="text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400"></p>
+                    </div>
+                </div>
 
-        menuBtn.addEventListener('click', openMenu);
-        closeBtn.addEventListener('click', closeMenu);
-        overlay.addEventListener('click', closeMenu);
-        navLinks.forEach(link => link.addEventListener('click', closeMenu));
+                <div>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Fonctionnalités clés</h4>
+                    <ul id="modal-features" class="space-y-2"></ul>
+                </div>
 
-        const observerOptions = {
-            root: null,
-            threshold: 0.05,
-            rootMargin: "0px 0px -20px 0px"
-        };
+                <div>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Stack technique</h4>
+                    <div id="modal-stack" class="flex flex-wrap gap-2"></div>
+                </div>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+                <div>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Défi technique</h4>
+                    <p id="modal-challenge" class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-5"></p>
+                </div>
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
+                <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-cobalt-600 to-indigo-600 text-white font-bold text-sm rounded-2xl shadow-xl shadow-cobalt-600/20 hover:shadow-cobalt-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+                    <span id="modal-link-label"></span>&nbsp;→
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
