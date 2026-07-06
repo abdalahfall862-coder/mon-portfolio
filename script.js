@@ -111,9 +111,13 @@ const projectsData = {
             "Déploiement continu sur Render avec variables d'environnement sécurisées"
         ],
         stack: ["TypeScript", "Node.js / Express", "TypeORM", "MongoDB", "JWT Auth", "Swagger"],
-        challenge: "Concevoir une architecture suffisamment découplée pour absorber de nouveaux modules métier sans régression, tout en maintenant un niveau de sécurité strict sur chaque endpoint exposé.",
-        link: "https://mon-api-vnhx.onrender.com/api-docs",
-        linkLabel: "Voir la documentation API"
+        architecture: [
+            "Séparation en couches routes / services / repositories pour isoler la logique métier de l'accès aux données",
+            "TypeORM choisi pour bénéficier d'entités typées et de migrations versionnées plutôt que des requêtes brutes",
+            "Middleware d'authentification JWT centralisé, appliqué par groupe de routes selon les rôles requis",
+            "Swagger généré à partir des schémas de validation pour que la documentation reste toujours synchronisée avec le code"
+        ],
+        challenge: "Concevoir une architecture suffisamment découplée pour absorber de nouveaux modules métier sans régression, tout en maintenant un niveau de sécurité strict sur chaque endpoint exposé."
     },
     methshop: {
         title: "Meth-Shop",
@@ -176,9 +180,29 @@ function renderProject(id) {
         stackWrap.appendChild(span);
     });
 
+    const archWrap = document.getElementById('modal-architecture-wrap');
+    const archList = document.getElementById('modal-architecture');
+    archList.innerHTML = '';
+    if (data.architecture && data.architecture.length) {
+        archWrap.classList.remove('hidden');
+        data.architecture.forEach(a => {
+            const li = document.createElement('li');
+            li.className = 'flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed';
+            li.innerHTML = `<span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0"></span><span>${a}</span>`;
+            archList.appendChild(li);
+        });
+    } else {
+        archWrap.classList.add('hidden');
+    }
+
     const linkEl = document.getElementById('modal-link');
-    linkEl.href = data.link;
-    document.getElementById('modal-link-label').textContent = data.linkLabel;
+    if (data.link) {
+        linkEl.classList.remove('hidden');
+        linkEl.href = data.link;
+        document.getElementById('modal-link-label').textContent = data.linkLabel;
+    } else {
+        linkEl.classList.add('hidden');
+    }
 
     document.title = `${data.title} — Mohamed Abdalah Fall`;
     return true;

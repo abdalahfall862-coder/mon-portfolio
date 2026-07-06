@@ -158,6 +158,7 @@
                 <li><a href="#competences" data-section="competences" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Compétences</a></li>
                 <li><a href="#projets" data-section="projets" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Projets</a></li>
                 <li><a href="#parcours" data-section="parcours" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Parcours</a></li>
+                <li><a href="#methode" data-section="methode" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Ma Méthode</a></li>
                 <li><a href="#contact" data-section="contact" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Contact</a></li>
             </ul>
         </nav>
@@ -241,7 +242,7 @@
 
                         <div class="mb-5">
                             <div class="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1.5">
-                                <span>Maîtrise</span><span>75%</span>
+                                <span>Maîtrise</span><span>90%</span>
                             </div>
                             <div class="h-1.5 w-full bg-slate-200/70 dark:bg-slate-800 rounded-full overflow-hidden">
                                 <div class="skill-bar-fill h-full bg-gradient-to-r from-indigo-500 to-cobalt-500 rounded-full" style="--fill:90%"></div>
@@ -297,9 +298,9 @@
                     Cliquez sur une carte pour ouvrir la fiche détaillée du projet : fonctionnalités, stack technique et défis rencontrés.
                 </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8">
                     <!-- Projet 1 -->
-                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer" data-project="taskmanager" role="button" tabindex="0" aria-label="Voir les détails du projet Task-manager">
+                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 hover:border-cobalt-500/30 dark:hover:border-cobalt-500/30 shadow-xl hover:shadow-2xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-2 transition-all duration-500 ease-out cursor-pointer lg:col-span-2" data-project="taskmanager" role="button" tabindex="0" aria-label="Voir les détails du projet Task-manager">
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/my-app.jpeg" alt="Task-manager" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
@@ -322,7 +323,7 @@
                     </article>
 
                     <!-- Projet 2 -->
-                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer" data-project="portfolio" role="button" tabindex="0" aria-label="Voir les détails du projet Portfolio Pro">
+                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 hover:border-indigo-500/30 dark:hover:border-indigo-500/30 shadow-xl hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-black/60 hover:-translate-y-2 transition-all duration-500 ease-out cursor-pointer lg:col-span-4" style="transition-delay:80ms" data-project="portfolio" role="button" tabindex="0" aria-label="Voir les détails du projet Portfolio Pro">
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/cv-web.png" alt="Portfolio Pro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
@@ -345,7 +346,7 @@
                     </article>
 
                     <!-- Projet 3 (Projet Vedette / Backend Pro) -->
-                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-5 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 md:col-span-2 cursor-pointer" data-project="api" role="button" tabindex="0" aria-label="Voir les détails du projet API Secure and Scalable">
+                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-5 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 hover:border-cobalt-500/30 dark:hover:border-cobalt-500/30 shadow-xl hover:shadow-2xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-2 transition-all duration-500 ease-out lg:col-span-6 cursor-pointer" data-project="api" role="button" tabindex="0" aria-label="Voir les détails du projet API Secure and Scalable">
 
                          <!-- Zone Image / Bannière Élargie -->
                         <div class="h-64 sm:h-72 rounded-[2rem] mb-6 overflow-hidden relative bg-slate-200 dark:bg-slate-800 shadow-inner">
@@ -385,12 +386,13 @@
                             <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">TypeORM</span>
                             <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">MongoDB</span>
                             <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">JWT Auth</span>
-                        
+                        </div>
+                     </div>
                      </div>
                     </article>
 
                     <!-- projet 4 -->
-                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 shadow-xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer" data-project="methshop" role="button" tabindex="0" aria-label="Voir les détails du projet Meth-Shop">
+                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 hover:border-cobalt-500/30 dark:hover:border-cobalt-500/30 shadow-xl hover:shadow-2xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-2 transition-all duration-500 ease-out cursor-pointer lg:col-span-4" data-project="methshop" role="button" tabindex="0" aria-label="Voir les détails du projet Meth-Shop">
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/e-commerce.jpeg" alt="Meth-Shop E-commerce" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
@@ -417,6 +419,21 @@
                             </a>
                         </div>
                     </article>
+
+                    <!-- Carte d'appel à l'action -->
+                    <a href="#contact" class="reveal group relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 rounded-[2.5rem] bg-gradient-to-br from-cobalt-600 to-indigo-600 text-white shadow-xl hover:shadow-2xl hover:shadow-cobalt-600/20 hover:-translate-y-2 transition-all duration-500 ease-out lg:col-span-2" style="transition-delay:80ms">
+                        <div class="absolute -right-8 -top-8 w-28 h-28 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                        <div>
+                            <span class="text-[10px] font-extrabold text-white/70 uppercase tracking-widest block mb-2">Envie d'aller plus loin ?</span>
+                            <h3 class="text-lg sm:text-xl font-black leading-snug">Discutons de votre projet</h3>
+                        </div>
+                        <span class="inline-flex items-center gap-2 text-xs font-bold mt-6 group-hover:gap-3 transition-all duration-300">
+                            Me contacter
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </span>
+                    </a>
 
                 </div>
             </div>
@@ -501,6 +518,41 @@
             </div>
         </section>
 
+        <!-- MÉTHODE DE TRAVAIL -->
+        <section id="methode" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="reveal text-2xl sm:text-3xl font-black mb-3 flex items-center uppercase tracking-wide">
+                    <span class="w-8 h-1 bg-gradient-to-r from-cobalt-600 to-indigo-500 mr-4 rounded-full"></span> Ma Méthode
+                </h2>
+                <p class="reveal text-slate-500 dark:text-slate-400 text-sm max-w-2xl mb-12 ml-12">
+                    Au-delà des technologies, voici les principes qui guident chacun de mes projets, de la conception au déploiement.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 rounded-[1.75rem] border border-white/60 dark:border-slate-800/50 shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-10 h-10 bg-cobalt-100 dark:bg-cobalt-950/50 text-cobalt-600 dark:text-cobalt-400 rounded-xl flex items-center justify-center font-black text-sm mb-4 transition-transform group-hover:scale-110">01</div>
+                        <h3 class="text-base font-extrabold mb-2">Sécurité par défaut</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">Authentification, validation des entrées et gestion des rôles pensées dès la conception, pas ajoutées après coup.</p>
+                    </div>
+                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 rounded-[1.75rem] border border-white/60 dark:border-slate-800/50 shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-10 h-10 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center font-black text-sm mb-4 transition-transform group-hover:scale-110">02</div>
+                        <h3 class="text-base font-extrabold mb-2">Typage strict</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">TypeScript en mode strict de bout en bout, pour détecter les erreurs avant qu'elles n'atteignent la production.</p>
+                    </div>
+                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 rounded-[1.75rem] border border-white/60 dark:border-slate-800/50 shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-10 h-10 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center font-black text-sm mb-4 transition-transform group-hover:scale-110">03</div>
+                        <h3 class="text-base font-extrabold mb-2">Documentation systématique</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">Chaque API expose sa documentation Swagger/OpenAPI pour être utilisable immédiatement par une équipe front-end.</p>
+                    </div>
+                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 rounded-[1.75rem] border border-white/60 dark:border-slate-800/50 shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-10 h-10 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center font-black text-sm mb-4 transition-transform group-hover:scale-110">04</div>
+                        <h3 class="text-base font-extrabold mb-2">Autonomie complète</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">De la modélisation des données au déploiement cloud (Render, Vercel), je porte mes projets de bout en bout.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="contact" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24 bg-gradient-to-br from-slate-950 to-cyber-darkbg text-white relative overflow-hidden rounded-t-[2.5rem] sm:rounded-t-[3.5rem] border-t border-slate-900">
             <div class="max-w-4xl mx-auto relative z-10 text-center">
                 <h2 class="reveal text-3xl sm:text-4xl md:text-6xl font-black mb-10 leading-tight">Parlez-moi de votre projet...</h2>
@@ -576,6 +628,11 @@
                 <div>
                     <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Stack technique</h4>
                     <div id="modal-stack" class="flex flex-wrap gap-2"></div>
+                </div>
+
+                <div id="modal-architecture-wrap" class="hidden">
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Décisions d'architecture</h4>
+                    <ul id="modal-architecture" class="space-y-2"></ul>
                 </div>
 
                 <div>
