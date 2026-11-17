@@ -10,573 +10,622 @@
             theme: {
                 extend: {
                     colors: {
-                        cobalt: {
-                            50: '#f0f5ff',
-                            100: '#e0ebff',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                        },
-                        cyber: {
-                            darkbg: '#090d16',
-                            cardlight: 'rgba(255, 255, 255, 0.65)',
-                            carddark: 'rgba(15, 23, 42, 0.45)',
-                        }
+                        cobalt: { 50: '#f0f5ff', 100: '#e0ebff', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+                        hoop: '#ff6a13'
                     }
                 }
             }
         }
     </script>
-    <title>Mohamed Abdalah Fall | Portfolio Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <title>Mohamed Abdalah Fall | Portfolio · Développeur Full-Stack</title>
     <style>
-        /* Effet d'apparition au scroll fluide */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        :root {
+            --tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='240'%3E%3Crect width='168' height='240' fill='%23d6994f'/%3E%3Crect x='0' y='0' width='56' height='100' fill='%23dca463'/%3E%3Crect x='0' y='100' width='56' height='140' fill='%23d2924a'/%3E%3Crect x='56' y='80' width='56' height='100' fill='%23d49650'/%3E%3Crect x='56' y='180' width='56' height='60' fill='%23dba665'/%3E%3Crect x='56' y='0' width='56' height='80' fill='%23dba665'/%3E%3Crect x='112' y='40' width='56' height='110' fill='%23d19049'/%3E%3Crect x='112' y='150' width='56' height='90' fill='%23dda966'/%3E%3Crect x='112' y='0' width='56' height='40' fill='%23dda966'/%3E%3Cg stroke='%237a4a1c' stroke-opacity='.38' stroke-width='1.2' fill='none'%3E%3Cpath d='M0 0V240M56 0V240M112 0V240M168 0V240'/%3E%3Cpath d='M0 100h56M0 0h56M0 240h56M56 80h56M56 180h56M112 40h56M112 150h56'/%3E%3C/g%3E%3C/svg%3E");
         }
 
-        /* Arrière-plan animé Liquide et Luxueux */
-        .liquid-bg {
-            background: linear-gradient(-45deg, #f8fafc, #e0f2fe, #e0e7ff, #f1f5f9);
-            background-size: 300% 300%;
-            animation: gradientAnim 20s ease infinite;
+        /* ===== Parquet ===== */
+        body.court { background: transparent; }
+        body.court::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; transform: translateZ(0);
+            background-color: #d6994f;
+            background-image:
+                radial-gradient(120% 60% at 50% 0%, rgba(255,244,214,.55), transparent 60%),
+                linear-gradient(180deg, rgba(255,255,255,0), rgba(70,35,8,.18)),
+                var(--tile);
         }
-        .dark .liquid-bg {
-            background: linear-gradient(-45deg, #070a13, #0f172a, #1e1b4b, #0b0f19);
-            background-size: 300% 300%;
+        .dark body.court::before {
+            background-image:
+                radial-gradient(100% 50% at 50% 0%, rgba(255,176,90,.24), transparent 60%),
+                linear-gradient(rgba(7,10,22,.76), rgba(7,10,22,.76)),
+                var(--tile);
         }
+        .board { background-image: linear-gradient(rgba(255,255,255,.06), rgba(60,25,5,.16)), var(--tile); }
 
-        @keyframes gradientAnim {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        .font-display { font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif; letter-spacing: .03em; }
+        .font-led { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; }
+        .ink  { color: #2b1608; } .dark .ink  { color: #f8fafc; }
+        .ink2 { color: rgba(43,22,8,.8); } .dark .ink2 { color: #cbd5e1; }
+        .kick { font: 700 10px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .22em; text-transform: uppercase; color: #b4470b; }
+        .dark .kick { color: #fb923c; }
 
-        /* Flottaison douce de l'héro */
-        @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-12px) scale(1.01); }
+        /* ===== Panneaux ===== */
+        .panel {
+            background: rgba(255,249,238,.95);
+            border: 1px solid rgba(120,70,20,.28);
+            box-shadow: 0 22px 40px -22px rgba(60,30,5,.55);
+            position: relative;
         }
-        .animate-float {
-            animation: gentleFloat 6s ease-in-out infinite;
-        }
+        .dark .panel { background: rgba(8,12,24,.9); border-color: rgba(148,163,184,.2); box-shadow: 0 22px 40px -22px rgba(0,0,0,.8); }
+        .panel2 { background: rgba(255,255,255,.65); border: 1px solid rgba(120,70,20,.18); }
+        .dark .panel2 { background: rgba(30,41,59,.55); border-color: rgba(148,163,184,.15); }
 
-        /* Barre de défilement premium */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 999px;
-        }
-        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        /* ===== Lignes de terrain ===== */
+        .court-svg { position: absolute; pointer-events: none; z-index: 0; }
+        .cl { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: .88; }
+        .dark .cl { opacity: .34; }
+        .cl.dash { stroke-dasharray: 6 7; }
+        .paint { fill: rgba(29,78,216,.4); }
+        .dark .paint { fill: rgba(37,99,235,.26); }
+        .hoopc { fill: none; stroke: #ff6a13; stroke-width: 4; }
+        .js .court-svg.draw .cl:not(.dash) { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.4s cubic-bezier(.16,1,.3,1); }
+        .js .court-svg.draw.drawn .cl:not(.dash) { stroke-dashoffset: 0; }
+        .zone { position: relative; overflow: hidden; }
 
-        /* Lien de nav actif */
-        .nav-link.is-active {
-            color: #fff;
-        }
-        .nav-link.is-active .nav-dot {
-            width: 2rem;
-            background: linear-gradient(90deg, #3b82f6, #6366f1);
-        }
+        /* ===== Panier (cible du tir 3D) ===== */
+        #fx-hoop::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 3px solid #ff6a13; opacity: 0; transform: scale(.6); }
+        #fx-hoop.swish::after { animation: swish .8s ease-out; }
+        @keyframes swish { 0% { opacity: .95; transform: scale(.6); } 100% { opacity: 0; transform: scale(2.6); } }
 
-        /* Barres de compétence animées */
-        .skill-bar-fill {
-            width: 0%;
-            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active .skill-bar-fill {
-            width: var(--fill);
-        }
+        /* ===== Tableau d'affichage ===== */
+        .led-board { display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: 28rem; padding: .9rem 1.3rem; border-radius: 1rem;
+            background: #090c13; border: 2px solid #1f2937; box-shadow: inset 0 0 24px rgba(255,106,19,.14), 0 16px 30px -14px rgba(0,0,0,.65); }
+        .led-team { display: flex; flex-direction: column; align-items: center; gap: .2rem; min-width: 4.5rem; }
+        .led-name { font: 700 10px 'JetBrains Mono', monospace; letter-spacing: .25em; color: #94a3b8; }
+        .led-score { font: 700 2.3rem/1 'JetBrains Mono', monospace; color: #ff6a13; text-shadow: 0 0 14px rgba(255,106,19,.75); }
+        .led-mid { display: flex; flex-direction: column; align-items: center; font: 700 11px 'JetBrains Mono', monospace; color: #fbbf24; letter-spacing: .15em; }
+        .led-mid #sb-clock { font-size: 1.35rem; text-shadow: 0 0 10px rgba(251,191,36,.6); }
+        .led-tag { font: 700 9px 'JetBrains Mono', monospace; letter-spacing: .2em; padding: .25rem .55rem; border-radius: .4rem; background: #090c13; color: #fbbf24; border: 1px solid #374151; }
 
-        /* Modale projet */
-        #project-modal {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
-        }
-        #project-modal.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #project-modal .modal-panel {
-            transform: translateY(24px) scale(0.98);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #project-modal.open .modal-panel {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-        }
+        /* ===== Cartes joueurs ===== */
+        .ovr { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 3.4rem; line-height: .9; color: #ff6a13; text-shadow: 0 2px 0 rgba(0,0,0,.15); }
+        .tile { display: flex; flex-direction: column; align-items: center; gap: .45rem; padding: .75rem .4rem; border-radius: .9rem; text-align: center;
+            font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; position: relative; transition: transform .25s, box-shadow .25s; }
+        .tile:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 20px -10px rgba(255,106,19,.55); }
+        .tile.star::after { content: '★'; position: absolute; top: 4px; right: 6px; font-size: 11px; color: #ff6a13; }
+        .ico { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; }
+        .ico img, .ico svg { width: 30px; height: 30px; object-fit: contain; }
+        .ico-fb { width: 30px; height: 30px; border-radius: .6rem; display: inline-flex; align-items: center; justify-content: center; color: #fff; font: 700 11px 'JetBrains Mono', monospace; }
+
+        /* ===== Ballons ===== */
+        .ball-dot { width: 24px; height: 24px; border-radius: 50%; position: relative; display: inline-block;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='.34' cy='.28' r='.85'%3E%3Cstop offset='0' stop-color='%23ffb27a'/%3E%3Cstop offset='.45' stop-color='%23d9601a'/%3E%3Cstop offset='1' stop-color='%236e2705'/%3E%3C/radialGradient%3E%3CradialGradient id='s' cx='.5' cy='.5' r='.5'%3E%3Cstop offset='.75' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='.35'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='49' fill='url(%23g)'/%3E%3Cg fill='none' stroke='%231a0a03' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M50 1V99M1 50H99'/%3E%3Cpath d='M30 8C11 33 11 67 30 92'/%3E%3Cpath d='M70 8C89 33 89 67 70 92'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='49' fill='url(%23s)'/%3E%3Cellipse cx='36' cy='26' rx='17' ry='9' fill='%23fff' opacity='.22' transform='rotate(-28 36 26)'/%3E%3C/svg%3E") center/100% 100% no-repeat; box-shadow: 0 5px 10px rgba(90,30,0,.45); }
+        .fx-ball-cursor { position: fixed; top: 0; left: 0; width: 22px; height: 22px; margin: -11px 0 0 -11px; pointer-events: none; z-index: 400; opacity: 0; transition: opacity .3s, width .2s, height .2s, margin .2s; }
+        .fx-on .fx-ball-cursor { opacity: 1; }
+        .fx-ball-cursor.big { width: 38px; height: 38px; margin: -19px 0 0 -19px; }
+        html.court-cursor, html.court-cursor * { cursor: none !important; }
+
+        /* ===== Divers ===== */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .fx-in { opacity: 0; transform: translateY(14px); animation: fxIn .9s cubic-bezier(.16,1,.3,1) .1s forwards; }
+        @keyframes fxIn { to { opacity: 1; transform: none; } }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #b8844a; border-radius: 999px; } .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        .nav-link.is-active { color: #fff; }
+        .nav-link.is-active .nav-dot { width: 2rem; background: #ff6a13; }
+        .skill-bar-fill { width: 0%; transition: width 1.2s cubic-bezier(.16,1,.3,1); }
+        .reveal.active .skill-bar-fill { width: var(--fill); }
+        .play { fill: none; stroke: #fff; stroke-width: 2; stroke-dasharray: 5 5; marker-end: url(#arr); }
+
+        #project-modal { opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+        #project-modal.open { opacity: 1; pointer-events: auto; }
+        #project-modal .modal-panel { transform: translateY(24px) scale(.98); opacity: 0; transition: all .4s cubic-bezier(.16,1,.3,1); }
+        #project-modal.open .modal-panel { transform: translateY(0) scale(1); opacity: 1; }
 
         @media (prefers-reduced-motion: reduce) {
-            .reveal, .animate-float, .skill-bar-fill, #project-modal, #project-modal .modal-panel {
-                transition: none !important;
-                animation: none !important;
-            }
+            .reveal, .skill-bar-fill, .fx-in, #project-modal, #project-modal .modal-panel { transition: none !important; animation: none !important; }
+            .reveal, .fx-in { opacity: 1; transform: none; }
         }
     </style>
 </head>
-<body class="liquid-bg text-slate-900 dark:text-slate-100 font-sans min-h-screen antialiased transition-colors duration-500 overflow-x-hidden">
+<body class="court text-stone-900 dark:text-slate-100 font-sans min-h-screen antialiased transition-colors duration-500 overflow-x-hidden">
+
+    <!-- Symbole réutilisable : demi-terrain -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#fff"/></marker>
+            <symbol id="halfcourt" viewBox="0 0 500 340">
+                <rect class="paint" x="170" y="0" width="160" height="190"/>
+                <path class="cl" d="M30 0V141.5A237.5 237.5 0 0 0 470 141.5V0"/>
+                <path class="cl" d="M170 0V190H330V0"/>
+                <path class="cl" d="M190 190a60 60 0 0 1 120 0"/>
+                <path class="cl dash" d="M190 190a60 60 0 0 0 120 0"/>
+                <path class="cl" d="M210 52a40 40 0 0 0 80 0"/>
+                <path class="cl" d="M220 40H280"/>
+                <circle class="hoopc" cx="250" cy="52" r="8"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- Ballon + tir 3D -->
+    <canvas id="bg-canvas" class="fixed inset-0 w-full h-full pointer-events-none" style="z-index:50"></canvas>
 
     <!-- Boutons Fixes Supérieurs -->
     <div class="fixed top-4 right-4 sm:top-6 sm:right-6 z-[120] flex items-center gap-3">
-        <button id="theme-toggle" class="px-4 py-2.5 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl text-xs sm:text-sm font-bold rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-lg shadow-slate-200/10 dark:shadow-none transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+        <button id="theme-toggle" class="px-4 py-2.5 bg-white/75 dark:bg-slate-900/70 text-xs sm:text-sm font-bold rounded-2xl border border-amber-900/20 dark:border-slate-700/60 shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
             🌙 Mode sombre
         </button>
-        <button id="menu-btn" class="lg:hidden bg-gradient-to-r from-cobalt-600 to-indigo-600 text-white p-3 rounded-2xl shadow-lg shadow-cobalt-600/20 transition-all hover:opacity-90 active:scale-95 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
+        <button id="menu-btn" class="lg:hidden bg-hoop text-white p-3 rounded-2xl shadow-lg transition-all hover:opacity-90 active:scale-95 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7" /></svg>
         </button>
     </div>
 
-    <!-- Navigation latérale (Sidebar) -->
-    <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-slate-950/95 text-white z-[130] lg:z-[100] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col p-8 border-r border-slate-900/60 backdrop-blur-xl">
-
-        <!-- Bouton fermer en Mobile -->
+    <!-- Navigation latérale (vestiaire) -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-[#0b0f17]/95 text-white z-[130] lg:z-[100] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col p-8 border-r-2 border-hoop/70">
         <button id="close-btn" class="lg:hidden absolute top-6 right-6 text-slate-400 hover:text-white transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
 
         <div class="mb-12 mt-4">
-            <h1 class="text-2xl font-black bg-gradient-to-r from-cobalt-500 via-blue-400 to-indigo-400 bg-clip-text text-transparent uppercase tracking-wider">
-                M. Abdalah Fall
-            </h1>
-            <p class="text-[10px] text-slate-400 font-extrabold tracking-[0.25em] mt-1 uppercase">Développeur Full-Stack</p>
+            <div class="flex items-end gap-3">
+                <span class="font-display text-6xl leading-none text-hoop">#01</span>
+                <div class="pb-1">
+                    <h1 class="text-lg font-black uppercase tracking-wider leading-tight">M. Abdalah<br>Fall</h1>
+                </div>
+            </div>
+            <p class="text-[10px] text-slate-400 font-extrabold tracking-[0.25em] mt-3 uppercase">Développeur Full-Stack</p>
         </div>
 
         <nav class="flex-1">
             <ul class="space-y-3 text-sm font-semibold">
-                <li><a href="#accueil" data-section="accueil" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Accueil</a></li>
-                <li><a href="#competences" data-section="competences" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Compétences</a></li>
-                <li><a href="#projets" data-section="projets" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Projets</a></li>
-                <li><a href="#parcours" data-section="parcours" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Parcours</a></li>
-                <li><a href="#methode" data-section="methode" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Ma Méthode</a></li>
-                <li><a href="#contact" data-section="contact" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-800 mr-4 group-hover:bg-cobalt-500 group-hover:w-8 transition-all duration-300"></span>Contact</a></li>
+                <li><a href="#accueil" data-section="accueil" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Accueil</a></li>
+                <li><a href="#competences" data-section="competences" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Compétences</a></li>
+                <li><a href="#projets" data-section="projets" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Projets</a></li>
+                <li><a href="#parcours" data-section="parcours" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Parcours</a></li>
+                <li><a href="#methode" data-section="methode" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Ma Méthode</a></li>
+                <li><a href="#contact" data-section="contact" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Contact</a></li>
             </ul>
         </nav>
 
-        <div class="mt-auto pt-6 border-t border-slate-900">
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">Dakar, Sénégal</p>
+        <div class="mt-auto pt-6 border-t border-slate-800">
+            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">🏀 Dakar, Sénégal</p>
         </div>
     </aside>
 
-    <!-- Overlay pour le menu mobile -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-slate-950/40 backdrop-blur-md z-[110] hidden lg:hidden transition-opacity"></div>
 
-    <!-- Contenu Principal -->
-    <main class="w-full lg:w-auto lg:pl-[280px] transition-all duration-300 overflow-x-hidden">
+    <main class="relative z-[1] w-full lg:w-auto lg:pl-[280px] transition-all duration-300 overflow-x-hidden">
 
-        <!-- ACCUEIL -->
-        <section id="accueil" class="min-h-screen flex items-center px-4 sm:px-8 md:px-16 lg:px-24 py-20">
-            <div class="max-w-4xl w-full">
-                <h1 class="reveal text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 sm:mb-8 leading-[1.05] tracking-tight dark:text-white animate-float break-words">
-                    Développeur <br><span class="bg-gradient-to-r from-cobalt-600 via-blue-500 to-indigo-500 bg-clip-text text-transparent">Full-stack</span>
-                </h1>
-                <p class="reveal text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mb-8 sm:mb-10 font-normal leading-relaxed">
-                    Je m'appelle <span class="font-bold text-slate-900 dark:text-white">Mohamed Abdalah Fall</span>. Je conçois des architectures backend sécurisées et des interfaces fluides, du modèle de données jusqu'au pixel.
-                </p>
-                <div class="reveal flex flex-col sm:flex-row gap-3">
-                    <a href="#projets" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-cobalt-600 to-indigo-600 text-white font-bold text-sm rounded-2xl shadow-xl shadow-cobalt-600/20 hover:shadow-cobalt-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
-                        Explorer mes réalisations
-                    </a>
-                    <a href="#contact" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 font-bold text-sm rounded-2xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
-                        Discuter d'un projet
-                    </a>
+        <!-- ACCUEIL : la raquette -->
+        <section id="accueil" class="zone min-h-screen flex items-center px-4 sm:px-8 md:px-16 lg:px-24 py-24">
+            <div class="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+                <div>
+                    <div class="fx-in inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full panel2 text-[11px] font-bold uppercase tracking-widest ink">
+                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
+                        Disponible pour de nouveaux projets
+                    </div>
+                    <h1 class="reveal font-display text-6xl sm:text-8xl lg:text-[7.5rem] leading-[.92] ink mb-6 break-words">
+                        Développeur <br><span class="text-hoop">Full-stack</span>
+                    </h1>
+                    <p class="reveal text-base sm:text-lg ink2 max-w-xl mb-8 font-medium leading-relaxed">
+                        Je m'appelle <span class="font-extrabold ink">Mohamed Abdalah Fall</span>. Je conçois des architectures backend sécurisées et des interfaces fluides, du modèle de données jusqu'au pixel.
+                    </p>
+                    <div class="reveal flex flex-col sm:flex-row gap-3">
+                        <a href="#projets" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-hoop text-white font-bold text-sm rounded-2xl shadow-xl shadow-orange-700/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+                            Explorer mes réalisations
+                        </a>
+                        <a href="#contact" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 panel2 font-bold text-sm rounded-2xl ink hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+                            Discuter d'un projet
+                        </a>
+                    </div>
+
+                    <div class="reveal led-board mt-10" aria-label="Tableau d'affichage">
+                        <div class="led-team"><span class="led-name">FALL</span><span id="sb-home" class="led-score">00</span></div>
+                        <div class="led-mid"><span id="sb-q">Q1</span><span id="sb-clock">12:00</span></div>
+                        <div class="led-team"><span class="led-name">BUGS</span><span class="led-score">00</span></div>
+                    </div>
+
+                    <div class="reveal mt-4 grid grid-cols-3 gap-3 max-w-md">
+                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-4xl ink"><span data-count="4">0</span></div><div class="kick mt-1">Projets en ligne</div></div>
+                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-4xl ink"><span data-count="2">0</span>+</div><div class="kick mt-1">Ans de pratique</div></div>
+                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-4xl ink"><span data-count="15">0</span>+</div><div class="kick mt-1">Technologies</div></div>
+                    </div>
+                </div>
+
+                <!-- Demi-terrain : raquette, lancer franc, panier -->
+                <div class="hero-court relative w-full max-w-[560px] mx-auto lg:ml-auto lg:mr-0 aspect-[500/340]" aria-hidden="true">
+                    <svg class="court-svg draw absolute inset-0 w-full h-full" viewBox="0 0 500 340">
+                        <rect class="paint" x="170" y="0" width="160" height="190"/>
+                        <path class="cl" pathLength="1" d="M30 0V141.5A237.5 237.5 0 0 0 470 141.5V0"/>
+                        <path class="cl" pathLength="1" d="M170 0V190H330V0"/>
+                        <path class="cl" pathLength="1" d="M190 190a60 60 0 0 1 120 0"/>
+                        <path class="cl dash" d="M190 190a60 60 0 0 0 120 0"/>
+                        <path class="cl" pathLength="1" d="M210 52a40 40 0 0 0 80 0"/>
+                        <path class="cl" pathLength="1" d="M220 40H280"/>
+                        <path class="cl" pathLength="1" d="M160 40h10M160 80h10M160 120h10M160 160h10M330 40h10M330 80h10M330 120h10M330 160h10"/>
+                        <circle class="hoopc" cx="250" cy="52" r="8"/>
+                    </svg>
+                    <div id="fx-hoop" class="absolute" style="left:50%;top:15.3%;width:12%;aspect-ratio:1;transform:translate(-50%,-50%)"></div>
+                    <div id="fx-ball-anchor" class="absolute" style="left:30%;top:34%;width:40%;height:50%"></div>
                 </div>
             </div>
         </section>
 
-        <!-- COMPÉTENCES -->
-        <section id="competences" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="reveal text-2xl sm:text-3xl font-black mb-3 flex items-center uppercase tracking-wide">
-                    <span class="w-8 h-1 bg-gradient-to-r from-cobalt-600 to-indigo-500 mr-4 rounded-full"></span> Compétences
-                </h2>
-                <p class="reveal text-slate-500 dark:text-slate-400 text-sm max-w-2xl mb-12 ml-12">
-                    Une stack complète, du front-end à l'infrastructure de données, avec une attention particulière portée à la sécurité et à la scalabilité.
-                </p>
+        <!-- COMPÉTENCES : l'effectif -->
+        <section id="competences" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+            <svg class="court-svg" style="right:-140px;bottom:-90px;width:640px;transform:rotate(180deg)" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
+            <div class="relative z-10 max-w-6xl mx-auto">
+                <div class="reveal mb-12">
+                    <p class="kick mb-2">// Zone 02 · L'effectif</p>
+                    <h2 class="font-display text-4xl sm:text-6xl ink flex items-center"><span class="w-10 h-1.5 bg-hoop mr-4 rounded-full"></span> Compétences</h2>
+                    <p class="ink2 text-sm max-w-2xl mt-3 font-medium">Cinq postes, une seule équipe : une stack complète, du front-end à l'infrastructure de données, avec une attention particulière portée à la sécurité et à la scalabilité. <span class="text-hoop font-bold">★ = titulaire</span>.</p>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                    <!-- Front-end -->
-                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] border border-white/60 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-cobalt-500/10 dark:hover:shadow-cobalt-500/5 hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex items-center justify-between mb-5">
-                            <div class="w-11 h-11 bg-cobalt-100 dark:bg-cobalt-950/50 text-cobalt-600 dark:text-cobalt-400 rounded-2xl flex items-center justify-center font-black text-sm transition-transform group-hover:scale-110">UI</div>
-                            <span class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">2+ ans</span>
+                    <!-- Meneur : Front-End -->
+                    <div class="reveal panel rounded-[2rem] p-6 sm:p-7 hover:-translate-y-1 transition-all duration-300">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <div class="kick">#10 · Meneur (PG)</div>
+                                <h3 class="font-display text-3xl ink mt-1">Front-End</h3>
+                            </div>
+                            <div class="text-right"><div class="ovr">85</div><div class="kick">OVR</div></div>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Front-End</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Interfaces immersives et réactives : composants réutilisables en React, animations pilotées par scroll, et design system Tailwind cohérent du mobile au desktop.</p>
-
+                        <p class="ink2 text-sm mb-5 leading-relaxed">Interfaces immersives et réactives : composants réutilisables en React, animations pilotées par scroll, et design system Tailwind cohérent du mobile au desktop.</p>
                         <div class="mb-5">
-                            <div class="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1.5">
-                                <span>Maîtrise</span><span>85%</span>
-                            </div>
-                            <div class="h-1.5 w-full bg-slate-200/70 dark:bg-slate-800 rounded-full overflow-hidden">
-                                <div class="skill-bar-fill h-full bg-gradient-to-r from-cobalt-500 to-blue-400 rounded-full" style="--fill:85%"></div>
-                            </div>
+                            <div class="flex justify-between kick mb-1.5"><span>Maîtrise</span><span>85%</span></div>
+                            <div class="h-2 w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-orange-400 to-hoop rounded-full" style="--fill:85%"></div></div>
                         </div>
-
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase tracking-wide">HTML5 / CSS3</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase tracking-wide">JavaScript ES6</span>
-                            <span class="text-[10px] font-extrabold bg-cobalt-50 dark:bg-cobalt-950/60 text-cobalt-600 dark:text-cobalt-400 px-2.5 py-1.5 rounded-lg uppercase tracking-wide border border-cobalt-100 dark:border-cobalt-900/50">Tailwind CSS</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase tracking-wide">React.js</span>
+                        <div class="grid grid-cols-3 gap-2.5 ink">
+                            <div class="tile panel2" data-ico="html5">HTML5</div>
+                            <div class="tile panel2" data-ico="css3">CSS3</div>
+                            <div class="tile panel2" data-ico="js">JavaScript</div>
+                            <div class="tile panel2" data-ico="tailwind">Tailwind</div>
+                            <div class="tile panel2 star" data-ico="react">React</div>
+                            <div class="tile panel2" data-ico="next">Next.js</div>
                         </div>
                     </div>
 
-                    <!-- Back-end -->
-                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] border border-white/60 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/5 hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex items-center justify-between mb-5">
-                            <div class="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center font-black text-sm transition-transform group-hover:scale-110">API</div>
-                            <span class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Spécialité</span>
+                    <!-- Pivot : Back-End -->
+                    <div class="reveal panel rounded-[2rem] p-6 sm:p-7 hover:-translate-y-1 transition-all duration-300">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <div class="kick">#05 · Pivot (C) · Spécialité</div>
+                                <h3 class="font-display text-3xl ink mt-1">Back-End</h3>
+                            </div>
+                            <div class="text-right"><div class="ovr">90</div><div class="kick">OVR</div></div>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Back-End</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Conception d'API REST typées et sécurisées : authentification JWT, hashing Bcrypt, validation stricte des entrées et architecture en couches (routes / services / repositories).</p>
-
+                        <p class="ink2 text-sm mb-5 leading-relaxed">Conception d'API REST typées et sécurisées avec Node.js et NestJS : authentification JWT, hashing Bcrypt, validation stricte des entrées et architecture en couches (routes / controllers / services / repositories).</p>
                         <div class="mb-5">
-                            <div class="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1.5">
-                                <span>Maîtrise</span><span>90%</span>
-                            </div>
-                            <div class="h-1.5 w-full bg-slate-200/70 dark:bg-slate-800 rounded-full overflow-hidden">
-                                <div class="skill-bar-fill h-full bg-gradient-to-r from-indigo-500 to-cobalt-500 rounded-full" style="--fill:90%"></div>
-                            </div>
+                            <div class="flex justify-between kick mb-1.5"><span>Maîtrise</span><span>90%</span></div>
+                            <div class="h-2 w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-orange-400 to-hoop rounded-full" style="--fill:90%"></div></div>
                         </div>
-
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Node.js</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Express / Fastify</span>
-                            <span class="text-[10px] font-extrabold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 px-2.5 py-1.5 rounded-lg uppercase tracking-wide border border-indigo-100 dark:border-indigo-900/50">TypeScript</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">TypeORM</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">JWT / Bcrypt</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Socket.IO</span>
+                        <div class="grid grid-cols-3 gap-2.5 ink">
+                            <div class="tile panel2" data-ico="node">Node.js</div>
+                            <div class="tile panel2" data-ico="express">Express</div>
+                            <div class="tile panel2" data-ico="fastify">Fastify</div>
+                            <div class="tile panel2 star" data-ico="nest">NestJS</div>
+                            <div class="tile panel2" data-ico="ts">TypeScript</div>
+                            <div class="tile panel2" data-ico="typeorm">TypeORM</div>
+                            <div class="tile panel2" data-ico="jwt">JWT</div>
+                            <div class="tile panel2" data-ico="bcrypt">Bcrypt</div>
+                            <div class="tile panel2" data-ico="socket">Socket.IO</div>
                         </div>
                     </div>
 
-                    <!-- Tools & Database -->
-                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] border border-white/60 dark:border-slate-800/50 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 group md:col-span-2 lg:col-span-1">
-                        <div class="flex items-center justify-between mb-5">
-                            <div class="w-11 h-11 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center font-black text-sm transition-transform group-hover:scale-110">DB</div>
-                            <span class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Quotidien</span>
+                    <!-- Ailier : Données & Outils -->
+                    <div class="reveal panel rounded-[2rem] p-6 sm:p-7 hover:-translate-y-1 transition-all duration-300 md:col-span-2 lg:col-span-1">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <div class="kick">#23 · Ailier (SF) · Quotidien</div>
+                                <h3 class="font-display text-3xl ink mt-1">Données & Outils</h3>
+                            </div>
+                            <div class="text-right"><div class="ovr">80</div><div class="kick">OVR</div></div>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Données & Outils</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">Modélisation de bases NoSQL et relationnelles, documentation d'API auto-générée avec Swagger, et workflow Git structuré (branches, PR, revue de code).</p>
-
+                        <p class="ink2 text-sm mb-5 leading-relaxed">Modélisation de bases NoSQL et relationnelles, documentation d'API auto-générée avec Swagger, workflow Git structuré (branches, PR, revue de code) et déploiement cloud.</p>
                         <div class="mb-5">
-                            <div class="flex justify-between text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1.5">
-                                <span>Maîtrise</span><span>80%</span>
-                            </div>
-                            <div class="h-1.5 w-full bg-slate-200/70 dark:bg-slate-800 rounded-full overflow-hidden">
-                                <div class="skill-bar-fill h-full bg-gradient-to-r from-blue-500 to-indigo-400 rounded-full" style="--fill:80%"></div>
-                            </div>
+                            <div class="flex justify-between kick mb-1.5"><span>Maîtrise</span><span>80%</span></div>
+                            <div class="h-2 w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-orange-400 to-hoop rounded-full" style="--fill:80%"></div></div>
                         </div>
-
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-[10px] font-extrabold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 px-2.5 py-1.5 rounded-lg uppercase tracking-wide border border-blue-100 dark:border-blue-900/50">MongoDB</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Firebase</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Git / GitHub</span>
-                            <span class="text-[10px] font-bold bg-white/90 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/40 uppercase">Swagger API</span>
+                        <div class="grid grid-cols-4 lg:grid-cols-3 gap-2.5 ink">
+                            <div class="tile panel2" data-ico="mongodb">MongoDB</div>
+                            <div class="tile panel2" data-ico="firebase">Firebase</div>
+                            <div class="tile panel2" data-ico="swagger">Swagger</div>
+                            <div class="tile panel2" data-ico="git">Git</div>
+                            <div class="tile panel2" data-ico="github">GitHub</div>
+                            <div class="tile panel2" data-ico="stripe">Stripe</div>
+                            <div class="tile panel2" data-ico="vercel">Vercel</div>
+                            <div class="tile panel2" data-ico="render">Render</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- REALISATIONS -->
-        <section id="projets" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24 bg-slate-900/5 dark:bg-black/40 backdrop-blur-md">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="reveal text-2xl sm:text-3xl font-black mb-3 flex items-center uppercase tracking-wide">
-                    <span class="w-8 h-1 bg-gradient-to-r from-cobalt-600 to-indigo-500 mr-4 rounded-full"></span> Mes Réalisations
-                </h2>
-                <p class="reveal text-slate-500 dark:text-slate-400 text-sm max-w-2xl mb-12 ml-12">
-                    Cliquez sur une carte pour ouvrir la fiche détaillée du projet : fonctionnalités, stack technique et défis rencontrés.
-                </p>
+        <!-- RÉALISATIONS : les highlights du match -->
+        <section id="projets" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+            <svg class="court-svg" style="left:50%;top:-40px;width:760px;transform:translateX(-50%)" viewBox="0 0 800 300" aria-hidden="true">
+                <path class="cl" d="M0 150H800"/><circle class="cl" cx="400" cy="150" r="120"/><circle class="cl" cx="400" cy="150" r="42" style="fill:rgba(255,106,19,.35)"/>
+            </svg>
+            <div class="relative z-10 max-w-6xl mx-auto">
+                <div class="reveal mb-12">
+                    <p class="kick mb-2">// Zone 03 · Highlights du match</p>
+                    <h2 class="font-display text-4xl sm:text-6xl ink flex items-center"><span class="w-10 h-1.5 bg-hoop mr-4 rounded-full"></span> Mes Réalisations</h2>
+                    <p class="ink2 text-sm max-w-2xl mt-3 font-medium">Cliquez sur une carte pour ouvrir la fiche détaillée du projet : fonctionnalités, stack technique et défis rencontrés.</p>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8">
                     <!-- Projet 1 -->
-                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 hover:border-cobalt-500/30 dark:hover:border-cobalt-500/30 shadow-xl hover:shadow-2xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-2 transition-all duration-500 ease-out cursor-pointer lg:col-span-2" data-project="taskmanager" role="button" tabindex="0" aria-label="Voir les détails du projet Task-manager">
+                    <article class="project-card reveal group panel p-4 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer lg:col-span-2" data-project="taskmanager" role="button" tabindex="0" aria-label="Voir les détails du projet Task-manager">
+                        <div class="flex items-center justify-between px-3 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 01</span><span class="led-tag">FINAL</span></div>
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/my-app.jpeg" alt="Task-manager" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
-                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
-                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-cobalt-600/90 px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-hoop px-4 py-2 rounded-xl">Voir la fiche projet</span>
                             </div>
                         </div>
                         <div class="px-3 pb-3">
-                            <span class="text-[10px] font-extrabold text-cobalt-500 uppercase tracking-widest block mb-1">Application Web · Productivité</span>
-                            <h3 class="text-xl font-bold mb-2 group-hover:text-cobalt-500 dark:group-hover:text-cobalt-400 transition-colors">Task-manager</h3>
-                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Gestionnaire de tâches intelligent avec authentification Firebase, synchronisation en temps réel entre appareils et interface épurée pensée pour la productivité quotidienne.</p>
+                            <span class="kick block mb-1">Application Web · Productivité</span>
+                            <h3 class="font-display text-3xl ink mb-2 group-hover:text-hoop transition-colors">Task-manager</h3>
+                            <p class="ink2 mb-5 font-normal text-sm leading-relaxed">Gestionnaire de tâches intelligent avec authentification Firebase, synchronisation en temps réel entre appareils et interface épurée pensée pour la productivité quotidienne.</p>
                             <div class="flex flex-wrap gap-2">
-                                <span class="text-[10px] font-bold bg-cobalt-50 dark:bg-cobalt-950/40 text-cobalt-600 dark:text-cobalt-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Firebase</span>
-                                <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Tailwind / JS</span>
+                                <span class="text-[10px] font-bold bg-orange-500/15 text-orange-700 dark:text-orange-300 px-3 py-1.5 rounded-lg uppercase tracking-wide">Firebase</span>
+                                <span class="text-[10px] font-bold bg-black/10 dark:bg-white/10 ink2 px-3 py-1.5 rounded-lg uppercase tracking-wide">Tailwind / JS</span>
                             </div>
-                            <a href="https://my-app-omega-one-21.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-cobalt-600 dark:text-cobalt-400 hover:text-cobalt-700 dark:hover:text-cobalt-300 transition-colors">
-                                Visiter le projet →
-                            </a>
+                            <a href="https://my-app-omega-one-21.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-hoop hover:opacity-80 transition-opacity">Visiter le projet →</a>
                         </div>
                     </article>
 
                     <!-- Projet 2 -->
-                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 hover:border-indigo-500/30 dark:hover:border-indigo-500/30 shadow-xl hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-black/60 hover:-translate-y-2 transition-all duration-500 ease-out cursor-pointer lg:col-span-4" style="transition-delay:80ms" data-project="portfolio" role="button" tabindex="0" aria-label="Voir les détails du projet Portfolio Pro">
+                    <article class="project-card reveal group panel p-4 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer lg:col-span-4" style="transition-delay:80ms" data-project="portfolio" role="button" tabindex="0" aria-label="Voir les détails du projet Portfolio Pro">
+                        <div class="flex items-center justify-between px-3 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 02</span><span class="led-tag">FINAL</span></div>
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/cv-web.png" alt="Portfolio Pro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
-                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
-                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-indigo-600/90 px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-hoop px-4 py-2 rounded-xl">Voir la fiche projet</span>
                             </div>
                         </div>
                         <div class="px-3 pb-3">
-                            <span class="text-[10px] font-extrabold text-indigo-500 uppercase tracking-widest block mb-1">Site Vitrine · UX/UI</span>
-                            <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">Portfolio Pro</h3>
-                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Vitrine personnelle haut de gamme avec micro-interactions fluides, mode sombre natif et structure UX pensée pour transformer les visiteurs en opportunités.</p>
+                            <span class="kick block mb-1">Site Vitrine · UX/UI</span>
+                            <h3 class="font-display text-3xl ink mb-2 group-hover:text-hoop transition-colors">Portfolio Pro</h3>
+                            <p class="ink2 mb-5 font-normal text-sm leading-relaxed">Vitrine personnelle haut de gamme avec micro-interactions fluides, mode sombre natif et structure UX pensée pour transformer les visiteurs en opportunités.</p>
                             <div class="flex flex-wrap gap-2">
-                                <span class="text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">HTML / Tailwind</span>
-                                <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Responsive</span>
+                                <span class="text-[10px] font-bold bg-orange-500/15 text-orange-700 dark:text-orange-300 px-3 py-1.5 rounded-lg uppercase tracking-wide">HTML / Tailwind</span>
+                                <span class="text-[10px] font-bold bg-black/10 dark:bg-white/10 ink2 px-3 py-1.5 rounded-lg uppercase tracking-wide">Responsive</span>
                             </div>
-                            <a href="https://mon-portfolio-ten-topaz.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
-                                Visiter le projet →
-                            </a>
+                            <a href="https://mon-portfolio-ten-topaz.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-hoop hover:opacity-80 transition-opacity">Visiter le projet →</a>
                         </div>
                     </article>
 
-                    <!-- Projet 3 (Projet Vedette / Backend Pro) -->
-                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-5 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 hover:border-cobalt-500/30 dark:hover:border-cobalt-500/30 shadow-xl hover:shadow-2xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-2 transition-all duration-500 ease-out lg:col-span-6 cursor-pointer" data-project="api" role="button" tabindex="0" aria-label="Voir les détails du projet API Secure and Scalable">
-
-                         <!-- Zone Image / Bannière Élargie -->
+                    <!-- Projet 3 (vedette / MVP) -->
+                    <article class="project-card reveal group panel p-5 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out lg:col-span-6 cursor-pointer" data-project="api" role="button" tabindex="0" aria-label="Voir les détails du projet API Secure and Scalable">
+                        <div class="flex items-center justify-between px-2 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 03 · PRIME TIME</span><span class="led-tag">🏆 MVP</span></div>
                         <div class="h-64 sm:h-72 rounded-[2rem] mb-6 overflow-hidden relative bg-slate-200 dark:bg-slate-800 shadow-inner">
-                            <img src="assets/api-swagger.png" alt="Mon API - Dexchange Infrastructure" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102">
+                            <img src="assets/api-swagger.png" alt="Mon API - Dexchange Infrastructure" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent"></div>
-
-                            <!-- Badge Live d'environnement de prod -->
                             <div class="absolute top-4 right-4 flex items-center gap-2 bg-slate-950/80 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/10">
                                 <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
                                 <span class="text-[10px] font-black text-white uppercase tracking-widest">Live on Render</span>
                             </div>
-                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
-                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-cobalt-600/90 px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-hoop px-4 py-2 rounded-xl">Voir la fiche projet</span>
                             </div>
                         </div>
-
-                     <!-- Contenu de la carte distribué de manière asymétrique -->
-                     <div class="px-2 pb-2 grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-
-                     <!-- Colonne Gauche : Description Principale (Prend 2 colonnes sur large) -->
-                     <div class="lg:col-span-2 space-y-4">
-                       <div>
-                            <span class="text-[10px] font-extrabold text-cobalt-500 uppercase tracking-widest block mb-1">Architecture Serveur & Algorithmie</span>
-                            <h3 class="text-xl sm:text-2xl font-black group-hover:text-cobalt-500 dark:group-hover:text-cobalt-400 transition-colors">
-                                API Secure & Scalable
-                            </h3>
+                        <div class="px-2 pb-2 space-y-4">
+                            <div>
+                                <span class="kick block mb-1">Architecture Serveur & Algorithmie</span>
+                                <h3 class="font-display text-3xl sm:text-4xl ink group-hover:text-hoop transition-colors">API Secure & Scalable</h3>
+                            </div>
+                            <p class="ink2 font-normal text-sm sm:text-base leading-relaxed max-w-3xl">
+                                Architecture backend découplée et sécurisée, orchestrant des flux de données complexes à haute disponibilité. Typage strict de bout en bout, authentification par rôles et documentation Swagger interactive.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="text-[9px] font-extrabold bg-orange-500/15 text-orange-700 dark:text-orange-300 px-2.5 py-1.5 rounded-lg uppercase">TypeScript</span>
+                                <span class="text-[9px] font-bold bg-black/10 dark:bg-white/10 ink2 px-2.5 py-1.5 rounded-lg uppercase">Node.js / Express</span>
+                                <span class="text-[9px] font-bold bg-black/10 dark:bg-white/10 ink2 px-2.5 py-1.5 rounded-lg uppercase">TypeORM</span>
+                                <span class="text-[9px] font-bold bg-black/10 dark:bg-white/10 ink2 px-2.5 py-1.5 rounded-lg uppercase">MongoDB</span>
+                                <span class="text-[9px] font-bold bg-black/10 dark:bg-white/10 ink2 px-2.5 py-1.5 rounded-lg uppercase">JWT Auth</span>
+                            </div>
                         </div>
-
-                        <p class="text-slate-600 dark:text-slate-400 font-normal text-sm sm:text-base leading-relaxed">
-                            Architecture backend découplée et sécurisée, orchestrant des flux de données complexes à haute disponibilité. Typage strict de bout en bout, authentification par rôles et documentation Swagger interactive.
-                        </p>
-
-                        <!-- Stack Technique Spécifique -->
-                        <div class="flex flex-wrap gap-1.5 pt-2">
-                            <span class="text-[9px] font-extrabold bg-cobalt-50 dark:bg-cobalt-950/50 text-cobalt-600 dark:text-cobalt-400 px-2.5 py-1.5 rounded-lg border border-cobalt-100 dark:border-cobalt-900/30 uppercase">TypeScript</span>
-                            <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">Node.js / Express</span>
-                            <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">TypeORM</span>
-                            <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">MongoDB</span>
-                            <span class="text-[9px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1.5 rounded-lg uppercase">JWT Auth</span>
-                        </div>
-                     </div>
-                     </div>
                     </article>
 
-                    <!-- projet 4 -->
-                    <article class="project-card reveal group bg-white dark:bg-slate-900/90 p-4 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 hover:border-cobalt-500/30 dark:hover:border-cobalt-500/30 shadow-xl hover:shadow-2xl hover:shadow-cobalt-500/10 dark:hover:shadow-black/60 hover:-translate-y-2 transition-all duration-500 ease-out cursor-pointer lg:col-span-4" data-project="methshop" role="button" tabindex="0" aria-label="Voir les détails du projet Meth-Shop">
+                    <!-- Projet 4 -->
+                    <article class="project-card reveal group panel p-4 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer lg:col-span-4" data-project="methshop" role="button" tabindex="0" aria-label="Voir les détails du projet Meth-Shop">
+                        <div class="flex items-center justify-between px-3 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 04</span><span class="led-tag">FINAL</span></div>
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/e-commerce.jpeg" alt="Meth-Shop E-commerce" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-slate-950/5 dark:bg-transparent group-hover:bg-transparent transition-colors"></div>
                             <div class="absolute top-4 right-4 flex items-center gap-2 bg-emerald-600/90 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/10">
                                 <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
                                 <span class="text-[10px] font-black text-white uppercase tracking-widest">Live on Vercel</span>
                             </div>
-                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
-                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-cobalt-600/90 px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-hoop px-4 py-2 rounded-xl">Voir la fiche projet</span>
                             </div>
                         </div>
                         <div class="px-3 pb-3">
-                            <span class="text-[10px] font-extrabold text-cobalt-500 uppercase tracking-widest block mb-1">E-Commerce Full-Stack</span>
-                            <h3 class="text-xl font-bold mb-2 group-hover:text-cobalt-500 dark:group-hover:text-cobalt-400 transition-colors">Meth-Shop</h3>
-                            <p class="text-slate-500 dark:text-slate-400 mb-5 font-normal text-sm leading-relaxed">Boutique en ligne complète : catalogue filtrable, panier persistant, paiement sécurisé via Stripe, authentification JWT et dashboard admin. Déployée sur Vercel avec MongoDB Atlas.</p>
+                            <span class="kick block mb-1">E-Commerce Full-Stack</span>
+                            <h3 class="font-display text-3xl ink mb-2 group-hover:text-hoop transition-colors">Meth-Shop</h3>
+                            <p class="ink2 mb-5 font-normal text-sm leading-relaxed">Boutique en ligne complète : catalogue filtrable, panier persistant, paiement sécurisé via Stripe, authentification JWT et dashboard admin. Déployée sur Vercel avec MongoDB Atlas.</p>
                             <div class="flex flex-wrap gap-2">
-                                <span class="text-[10px] font-extrabold bg-cobalt-50 dark:bg-cobalt-950/40 text-cobalt-600 dark:text-cobalt-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Next.js</span>
-                                <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">MongoDB Atlas</span>
-                                <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">Stripe API</span>
-                                <span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1.5 rounded-lg uppercase tracking-wide">JWT Auth</span>
+                                <span class="text-[10px] font-extrabold bg-orange-500/15 text-orange-700 dark:text-orange-300 px-3 py-1.5 rounded-lg uppercase tracking-wide">Next.js</span>
+                                <span class="text-[10px] font-bold bg-black/10 dark:bg-white/10 ink2 px-3 py-1.5 rounded-lg uppercase tracking-wide">MongoDB Atlas</span>
+                                <span class="text-[10px] font-bold bg-black/10 dark:bg-white/10 ink2 px-3 py-1.5 rounded-lg uppercase tracking-wide">Stripe API</span>
+                                <span class="text-[10px] font-bold bg-black/10 dark:bg-white/10 ink2 px-3 py-1.5 rounded-lg uppercase tracking-wide">JWT Auth</span>
                             </div>
-                            <a href="https://meth-shop.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-cobalt-600 dark:text-cobalt-400 hover:text-cobalt-700 dark:hover:text-cobalt-300 transition-colors">
-                                Visiter la boutique →
-                            </a>
+                            <a href="https://meth-shop.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-hoop hover:opacity-80 transition-opacity">Visiter la boutique →</a>
                         </div>
                     </article>
 
-                    <!-- Carte d'appel à l'action -->
-                    <a href="#contact" class="reveal group relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 rounded-[2.5rem] bg-gradient-to-br from-cobalt-600 to-indigo-600 text-white shadow-xl hover:shadow-2xl hover:shadow-cobalt-600/20 hover:-translate-y-2 transition-all duration-500 ease-out lg:col-span-2" style="transition-delay:80ms">
-                        <div class="absolute -right-8 -top-8 w-28 h-28 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <!-- Appel à l'action -->
+                    <a href="#contact" class="reveal group relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 rounded-[2.5rem] bg-gradient-to-br from-hoop to-orange-700 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out lg:col-span-2" style="transition-delay:80ms">
+                        <div class="absolute -right-8 -top-8 w-28 h-28 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
                         <div>
-                            <span class="text-[10px] font-extrabold text-white/70 uppercase tracking-widest block mb-2">Envie d'aller plus loin ?</span>
-                            <h3 class="text-lg sm:text-xl font-black leading-snug">Discutons de votre projet</h3>
+                            <span class="font-led text-[10px] font-bold text-white/75 uppercase tracking-widest block mb-2">Temps mort ? Passe la balle</span>
+                            <h3 class="font-display text-3xl leading-none">Discutons de votre projet</h3>
                         </div>
                         <span class="inline-flex items-center gap-2 text-xs font-bold mt-6 group-hover:gap-3 transition-all duration-300">
                             Me contacter
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </span>
                     </a>
-
                 </div>
             </div>
         </section>
 
-        <section id="parcours" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="reveal text-2xl sm:text-3xl font-black mb-16 flex items-center uppercase tracking-wide">
-                   <span class="w-8 h-1 bg-gradient-to-r from-cobalt-600 to-indigo-500 mr-4 rounded-full"></span> Mon Parcours
-                </h2>
+        <!-- PARCOURS : la saison -->
+        <section id="parcours" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+            <svg class="court-svg" style="right:-200px;top:40px;width:560px;transform:rotate(-90deg)" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <div class="reveal mb-14">
+                    <p class="kick mb-2">// Zone 04 · La saison</p>
+                    <h2 class="font-display text-4xl sm:text-6xl ink flex items-center"><span class="w-10 h-1.5 bg-hoop mr-4 rounded-full"></span> Mon Parcours</h2>
+                </div>
 
-                <div class="relative border-l-2 border-slate-300 dark:border-slate-800/80 ml-4 md:ml-6 space-y-12">
-
-                    <div class="reveal relative pl-8 sm:pl-10 group">
-                        <div class="absolute left-[-9px] top-1.5 w-4 h-4 bg-cobalt-500 border-4 border-white dark:border-slate-950 rounded-full z-10 ring-4 ring-cobalt-500/20 transition-transform duration-300 group-hover:scale-125"></div>
-
-                        <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-2">
-                            <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-cobalt-500/10 text-cobalt-600 dark:text-cobalt-400 uppercase w-max">
-                                Présent
-                            </span>
-                            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-cobalt-500 dark:group-hover:text-cobalt-400 transition-colors">
-                                Développeur Full-Stack
-                            </h3>
+                <div class="relative border-l-4 border-white/85 dark:border-white/20 ml-4 md:ml-6 space-y-10">
+                    <div class="reveal relative pl-9 sm:pl-12">
+                        <span class="ball-dot absolute left-[-15px] top-5"></span>
+                        <div class="panel rounded-3xl p-5 sm:p-6">
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-hoop text-white uppercase">Présent</span>
+                                <span class="kick">Cinq majeur · Titulaire</span>
+                            </div>
+                            <h3 class="font-display text-3xl ink">Développeur Full-Stack</h3>
+                            <p class="text-sm font-bold ink2 opacity-70 mb-2 uppercase tracking-wide">Indépendant & Open Source</p>
+                            <p class="ink2 font-normal text-sm sm:text-base leading-relaxed max-w-2xl">Conception globale d'applications complexes, gestion d'architectures d'APIs asynchrones, et optimisation des cycles de déploiement cloud continus.</p>
                         </div>
-                        <p class="text-sm font-bold text-slate-400 dark:text-slate-500 mb-2 uppercase tracking-wide">Indépendant & Open Source</p>
-                        <p class="text-slate-600 dark:text-slate-400 font-normal text-sm sm:text-base leading-relaxed max-w-2xl">
-                            Conception globale d'applications complexes, gestion d'architectures d'APIs asynchrones, et optimisation des cycles de déploiement cloud continus.
-                        </p>
                     </div>
 
-                    <div class="reveal relative pl-8 sm:pl-10 group">
-                        <div class="absolute left-[-9px] top-1.5 w-4 h-4 bg-indigo-500 border-4 border-white dark:border-slate-950 rounded-full z-10 ring-4 ring-indigo-500/20 transition-transform duration-300 group-hover:scale-125"></div>
-
-                        <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-2">
-                            <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 uppercase w-max">
-                                Spécialisation 2026
-                            </span>
-                            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">
-                                DEXCHANGE-GROUP
-                            </h3>
+                    <div class="reveal relative pl-9 sm:pl-12">
+                        <span class="ball-dot absolute left-[-15px] top-5"></span>
+                        <div class="panel rounded-3xl p-5 sm:p-6">
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-indigo-600 text-white uppercase">Spécialisation 2026</span>
+                                <span class="kick">Playoffs</span>
+                            </div>
+                            <h3 class="font-display text-3xl ink">DEXCHANGE-GROUP</h3>
+                            <p class="text-sm font-bold ink2 opacity-70 mb-2 uppercase tracking-wide">Immersion Professionnelle</p>
+                            <p class="ink2 font-normal text-sm sm:text-base leading-relaxed max-w-2xl">Ingénierie applicative avancée. Focus majeur sur la modélisation de bases de données relationnelles et non relationnelles (<code class="font-led text-[13px]">TypeORM</code>, <code class="font-led text-[13px]">MongoDB</code>) et la sécurisation des flux.</p>
                         </div>
-                        <p class="text-sm font-bold text-slate-400 dark:text-slate-500 mb-2 uppercase tracking-wide">Immersion Professionnelle</p>
-                        <p class="text-slate-600 dark:text-slate-400 font-normal text-sm sm:text-base leading-relaxed max-w-2xl">
-                            Ingénierie applicative avancée. Focus majeur sur la modélisation de bases de données relationnelles et non relationnelles (`TypeORM`, `MongoDB`) et la sécurisation des flux.
-                        </p>
                     </div>
 
-                    <div class="reveal relative pl-8 sm:pl-10 group">
-                        <div class="absolute left-[-9px] top-1.5 w-4 h-4 bg-slate-400 border-4 border-white dark:border-slate-950 rounded-full z-10 transition-transform duration-300 group-hover:scale-125"></div>
-
-                        <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-2">
-                            <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-slate-500/10 text-slate-600 dark:text-slate-400 uppercase w-max">
-                                2024 - 2025
-                            </span>
-                            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white transition-colors">
-                                Freelance & Projets Personnels
-                            </h3>
+                    <div class="reveal relative pl-9 sm:pl-12">
+                        <span class="ball-dot absolute left-[-15px] top-5"></span>
+                        <div class="panel rounded-3xl p-5 sm:p-6">
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-slate-700 text-white uppercase">2024 - 2025</span>
+                                <span class="kick">Saison régulière</span>
+                            </div>
+                            <h3 class="font-display text-3xl ink">Freelance & Projets Personnels</h3>
+                            <p class="text-sm font-bold ink2 opacity-70 mb-2 uppercase tracking-wide">Création de solutions web</p>
+                            <p class="ink2 font-normal text-sm sm:text-base leading-relaxed max-w-2xl">Développement et déploiement de l'écosystème <em>TaskMaster</em> et d'interfaces web réactives sur mesure pour moderniser l'activité de commerces de proximité.</p>
                         </div>
-                        <p class="text-sm font-bold text-slate-400 dark:text-slate-500 mb-2 uppercase tracking-wide">Création de solutions web</p>
-                        <p class="text-slate-600 dark:text-slate-400 font-normal text-sm sm:text-base leading-relaxed max-w-2xl">
-                            Développement et déploiement de l'écosystème *TaskMaster* et d'interfaces web réactives sur mesure pour moderniser l'activité de commerces de proximité.
-                        </p>
                     </div>
 
-                    <div class="reveal relative pl-8 sm:pl-10 group">
-                        <div class="absolute left-[-9px] top-1.5 w-4 h-4 bg-slate-300 dark:bg-slate-700 border-4 border-white dark:border-slate-950 rounded-full z-10 transition-transform duration-300 group-hover:scale-125"></div>
-
-                        <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-2">
-                            <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-slate-500/10 text-slate-600 dark:text-slate-400 uppercase w-max">
-                                2024 - Présent
-                            </span>
-                            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white transition-colors">
-                                UNCHK
-                            </h3>
+                    <div class="reveal relative pl-9 sm:pl-12">
+                        <span class="ball-dot absolute left-[-15px] top-5"></span>
+                        <div class="panel rounded-3xl p-5 sm:p-6">
+                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                <span class="inline-block text-[11px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-slate-700 text-white uppercase">2024 - Présent</span>
+                                <span class="kick">La draft</span>
+                            </div>
+                            <h3 class="font-display text-3xl ink">UNCHK</h3>
+                            <p class="text-sm font-bold ink2 opacity-70 mb-2 uppercase tracking-wide">Cursus Académique Supérieur</p>
+                            <p class="ink2 font-normal text-sm sm:text-base leading-relaxed max-w-2xl">Acquisition de compétences fondamentales rigoureuses : algorithmique complexe, structures de données, réseaux distribués et bases du génie logiciel.</p>
                         </div>
-                        <p class="text-sm font-bold text-slate-400 dark:text-slate-500 mb-2 uppercase tracking-wide">Cursus Académique Supérieur</p>
-                        <p class="text-slate-600 dark:text-slate-400 font-normal text-sm sm:text-base leading-relaxed max-w-2xl">
-                            Acquisition de compétences fondamentales rigoureuses : algorithmique complexe, structures de données, réseaux distribués et bases du génie logiciel.
-                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- MÉTHODE DE TRAVAIL -->
-        <section id="methode" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="reveal text-2xl sm:text-3xl font-black mb-3 flex items-center uppercase tracking-wide">
-                    <span class="w-8 h-1 bg-gradient-to-r from-cobalt-600 to-indigo-500 mr-4 rounded-full"></span> Ma Méthode
-                </h2>
-                <p class="reveal text-slate-500 dark:text-slate-400 text-sm max-w-2xl mb-12 ml-12">
-                    Au-delà des technologies, voici les principes qui guident chacun de mes projets, de la conception au déploiement.
-                </p>
+        <!-- MÉTHODE : le playbook -->
+        <section id="methode" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+            <div class="relative z-10 max-w-6xl mx-auto">
+                <div class="reveal mb-12">
+                    <p class="kick mb-2">// Zone 05 · Le playbook</p>
+                    <h2 class="font-display text-4xl sm:text-6xl ink flex items-center"><span class="w-10 h-1.5 bg-hoop mr-4 rounded-full"></span> Ma Méthode</h2>
+                    <p class="ink2 text-sm max-w-2xl mt-3 font-medium">Au-delà des technologies, voici les principes qui guident chacun de mes projets, de la conception au déploiement.</p>
+                </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 rounded-[1.75rem] border border-white/60 dark:border-slate-800/50 shadow-lg hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="w-10 h-10 bg-cobalt-100 dark:bg-cobalt-950/50 text-cobalt-600 dark:text-cobalt-400 rounded-xl flex items-center justify-center font-black text-sm mb-4 transition-transform group-hover:scale-110">01</div>
-                        <h3 class="text-base font-extrabold mb-2">Sécurité par défaut</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">Authentification, validation des entrées et gestion des rôles pensées dès la conception, pas ajoutées après coup.</p>
+                <div class="grid lg:grid-cols-[minmax(0,380px)_1fr] gap-8 items-start">
+                    <!-- Tableau tactique -->
+                    <div class="reveal board rounded-[2rem] p-4 border-4 border-white/70 dark:border-white/15 shadow-2xl">
+                        <svg viewBox="0 0 260 260" class="w-full h-auto" aria-hidden="true">
+                            <rect class="paint" x="10" y="90" width="95" height="80"/>
+                            <rect class="cl" x="10" y="10" width="240" height="240" rx="4"/>
+                            <path class="cl" d="M10 90H105V170H10"/>
+                            <path class="cl" d="M105 100a30 30 0 0 1 0 60"/>
+                            <path class="cl dash" d="M105 100a30 30 0 0 0 0 60"/>
+                            <path class="cl" d="M10 20H81.4A119 119 0 0 1 81.4 240H10"/>
+                            <path class="cl" d="M250 100a30 30 0 0 0 0 60"/>
+                            <circle class="hoopc" cx="36" cy="130" r="6"/>
+                            <path class="play" d="M184 126Q168 96 158 68"/>
+                            <path class="play" d="M146 196Q112 170 72 142"/>
+                            <path class="play" d="M148 58Q108 66 82 96"/>
+                            <path class="play" d="M174 134Q140 134 96 131"/>
+                            <g font-family="JetBrains Mono, monospace" font-weight="700" text-anchor="middle">
+                                <circle cx="150" cy="60" r="11" fill="#ff6a13"/><text x="150" y="64" fill="#fff" font-size="12">1</text>
+                                <circle cx="150" cy="200" r="11" fill="#ff6a13"/><text x="150" y="204" fill="#fff" font-size="12">2</text>
+                                <circle cx="190" cy="130" r="11" fill="#ff6a13"/><text x="190" y="134" fill="#fff" font-size="12">3</text>
+                                <circle cx="74" cy="138" r="11" fill="#ff6a13"/><text x="74" y="142" fill="#fff" font-size="12">4</text>
+                                <text x="118" y="56" fill="#fff" font-size="15" opacity=".85">✕</text>
+                                <text x="118" y="206" fill="#fff" font-size="15" opacity=".85">✕</text>
+                                <text x="218" y="86" fill="#fff" font-size="15" opacity=".85">✕</text>
+                            </g>
+                        </svg>
+                        <p class="kick text-center mt-2 !text-white/90">Tableau tactique · Play book 2026</p>
                     </div>
-                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 rounded-[1.75rem] border border-white/60 dark:border-slate-800/50 shadow-lg hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="w-10 h-10 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center font-black text-sm mb-4 transition-transform group-hover:scale-110">02</div>
-                        <h3 class="text-base font-extrabold mb-2">Typage strict</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">TypeScript en mode strict de bout en bout, pour détecter les erreurs avant qu'elles n'atteignent la production.</p>
-                    </div>
-                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 rounded-[1.75rem] border border-white/60 dark:border-slate-800/50 shadow-lg hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="w-10 h-10 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center font-black text-sm mb-4 transition-transform group-hover:scale-110">03</div>
-                        <h3 class="text-base font-extrabold mb-2">Documentation systématique</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">Chaque API expose sa documentation Swagger/OpenAPI pour être utilisable immédiatement par une équipe front-end.</p>
-                    </div>
-                    <div class="reveal bg-cyber-cardlight dark:bg-cyber-carddark backdrop-blur-xl p-6 rounded-[1.75rem] border border-white/60 dark:border-slate-800/50 shadow-lg hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="w-10 h-10 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center font-black text-sm mb-4 transition-transform group-hover:scale-110">04</div>
-                        <h3 class="text-base font-extrabold mb-2">Autonomie complète</h3>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">De la modélisation des données au déploiement cloud (Render, Vercel), je porte mes projets de bout en bout.</p>
+
+                    <div class="grid sm:grid-cols-2 gap-5 sm:gap-6">
+                        <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
+                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">1</span><span class="kick">🏀 Défense</span></div>
+                            <h3 class="font-display text-2xl ink mb-2">Sécurité par défaut</h3>
+                            <p class="ink2 text-xs leading-relaxed">Authentification, validation des entrées et gestion des rôles pensées dès la conception, pas ajoutées après coup.</p>
+                        </div>
+                        <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
+                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">2</span><span class="kick">🏀 Fondamentaux</span></div>
+                            <h3 class="font-display text-2xl ink mb-2">Typage strict</h3>
+                            <p class="ink2 text-xs leading-relaxed">TypeScript en mode strict de bout en bout, pour détecter les erreurs avant qu'elles n'atteignent la production.</p>
+                        </div>
+                        <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
+                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">3</span><span class="kick">🏀 Playbook</span></div>
+                            <h3 class="font-display text-2xl ink mb-2">Documentation systématique</h3>
+                            <p class="ink2 text-xs leading-relaxed">Chaque API expose sa documentation Swagger/OpenAPI pour être utilisable immédiatement par une équipe front-end.</p>
+                        </div>
+                        <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
+                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">4</span><span class="kick">🏀 Franchise player</span></div>
+                            <h3 class="font-display text-2xl ink mb-2">Autonomie complète</h3>
+                            <p class="ink2 text-xs leading-relaxed">De la modélisation des données au déploiement cloud (Render, Vercel), je porte mes projets de bout en bout.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24 bg-gradient-to-br from-slate-950 to-cyber-darkbg text-white relative overflow-hidden rounded-t-[2.5rem] sm:rounded-t-[3.5rem] border-t border-slate-900">
+        <!-- CONTACT : le lancer franc -->
+        <section id="contact" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24 bg-gradient-to-br from-[#0b0f17] to-[#1a0e05] text-white rounded-t-[2.5rem] sm:rounded-t-[3.5rem] border-t-2 border-hoop/60">
+            <svg class="court-svg" style="left:-160px;top:-60px;width:620px;opacity:.5" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
             <div class="max-w-4xl mx-auto relative z-10 text-center">
-                <h2 class="reveal text-3xl sm:text-4xl md:text-6xl font-black mb-10 leading-tight">Parlez-moi de votre projet...</h2>
+                <p class="kick !text-orange-400 mb-3">// Zone 06 · Lancer franc</p>
+                <h2 class="reveal font-display text-5xl sm:text-6xl md:text-8xl mb-10 leading-none">Parlez-moi de votre projet...</h2>
                 <form id="contact-form" class="reveal space-y-4 sm:space-y-5 max-w-xl mx-auto text-left">
-                    <div>
-                        <input type="text" name="name" placeholder="VOTRE NOM..." required class="w-full bg-slate-900/60 border border-slate-800/80 rounded-2xl px-5 py-4 outline-none focus:border-cobalt-500 focus:bg-slate-900 text-sm font-semibold uppercase tracking-wider transition-all duration-300">
-                    </div>
-                    <div>
-                        <input type="email" name="email" placeholder="VOTRE EMAIL..." required class="w-full bg-slate-900/60 border border-slate-800/80 rounded-2xl px-5 py-4 outline-none focus:border-cobalt-500 focus:bg-slate-900 text-sm font-semibold transition-all duration-300">
-                    </div>
-                    <div>
-                        <textarea name="message" placeholder="VOTRE MESSAGE..." rows="4" required class="w-full bg-slate-900/60 border border-slate-800/80 rounded-2xl px-5 py-4 outline-none focus:border-cobalt-500 focus:bg-slate-900 text-sm font-semibold transition-all duration-300"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-cobalt-600 to-indigo-600 text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] hover:opacity-95 transition-all active:scale-98 shadow-xl shadow-cobalt-600/10">
-                        Soumettre...
+                    <div><input type="text" name="name" placeholder="VOTRE NOM..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-sm font-semibold uppercase tracking-wider transition-all duration-300"></div>
+                    <div><input type="email" name="email" placeholder="VOTRE EMAIL..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-sm font-semibold transition-all duration-300"></div>
+                    <div><textarea name="message" placeholder="VOTRE MESSAGE..." rows="4" required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-sm font-semibold transition-all duration-300"></textarea></div>
+                    <button type="submit" class="w-full bg-hoop text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] hover:opacity-95 transition-all active:scale-98 shadow-xl shadow-orange-700/30">
+                        🏀 Tirer au panier...
                     </button>
                     <p id="form-feedback" class="hidden text-xs font-bold text-emerald-400 text-center pt-1">Message prêt à être envoyé — merci !</p>
                 </form>
             </div>
         </section>
 
-        <footer class="py-8 px-4 sm:px-8 md:px-16 text-slate-500 text-[11px] font-bold uppercase tracking-widest flex justify-between items-center bg-cyber-darkbg border-t border-slate-900">
+        <footer class="py-8 px-4 sm:px-8 md:px-16 text-slate-400 text-[11px] font-bold uppercase tracking-widest flex flex-wrap gap-3 justify-between items-center bg-[#0b0f17] border-t border-slate-800">
             <p>© 2026 Mohamed Abdalah Fall</p>
-            <p class="text-cobalt-500 text-right">Dakar, Sénégal</p>
+            <p class="font-led text-hoop">Fin du match · FALL ∞ — 0 BUGS</p>
+            <p class="text-hoop text-right">Dakar, Sénégal</p>
         </footer>
     </main>
 
@@ -585,9 +634,7 @@
         <div id="modal-backdrop" class="absolute inset-0 bg-slate-950/70 backdrop-blur-md"></div>
         <div class="modal-panel relative w-full sm:max-w-3xl max-h-full sm:max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 sm:rounded-[2.5rem] shadow-2xl">
             <button id="modal-close" aria-label="Fermer la fiche projet" class="fixed sm:absolute top-4 right-4 sm:top-6 sm:right-6 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-slate-950/70 hover:bg-slate-950/90 text-white backdrop-blur-md transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
 
             <div id="modal-hero" class="h-56 sm:h-72 w-full relative bg-slate-200 dark:bg-slate-800 overflow-hidden">
@@ -601,7 +648,7 @@
 
             <div class="p-6 sm:p-10 space-y-8">
                 <div>
-                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Aperçu</h4>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-hoop mb-3">Aperçu</h4>
                     <p id="modal-overview" class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed"></p>
                 </div>
 
@@ -621,32 +668,37 @@
                 </div>
 
                 <div>
-                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Fonctionnalités clés</h4>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-hoop mb-3">Fonctionnalités clés</h4>
                     <ul id="modal-features" class="space-y-2"></ul>
                 </div>
 
                 <div>
-                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Stack technique</h4>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-hoop mb-3">Stack technique</h4>
                     <div id="modal-stack" class="flex flex-wrap gap-2"></div>
                 </div>
 
                 <div id="modal-architecture-wrap" class="hidden">
-                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Décisions d'architecture</h4>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-hoop mb-3">Décisions d'architecture</h4>
                     <ul id="modal-architecture" class="space-y-2"></ul>
                 </div>
 
                 <div>
-                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-cobalt-500 mb-3">Défi technique</h4>
+                    <h4 class="text-xs font-extrabold uppercase tracking-widest text-hoop mb-3">Défi technique</h4>
                     <p id="modal-challenge" class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-5"></p>
                 </div>
 
-                <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-cobalt-600 to-indigo-600 text-white font-bold text-sm rounded-2xl shadow-xl shadow-cobalt-600/20 hover:shadow-cobalt-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+                <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-hoop text-white font-bold text-sm rounded-2xl shadow-xl shadow-orange-700/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
                     <span id="modal-link-label"></span>&nbsp;→
                 </a>
             </div>
         </div>
     </div>
 
+    <!-- three.js + scène + couches d'effets -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="three-scene.js"></script>
+    <script src="hightech.js"></script>
+    <script src="court.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
