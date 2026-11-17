@@ -1,7 +1,9 @@
-/* three-scene.js v5 — ballon de basket façon NBA.
-   Texture générée une fois en JS : cuir grainé, canaux creusés, panneaux, marquage "FALL #01".
-   Rendu PBR (MeshStandardMaterial + bump map), ombre douce, caméra orthographique en pixels :
-   le ballon dribble sur #fx-ball-anchor puis tire vers #fx-hoop. Événement 'fx:swish' à chaque panier. */
+/* three-scene.js v8 — ballon de basket officiel NBA Wilson.
+   Texture générée en JS : cuir pleine grain, 8 panneaux, NBA Pro Seams à double profondeur
+   (3 grands cercles perpendiculaires, coutures ~6,2 mm / max FIBA 6,35 mm), logoman NBA,
+   script Wilson avec inline anthracite. Rendu PBR (MeshStandardMaterial + bump map),
+   ombre douce, caméra orthographique en pixels : le ballon dribble sur #fx-ball-anchor puis
+   tire vers #fx-hoop avec un halo, un backspin et un éclat d'étincelles. Événement 'fx:swish'. */
 (function () {
   if (typeof THREE === 'undefined') return;
   const canvas = document.getElementById('bg-canvas');
@@ -37,16 +39,23 @@
 
     const cp = new Float32Array(TW), sp = new Float32Array(TW);
     for (let x = 0; x < TW; x++) { const ph = (x + 0.5) / TW * Math.PI * 2; cp[x] = Math.cos(ph); sp[x] = Math.sin(ph); }
-    const ang = 35 * Math.PI / 180, cs = Math.cos(ang), sn = Math.sin(ang);
-    const w = 0.02, F = 46;
+    /* Canaux conformes à la norme : 3 grands cercles mutuellement perpendiculaires
+       (1 équateur + 2 méridiens à 90°) -> 8 panneaux, configuration classique FIBA/NBA.
+       Les méridiens sont tournés de 45° pour que le marquage tombe au centre d'un panneau.
+       Demi-largeur 0,026 rad ~ 6,2 mm de couture sur une taille 7 (max FIBA : 6,35 mm). */
+    const q = Math.SQRT1_2;
+    const w = 0.026, F = 46;
     const sm = (a, b, v) => { const t = Math.max(0, Math.min(1, (v - a) / (b - a))); return t * t * (3 - 2 * t); };
 
     for (let y = 0; y < TH; y++) {
       const th = (y + 0.5) / TH * Math.PI, st = Math.sin(th), ny = Math.cos(th);
       for (let x = 0; x < TW; x++) {
         const nx = -cp[x] * st, nz = sp[x] * st;
-        // distance aux 4 canaux : équateur + 3 méridiens (centre et ±35°)
-        const d = Math.min(Math.abs(ny), Math.abs(nx), Math.abs(nx * cs - nz * sn), Math.abs(nx * cs + nz * sn));
+        // 3 canaux : équateur + 2 méridiens perpendiculaires (8 panneaux)
+        const dEq = Math.abs(ny);
+        const dMer = Math.min(Math.abs((nx - nz) * q), Math.abs((nx + nz) * q));
+        const d = Math.min(dEq, dMer);
+        const dep = dMer < dEq ? 0.95 : 0.78;         // NBA Pro Seams : double profondeur
         const g = 1 - sm(w * 0.6, w, d);              // fond du canal
         const e = sm(w, w * 2.6, d);                   // 0 près du canal -> 1 loin
         const pb = Math.sin(nx * F + 1.3) * Math.sin(ny * F + 0.7) * Math.sin(nz * F + 2.1);
@@ -60,8 +69,8 @@
         d1[o] = Math.min(255, r * 255); d1[o + 1] = Math.min(255, gg * 255); d1[o + 2] = Math.min(255, b * 255); d1[o + 3] = 255;
 
         let h = (0.6 + 0.26 * (p - 0.5)) * (0.4 + 0.6 * e);
-        h = h * (1 - g);
-        const ridge = Math.exp(-Math.pow((d - w * 1.4) / (w * 0.65), 2)) * 0.16;
+        h = h * (1 - g * dep);
+        const ridge = Math.exp(-Math.pow((d - w * 1.4) / (w * 0.65), 2)) * 0.2;
         h += ridge * (1 - g);
         const hv = Math.max(0, Math.min(255, h * 255));
         d2[o] = d2[o + 1] = d2[o + 2] = hv; d2[o + 3] = 255;
@@ -69,13 +78,45 @@
     }
     x1.putImageData(i1, 0, 0); x2.putImageData(i2, 0, 0);
 
-    // Marquage sur le grand panneau
+    /* Marquage du ballon officiel NBA Wilson : logoman NBA et script Wilson
+       estampés dans le cuir grainé, avec l'inline anthracite du logo Wilson. */
     x1.textAlign = 'center'; x1.textBaseline = 'middle';
-    x1.fillStyle = 'rgba(16,7,3,.92)';
-    x1.font = '900 66px Impact, "Arial Black", sans-serif';
-    x1.fillText('FALL', TW * 0.5, TH * 0.385);
-    x1.font = '800 34px Impact, "Arial Black", sans-serif';
-    x1.fillText('#01', TW * 0.5, TH * 0.63);
+
+    /* --- Logoman NBA : joueur en mouvement dans un cercle --- */
+    (function logoman(cx, cy, R) {
+      const ink = 'rgba(26,12,5,.9)';
+      x1.save(); x1.translate(cx, cy);
+      x1.beginPath(); x1.arc(0, 0, R, 0, Math.PI * 2);
+      x1.fillStyle = 'rgba(120,52,14,.5)'; x1.fill();
+      x1.lineWidth = 7; x1.strokeStyle = ink; x1.stroke();
+      x1.fillStyle = ink; x1.strokeStyle = ink; x1.lineCap = 'round';
+      x1.beginPath(); x1.arc(-R * 0.04, -R * 0.36, R * 0.15, 0, Math.PI * 2); x1.fill();
+      x1.save(); x1.rotate(-0.22); x1.fillRect(-R * 0.14, -R * 0.2, R * 0.28, R * 0.5); x1.restore();
+      x1.lineWidth = R * 0.11;
+      x1.beginPath(); x1.moveTo(R * 0.08, -R * 0.06); x1.lineTo(R * 0.42, -R * 0.26); x1.stroke();
+      x1.beginPath(); x1.moveTo(-R * 0.06, R * 0.26); x1.lineTo(-R * 0.26, R * 0.56); x1.stroke();
+      x1.beginPath(); x1.moveTo(R * 0.06, R * 0.26); x1.lineTo(R * 0.28, R * 0.54); x1.stroke();
+      x1.beginPath(); x1.arc(R * 0.5, -R * 0.32, R * 0.16, 0, Math.PI * 2); x1.fill();
+      x1.restore();
+      x1.font = '900 22px "Arial Black", Impact, sans-serif';
+      x1.fillStyle = ink;
+      x1.fillText('NBA', cx, cy + R + 16);
+    })(TW * 0.25, TH * 0.31, 58);
+
+    /* --- Script Wilson + inline anthracite --- */
+    (function wilson(cx, cy) {
+      x1.save(); x1.translate(cx, cy);
+      x1.font = 'italic 900 66px Georgia, "Times New Roman", serif';
+      x1.lineJoin = 'round'; x1.lineWidth = 9;
+      x1.strokeStyle = 'rgba(38,38,42,.92)';                 // anthracite inline
+      x1.strokeText('Wilson', 0, 0);
+      x1.fillStyle = 'rgba(58,22,6,.94)';
+      x1.fillText('Wilson', 0, 0);
+      x1.font = '700 16px "Arial Black", sans-serif';
+      x1.fillStyle = 'rgba(38,38,42,.8)';
+      x1.fillText('OFFICIAL GAME BALL', 0, 50);
+      x1.restore();
+    })(TW * 0.75, TH * 0.69);
     return { color: c1, bump: c2 };
   }
 
@@ -107,6 +148,73 @@
   const shadow = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shadowMat);
   scene.add(shadow, ball);
 
+  /* ---------- Halo doux et étincelles du panier ---------- */
+  function softDot() {
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const x = c.getContext('2d');
+    const g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, 'rgba(255,255,255,1)');
+    g.addColorStop(0.28, 'rgba(255,240,220,.85)');
+    g.addColorStop(0.65, 'rgba(255,190,120,.28)');
+    g.addColorStop(1, 'rgba(255,170,90,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(c);
+  }
+  const dotTex = softDot();
+
+  /* Halo doux qui accompagne le ballon (s'intensifie pendant le tir) */
+  const glowMat = new THREE.SpriteMaterial({
+    map: dotTex, color: 0xff8a36, transparent: true,
+    blending: THREE.AdditiveBlending, depthWrite: false, depthTest: true, opacity: 0.2
+  });
+  const glow = new THREE.Sprite(glowMat);
+  glow.position.z = 4.7;
+  scene.add(glow);
+
+  /* Étincelles jaillissant du cercle au moment du swish */
+  const BN = 20;
+  const bPos = new Float32Array(BN * 3), bCol = new Float32Array(BN * 3);
+  const bx = new Float32Array(BN), by = new Float32Array(BN);
+  const bvx = new Float32Array(BN), bvy = new Float32Array(BN), bLife = new Float32Array(BN);
+  const bGeo = new THREE.BufferGeometry();
+  bGeo.setAttribute('position', new THREE.BufferAttribute(bPos, 3));
+  bGeo.setAttribute('color', new THREE.BufferAttribute(bCol, 3));
+  const burst = new THREE.Points(bGeo, new THREE.PointsMaterial({
+    size: 9, map: dotTex, vertexColors: true, transparent: true,
+    blending: THREE.AdditiveBlending, depthWrite: false, depthTest: true,
+    sizeAttenuation: false
+  }));
+  burst.frustumCulled = false; burst.visible = false;
+  scene.add(burst);
+  function spawnBurst(x, y) {
+    for (let i = 0; i < BN; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const sp = 60 + Math.random() * 150;
+      bx[i] = x; by[i] = y;
+      bvx[i] = Math.cos(a) * sp * 0.55;
+      bvy[i] = Math.sin(a) * sp * 0.75 - 40;
+      bLife[i] = 0.45 + Math.random() * 0.45;
+    }
+    burst.visible = true;
+  }
+  function updateBurst(dt) {
+    if (!burst.visible || dt <= 0) return;
+    let alive = false;
+    for (let i = 0; i < BN; i++) {
+      if (bLife[i] <= 0) { bCol[i * 3] = bCol[i * 3 + 1] = bCol[i * 3 + 2] = 0; continue; }
+      alive = true;
+      bLife[i] -= dt;
+      bvy[i] += 320 * dt;                     // gravité (écran : y vers le bas)
+      bx[i] += bvx[i] * dt; by[i] += bvy[i] * dt;
+      const f = Math.max(0, Math.min(1, bLife[i] / 0.9));
+      bPos[i * 3] = bx[i]; bPos[i * 3 + 1] = -by[i]; bPos[i * 3 + 2] = 4.3;
+      bCol[i * 3] = f; bCol[i * 3 + 1] = 0.55 * f * f; bCol[i * 3 + 2] = 0.12 * f * f;
+    }
+    bGeo.attributes.position.needsUpdate = true;
+    bGeo.attributes.color.needsUpdate = true;
+    if (!alive) burst.visible = false;
+  }
+
   /* ---------- Mesures mises en cache ---------- */
   let W = 1, H = 1;
   let A = { l: 0, t: 0, w: 0, h: 0 }, Hm = { x: 0, y: 0, w: 0 };
@@ -135,7 +243,9 @@
   let sx0 = 0, sy0 = 0, sr = 30;
   const bp = { x: 0, y: 0, r: 30 };
   addEventListener('fx:shoot', () => {
-    if (st === 'dribble' && hoopEl && Hm.w > 0) { st = 'shot'; st0 = lastT; sx0 = bp.x; sy0 = bp.y; sr = bp.r; }
+    if (st === 'dribble' && hoopEl && Hm.w > 0) {
+      st = 'shot'; st0 = lastT; sx0 = bp.x; sy0 = bp.y; sr = bp.r;
+    }
   });
   const ease = (u) => u * u * (3 - 2 * u);
 
@@ -143,8 +253,8 @@
     const sY = window.scrollY;
     const a = { left: A.l, top: A.t - sY, width: A.w, height: A.h, bottom: A.t + A.h - sY };
     const onScreen = a.width > 0 && a.bottom > -60 && a.top < H + 60;
-    ball.visible = shadow.visible = onScreen;
-    if (!onScreen) return;
+    ball.visible = shadow.visible = glow.visible = onScreen;
+    if (!onScreen) { burst.visible = false; return; }
 
     const R = Math.max(22, Math.min(50, a.width * 0.18));
     const cx = a.left + a.width / 2;
@@ -154,7 +264,10 @@
     let k = 1, squash = 1, shOp = 1;
 
     if (st === 'dribble') {
-      if (el >= 4 && hoopEl && Hm.w > 0) { st = 'shot'; st0 = t; sx0 = bp.x; sy0 = bp.y; sr = bp.r; return frame(t, 0); }
+      if (el >= 4 && hoopEl && Hm.w > 0) {
+        st = 'shot'; st0 = t; sx0 = bp.x; sy0 = bp.y; sr = bp.r;
+        return frame(t, 0);
+      }
       const u = (el % 0.8) / 0.8, h = 4 * u * (1 - u);
       bp.x = cx + Math.sin(el * 0.6) * a.width * 0.12;
       bp.y = floorY - h * drib;
@@ -165,13 +278,21 @@
     } else if (st === 'shot') {
       const hx = Hm.x, hy = Hm.y - sY;
       const u = Math.min(1, el / 1.3);
-      bp.x = sx0 + (hx - sx0) * u;
-      bp.y = sy0 + (hy - sy0) * u - 150 * 4 * u * (1 - u);
-      bp.r = sr * (1 - 0.4 * u);
-      ball.rotation.z -= dt * 8; ball.rotation.y += dt * 2;
+      // Parabole réelle : le sommet est avant le panier, le ballon redescend dans le cercle
+      const dx = hx - sx0;
+      const arc = Math.max(120, Math.min(320, Math.abs(dx) * 0.55 + 70));
+      const cxp = sx0 + dx * 0.42;
+      const cyp = Math.min(sy0, hy) - arc;
+      const iu = 1 - u;
+      bp.x = iu * iu * sx0 + 2 * iu * u * cxp + u * u * hx;
+      bp.y = iu * iu * sy0 + 2 * iu * u * cyp + u * u * hy;
+      bp.r = sr * (1 - 0.25 * u);
+      ball.rotation.z = -u * Math.PI * 3.4;   // backspin régulier et lisible
+      ball.rotation.y += dt * 2.4;
       shOp = Math.max(0, 1 - u * 3);
       if (u >= 1) {
         st = 'drop'; st0 = t;
+        spawnBurst(hx, hy);
         hoopEl.classList.remove('swish'); void hoopEl.offsetWidth; hoopEl.classList.add('swish');
         dispatchEvent(new CustomEvent('fx:swish'));
       }
@@ -195,6 +316,12 @@
     shadow.scale.set(R * 1.15 * sh, R * 0.3 * sh, 1);
     shadowMat.opacity = shOp * sh;
     if (st === 'shot' || st === 'drop') shadow.visible = false;
+
+    glow.position.set(bp.x, -bp.y, 4.7);
+    const gr = r * 3.4;
+    glow.scale.set(gr, gr, 1);
+    glowMat.opacity = st === 'shot' ? 0.5 : (st === 'drop' ? 0.32 : 0.18);
+    updateBurst(dt);
   }
 
   const clock = new THREE.Clock();
