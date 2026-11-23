@@ -3,9 +3,9 @@
    (3 grands cercles perpendiculaires, coutures ~6,2 mm / max FIBA 6,35 mm), logoman NBA,
    script Wilson avec inline anthracite. Rendu PBR (MeshStandardMaterial + bump map),
    ombre douce, caméra orthographique en pixels : le ballon dribble sur #fx-ball-anchor.
-   Un clic le fait rebondir vers #fx-hoop avec une vraie trajectoire balistique : il ne marque
-   que s'il traverse le cercle, sinon il rebondit dessus et reprend le dribble. Pas de bouton :
-   le score vient uniquement du rebond. Événements 'fx:bounce' (entrée) et 'fx:swish' (sortie). */
+   Un clic sur le terrain le fait simplement rebondir sur place (sans score). Un clic sur
+   #fx-hoop déclenche un tir balistique : il ne marque que s'il traverse le cercle, sinon
+   il rebondit dessus et reprend le dribble. Événements 'fx:bounce' (tir) et 'fx:swish'. */
 (function () {
   if (typeof THREE === 'undefined') return;
   const canvas = document.getElementById('bg-canvas');
@@ -240,18 +240,30 @@
   addEventListener('load', measure);
   if (window.ResizeObserver) new ResizeObserver(measure).observe(document.body);
 
-  /* ---------- Machine à états : dribble → bounce → (drop | miss) → ret/dribble ---------- */
+  /* ---------- Machine à états : dribble ↔ plain (rebond libre) | bounce → (drop | miss) ---------- */
   let st = 'dribble', st0 = 0, lastT = 0;
   let scoreR = 30;                                // rayon du ballon au moment du panier
   let velX = 0, velY = 0;                         // vitesses instantanées (squash / rebond sur le cercle)
   let shX0 = 0, shY0 = 0, shVY = 0, shTargetX = 0, shT = 0.9, shElapsed = 0, shCurve = 0;
+  let plainN = 0;                                 // nombre de rebonds libres déjà effectués
   let imp = 0;                                    // intensité de l'impact
   const G = 1900;                                  // gravité en px/s²
   const bp = { x: 0, y: 0, r: 30 };
-  /* Rebond directionnel : un clic envoie le ballon vers le cercle avec une trajectoire
-     balistique. La visée dépend du point cliqué : cliquer près du panier est précis.
-     Le panier n'est validé que si le ballon redescend dans le cercle (voir frame()). */
-  function startBounce(clientX, perfect) {
+  /* Rebond libre : un clic sur le terrain fait simplement rebondir le ballon sur place,
+     avec amortissement, sans aucune trajectoire vers le panier et sans marquer de point. */
+  function startPlainBounce() {
+    if (!ball.visible || st === 'drop' || st === 'miss') return;
+    const h = Math.max(90, Math.min(190, A.h * 0.55));
+    velY = -Math.sqrt(2 * G * h);
+    velX = 0;
+    plainN = 0;
+    imp = 1;
+    st = 'plain'; st0 = lastT;
+  }
+
+  /* Tir directionnel : un clic sur le panier envoie le ballon vers le cercle avec une
+     trajectoire balistique. Le panier n'est validé que s'il redescend dans le cercle. */
+  function startShot(clientX, perfect) {
     if (!ball.visible || st === 'drop' || st === 'miss') return;
     if (!hoopEl) return;
     const hr = hoopEl.getBoundingClientRect();
@@ -272,19 +284,20 @@
     st = 'bounce'; st0 = lastT;
   }
 
-  // Raccourci clavier / palette : même rebond, visée centrée.
+  // Raccourci clavier / palette : tir visé centre, équivalent d'un clic sur le panier.
   addEventListener('fx:bounce', (e) => {
     const d = e.detail || {};
     const hr = hoopEl && hoopEl.getBoundingClientRect();
-    startBounce(typeof d.clientX === 'number' ? d.clientX : (hr ? hr.left + hr.width / 2 : bp.x), !!d.perfect);
+    startShot(typeof d.clientX === 'number' ? d.clientX : (hr ? hr.left + hr.width / 2 : bp.x), !!d.perfect);
   });
 
-  // Clic sur le terrain (hors éléments interactifs) : rebond vers le panier.
+  // Clic sur le panier = tir ; clic ailleurs sur le terrain = simple rebond (sans score).
   addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;
     const el = e.target;
     if (el && el.closest && el.closest('a,button,input,textarea,select,label,[role="button"],.project-card,#project-modal,#sidebar,#top-actions,#fx-hud,#fx-pal')) return;
-    startBounce(e.clientX, false);
+    if (el && el.closest && el.closest('#fx-hoop')) startShot(e.clientX, true);
+    else startPlainBounce();
   }, { passive: true });
 
   const ease = (u) => u * u * (3 - 2 * u);
@@ -296,8 +309,8 @@
     ball.visible = shadow.visible = glow.visible = onScreen;
     if (!onScreen) { burst.visible = false; return; }
 
-    // Le rayon du ballon est calibré sur le cercle : diamètre du ballon ≈ 53 % du cercle.
-    const R = Math.max(7, Math.min(30, (Hm.w || a.width * 0.5) * 0.185));
+    // Le rayon du ballon est calibré sur le cercle : diamètre du ballon ≈ 59 % du cercle.
+    const R = Math.max(9, Math.min(36, (Hm.w || a.width * 0.5) * 0.2));
     const cx = a.left + a.width / 2;
     const floorY = a.bottom - 6 - R;
     const drib = Math.min(a.height * 0.45, R * 6);
@@ -337,6 +350,31 @@
       shOp = 0;
       ball.rotation.z += dt * (u < 0.62 ? 3 : 1.4);  // le filet freine la rotation
       if (u >= 1) { st = 'ret'; st0 = t; }
+    } else if (st === 'plain') {
+      // Rebond libre : le ballon monte puis retombe, avec des rebonds de plus en plus bas.
+      // Aucune visée, aucun contact avec le cercle, aucun point. Même dérive que le dribble
+      // pour éviter tout saut latéral au moment de reprendre le dribble.
+      velY += G * dt;
+      bp.x = cx + Math.sin(t * 0.6) * a.width * 0.12;
+      bp.y += velY * dt;
+      bp.r = R;
+      if (bp.y >= floorY) {
+        bp.y = floorY;
+        if (Math.abs(velY) > 150 && plainN < 3) {
+          velY = -Math.abs(velY) * 0.56;
+          plainN++;
+          imp = 1;
+        } else {
+          velY = 0;
+          st = 'dribble'; st0 = t;
+        }
+      }
+      const above = Math.max(0, floorY - bp.y);
+      imp = Math.max(0, imp - dt * 4.5);
+      squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(velY) / 6000);
+      shOp = Math.max(0.12, 1 - above / 260);
+      ball.rotation.y += dt * (1.6 + Math.abs(velY) / 600);
+      ball.rotation.z += dt * 0.6;
     } else if (st === 'bounce' || st === 'miss') {
       const hx = Hm.x, hy = Hm.y - sY;
       const prevY = bp.y;
@@ -399,7 +437,7 @@
     glow.position.set(bp.x, -bp.y, 4.7);
     const gr = r * 3.4;
     glow.scale.set(gr, gr, 1);
-    glowMat.opacity = st === 'drop' ? 0.32 : (st === 'bounce' ? 0.28 : 0.18);
+    glowMat.opacity = st === 'drop' ? 0.32 : ((st === 'bounce' || st === 'plain') ? 0.28 : 0.18);
     updateBurst(dt);
   }
 

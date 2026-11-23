@@ -135,6 +135,10 @@
         .fx-on .fx-ball-cursor { opacity: 1; }
         .fx-ball-cursor.big { width: 38px; height: 38px; margin: -19px 0 0 -19px; }
         html.court-cursor, html.court-cursor * { cursor: none !important; }
+        /* Sur le terrain, on manipule le vrai ballon 3D : on cache le curseur-ballon
+           et on rend le curseur système à nouveau visible. */
+        html.over-court, html.over-court * { cursor: auto !important; }
+        html.over-court .fx-ball-cursor { opacity: 0 !important; }
 
         /* ===== Divers ===== */
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
@@ -328,7 +332,7 @@
                 </div>
 
                 <!-- Demi-terrain : raquette, lancer franc, panier -->
-                <div class="hero-court relative w-full max-w-[min(720px,100%)] mx-auto mt-6 lg:mt-0 lg:ml-auto lg:mr-0 aspect-[500/340]">
+                <div class="hero-court relative w-full max-w-[min(860px,100%)] mx-auto mt-6 lg:mt-0 lg:ml-auto lg:mr-0 aspect-[500/340]">
                     <svg class="court-svg draw absolute inset-0 w-full h-full" viewBox="0 0 500 340" aria-hidden="true">
                         <rect class="paint" x="170" y="0" width="160" height="190"/>
                         <path class="cl" pathLength="1" d="M30 0V141.5A237.5 237.5 0 0 0 470 141.5V0"/>
@@ -338,17 +342,17 @@
                         <path class="cl" pathLength="1" d="M210 52a40 40 0 0 0 80 0"/>
                         <path class="cl" pathLength="1" d="M220 40H280"/>
                         <path class="cl" pathLength="1" d="M160 40h10M160 80h10M160 120h10M160 160h10M330 40h10M330 80h10M330 120h10M330 160h10"/>
-                        <circle class="hoopc" cx="250" cy="52" r="23"/>
+                        <circle class="hoopc" cx="250" cy="52" r="27"/>
                     </svg>
 
                     <!-- Panier : planche, bras, cercle et filet. Le ballon rebondit dessus. -->
                     <div id="fx-hoop" class="absolute" aria-hidden="true"
-                         style="left:50%;top:15.3%;width:13%;aspect-ratio:1;transform:translate(-50%,-50%)">
+                         style="left:50%;top:15.3%;width:16%;aspect-ratio:1;transform:translate(-50%,-50%)">
                         <svg viewBox="0 0 100 100" aria-hidden="true">
                          <g transform="translate(50 52) scale(1.42) translate(-50 -52)">
                             <path class="hoop-arm" d="M80 8L96 2M96 -26V4"/>
                             <rect class="hoop-board" x="18" y="-6" width="64" height="42" rx="2"/>
-                            <rect class="hoop-square" x="35" y="10" width="30" height="22"/>
+                            <rect class="hoop-square" x="32" y="8" width="36" height="26"/>
                             <rect x="48" y="36" width="4" height="10" rx="1" fill="#ff6a13"/>
                             <g class="hoop-net">
                                 <path d="M74 52Q69 67 64 80"/>

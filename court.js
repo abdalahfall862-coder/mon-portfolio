@@ -194,5 +194,17 @@
         ),
       );
     });
+
+    // Au-dessus du terrain, on manipule le ballon 3D : on efface le curseur-ballon
+    // et on réaffiche le curseur système pour ne pas voir deux ballons à la fois.
+    const court = document.querySelector(".hero-court");
+    if (court) {
+      court.addEventListener("pointerenter", () =>
+        document.documentElement.classList.add("over-court"),
+      );
+      court.addEventListener("pointerleave", () =>
+        document.documentElement.classList.remove("over-court"),
+      );
+    }
   }
 })();
