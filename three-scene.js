@@ -246,17 +246,25 @@
   let velX = 0, velY = 0;                         // vitesses instantanées (squash / rebond sur le cercle)
   let shX0 = 0, shY0 = 0, shVY = 0, shTargetX = 0, shT = 0.9, shElapsed = 0, shCurve = 0;
   let plainN = 0;                                 // nombre de rebonds libres déjà effectués
+  let plX0 = 0, plY0 = 0, plTX = 0, plTY = 0, plT = 0.5, plTm = 0, plVY = 0;
+  let plPhase = 0, plRX = 0;                      // 0 = saut vers le point, 1 = rebonds, 2 = retour
+  let curR = 30;                                  // rayon courant, mis à jour à chaque frame
   let imp = 0;                                    // intensité de l'impact
   const G = 1900;                                  // gravité en px/s²
   const bp = { x: 0, y: 0, r: 30 };
-  /* Rebond libre : un clic sur le terrain fait simplement rebondir le ballon sur place,
-     avec amortissement, sans aucune trajectoire vers le panier et sans marquer de point. */
-  function startPlainBounce() {
+  /* Rebond libre : un clic envoie le ballon sur le point choisi du terrain, puis il y
+     rebondit avec amortissement avant de revenir au dribble. Pas de visée, pas de score. */
+  function startPlainBounce(clientX, clientY) {
     if (!ball.visible || st === 'drop' || st === 'miss') return;
-    const h = Math.max(90, Math.min(190, A.h * 0.55));
-    velY = -Math.sqrt(2 * G * h);
-    velX = 0;
-    plainN = 0;
+    const R = curR;
+    const top = A.t - window.scrollY;
+    plTX = Math.max(A.l + R, Math.min(A.l + A.w - R, clientX));
+    plTY = Math.max(top + R, Math.min(top + A.h - R, clientY));
+    plX0 = bp.x; plY0 = bp.y;
+    const dist = Math.hypot(plTX - plX0, plTY - plY0);
+    plT = Math.max(0.32, Math.min(0.85, 0.3 + dist / 900));
+    plVY = (plTY - plY0 - 0.5 * G * plT * plT) / plT;
+    plTm = 0; plPhase = 0; plainN = 0; velX = 0;
     imp = 1;
     st = 'plain'; st0 = lastT;
   }
@@ -297,7 +305,7 @@
     const el = e.target;
     if (el && el.closest && el.closest('a,button,input,textarea,select,label,[role="button"],.project-card,#project-modal,#sidebar,#top-actions,#fx-hud,#fx-pal')) return;
     if (el && el.closest && el.closest('#fx-hoop')) startShot(e.clientX, true);
-    else startPlainBounce();
+    else startPlainBounce(e.clientX, e.clientY);
   }, { passive: true });
 
   const ease = (u) => u * u * (3 - 2 * u);
@@ -311,6 +319,7 @@
 
     // Le rayon du ballon est calibré sur le cercle : diamètre du ballon ≈ 59 % du cercle.
     const R = Math.max(9, Math.min(36, (Hm.w || a.width * 0.5) * 0.2));
+    curR = R;
     const cx = a.left + a.width / 2;
     const floorY = a.bottom - 6 - R;
     const drib = Math.min(a.height * 0.45, R * 6);
@@ -351,24 +360,48 @@
       ball.rotation.z += dt * (u < 0.62 ? 3 : 1.4);  // le filet freine la rotation
       if (u >= 1) { st = 'ret'; st0 = t; }
     } else if (st === 'plain') {
-      // Rebond libre : le ballon monte puis retombe, avec des rebonds de plus en plus bas.
-      // Aucune visée, aucun contact avec le cercle, aucun point. Même dérive que le dribble
-      // pour éviter tout saut latéral au moment de reprendre le dribble.
-      velY += G * dt;
-      bp.x = cx + Math.sin(t * 0.6) * a.width * 0.12;
-      bp.y += velY * dt;
-      bp.r = R;
-      if (bp.y >= floorY) {
-        bp.y = floorY;
-        if (Math.abs(velY) > 150 && plainN < 3) {
-          velY = -Math.abs(velY) * 0.56;
-          plainN++;
-          imp = 1;
-        } else {
-          velY = 0;
-          st = 'dribble'; st0 = t;
+      const driftX = cx + Math.sin(t * 0.6) * a.width * 0.12;
+      if (plPhase === 0) {
+        // Saut balistique vers le point exact cliqué.
+        plTm += dt;
+        const u = Math.min(1, plTm / plT);
+        velX = (plTX - plX0) / plT;
+        velY = plVY + G * plTm;
+        bp.x = plX0 + (plTX - plX0) * u;
+        bp.y = plY0 + plVY * plTm + 0.5 * G * plTm * plTm;
+        if (u >= 1 || bp.y >= floorY) {
+          bp.x = plTX;
+          bp.y = Math.min(bp.y, floorY);
+          velX = 0;
+          velY = -Math.max(240, Math.abs(velY) * 0.6);   // premier bond sur le point visé
+          plPhase = 1; plTm = 0; plainN = 0; imp = 1;
         }
+      } else if (plPhase === 1) {
+        // Rebonds amortis à l'endroit cliqué.
+        velY += G * dt;
+        velX += (driftX - bp.x) * dt * 2.5;
+        bp.x += velX * dt;
+        bp.y += velY * dt;
+        if (bp.y >= floorY) {
+          bp.y = floorY;
+          if (Math.abs(velY) > 150 && plainN < 3) {
+            velY = -Math.abs(velY) * 0.56;
+            plainN++; imp = 1;
+          } else {
+            velY = 0; velX = 0; plRX = bp.x;
+            plPhase = 2; plTm = 0;
+          }
+        }
+      } else {
+        // Retour en douceur vers le dribble, sans saut latéral.
+        plTm += dt;
+        const u = Math.min(1, plTm / 0.45);
+        bp.x = plRX + (driftX - plRX) * ease(u);
+        bp.y = floorY - Math.sin(u * Math.PI) * R * 0.7;
+        velY = 0; velX = 0;
+        if (u >= 1) { st = 'dribble'; st0 = t; }
       }
+      bp.r = R;
       const above = Math.max(0, floorY - bp.y);
       imp = Math.max(0, imp - dt * 4.5);
       squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(velY) / 6000);
