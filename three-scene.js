@@ -3,7 +3,7 @@
    (3 grands cercles perpendiculaires, coutures ~6,2 mm / max FIBA 6,35 mm), logoman NBA,
    script Wilson avec inline anthracite. Rendu PBR (MeshStandardMaterial + bump map),
    ombre douce, caméra orthographique en pixels : le ballon dribble sur #fx-ball-anchor puis
-   tire vers #fx-hoop avec un halo, un backspin et un éclat d'étincelles. Événement 'fx:swish'. */
+   tire vers #fx-hoop avec un halo, un backspin et un éclat d'étincelles. Un clic hors des zones interactives fait rebondir le ballon avec gravité, amortissement et squash à l'impact. Événements 'fx:swish' et 'fx:shoot'. */
 (function () {
   if (typeof THREE === 'undefined') return;
   const canvas = document.getElementById('bg-canvas');
@@ -237,15 +237,35 @@
   addEventListener('load', measure);
   if (window.ResizeObserver) new ResizeObserver(measure).observe(document.body);
 
-  /* ---------- Machine à états : dribble -> shot -> drop -> ret ---------- */
+  /* ---------- Machine à états : dribble ↔ bounce → shot → drop → ret ---------- */
   let st = 'dribble', st0 = 0, lastT = 0;
   let sx0 = 0, sy0 = 0, sr = 30;
+  let bv = 0, imp = 0;                            // vitesse verticale, intensité de l'impact
+  const G = 1900;                                  // gravité en px/s²
   const bp = { x: 0, y: 0, r: 30 };
   addEventListener('fx:shoot', () => {
-    if (st === 'dribble' && hoopEl && Hm.w > 0) {
+    if ((st === 'dribble' || st === 'bounce') && hoopEl && Hm.w > 0) {
       st = 'shot'; st0 = lastT; sx0 = bp.x; sy0 = bp.y; sr = bp.r;
     }
   });
+
+  /* Clic (hors liens, boutons, champs, cartes et panneaux) : le ballon rebondit.
+     L'impulsion dépend de la hauteur du dribble, l'amortissement rend le geste naturel. */
+  addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || !ball.visible || st === 'shot' || st === 'drop') return;
+    const el = e.target;
+    if (el && el.closest && el.closest('a,button,input,textarea,select,label,[role="button"],.project-card,#project-modal,#sidebar,#top-actions,#fx-hud,#fx-pal')) return;
+    // On remplace le dribble par un vrai rebond : hauteur cible calculée depuis la
+    // position actuelle, pour une impulsion douce même si le ballon est déjà en l'air.
+    const r = anchor.getBoundingClientRect();
+    const R = Math.max(22, Math.min(50, r.width * 0.18));
+    const curH = Math.max(0, r.bottom - 6 - R - bp.y);
+    const target = Math.max(curH + 45, Math.min(r.height * 0.55, 190) * 1.4);
+    bv = -Math.sqrt(2 * G * Math.max(45, target - curH));
+    imp = 1;
+    st = 'bounce'; st0 = lastT;
+  }, { passive: true });
+
   const ease = (u) => u * u * (3 - 2 * u);
 
   function frame(t, dt) {
@@ -268,7 +288,7 @@
         return frame(t, 0);
       }
       const u = (el % 0.8) / 0.8, h = 4 * u * (1 - u);
-      bp.x = cx + Math.sin(el * 0.6) * a.width * 0.12;
+      bp.x = cx + Math.sin(t * 0.6) * a.width * 0.12;   // phase continue : aucun saut latéral
       bp.y = floorY - h * drib;
       bp.r = R;
       squash = h < 0.06 ? 0.86 + 0.14 * (h / 0.06) : 1;
@@ -300,6 +320,22 @@
       bp.x = Hm.x; bp.y = Hm.y - sY + 14 * u;
       k = 1 - ease(u); bp.r = sr * 0.6; shOp = 0;
       if (u >= 1) { st = 'ret'; st0 = t; }
+    } else if (st === 'bounce') {
+      bv += G * dt;
+      bp.y += bv * dt;
+      bp.x = cx + Math.sin(t * 0.6) * a.width * 0.12;  // même dérive que le dribble
+      bp.r = R;
+      const above = Math.max(0, floorY - bp.y);
+      if (bp.y >= floorY) {
+        bp.y = floorY;
+        if (bv > 130) { bv = -bv * 0.62; imp = 1; }   // rebonds successifs de plus en plus bas
+        else { bv = 0; st = 'dribble'; st0 = t; }     // reprise du dribble sans coupure
+      }
+      imp = Math.max(0, imp - dt * 4.5);
+      squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(bv) / 6000);
+      shOp = Math.max(0.12, 1 - above / 260);
+      ball.rotation.y += dt * (1.6 + Math.abs(bv) / 600);
+      ball.rotation.z += dt * 0.5;
     } else {
       const u = Math.min(1, Math.max(0, (el - 0.5) / 0.6));
       bp.x = cx; bp.y = floorY; bp.r = R;
