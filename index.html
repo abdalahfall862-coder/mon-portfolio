@@ -203,23 +203,6 @@
                 <path class="cl" d="M220 40H280"/>
                 <circle class="hoopc" cx="250" cy="52" r="8"/>
             </symbol>
-            <!-- Icônes UI (remplacent les emojis) -->
-            <symbol id="ico-ball" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
-                <path d="M3 12h18M12 3c3 2.6 3 15.4 0 18M12 3c-3 2.6-3 15.4 0 18" fill="none" stroke="currentColor" stroke-width="1.6"/>
-            </symbol>
-            <symbol id="ico-court" viewBox="0 0 24 24">
-                <rect x="2.5" y="4.5" width="19" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
-                <path d="M12 4.5v15" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                <circle cx="12" cy="12" r="3.1" fill="none" stroke="currentColor" stroke-width="1.5"/>
-            </symbol>
-            <symbol id="ico-moon" viewBox="0 0 24 24">
-                <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            </symbol>
-            <symbol id="ico-sun" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
-                <path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </symbol>
         </defs>
     </svg>
 
@@ -229,7 +212,7 @@
     <!-- Boutons Fixes Supérieurs -->
     <div id="top-actions" class="fixed z-[120] flex items-center gap-2 sm:gap-3">
         <button id="theme-toggle" aria-label="Activer le mode sombre" class="px-3 py-2.5 sm:px-4 bg-white/75 dark:bg-slate-900/70 text-xs sm:text-sm font-bold rounded-2xl border border-amber-900/20 dark:border-slate-700/60 shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2 min-h-[44px]">
-            <svg id="theme-icon" class="w-4 h-4" aria-hidden="true"><use href="#ico-moon"></use></svg>
+            <span id="theme-icon" aria-hidden="true">🌙</span>
             <span id="theme-label" class="hidden sm:inline">Mode sombre</span>
         </button>
         <button id="menu-btn" class="lg:hidden bg-hoop text-white p-3 rounded-2xl shadow-lg transition-all hover:opacity-90 active:scale-95 flex items-center justify-center">
@@ -265,7 +248,7 @@
         </nav>
 
         <div class="mt-auto pt-6 border-t border-slate-800">
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center flex items-center justify-center gap-2"><svg class="w-3.5 h-3.5 text-hoop" aria-hidden="true"><use href="#ico-court"></use></svg> Dakar, Sénégal</p>
+            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">📍 Dakar, Sénégal</p>
         </div>
     </aside>
 
@@ -278,8 +261,7 @@
             <div class="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
                 <div>
                     <div class="fx-in inline-flex items-center gap-2.5 mb-6 px-4 py-2 rounded-full panel2 text-[11px] font-bold uppercase tracking-widest ink">
-                        <svg class="w-3.5 h-3.5 text-hoop" aria-hidden="true"><use href="#ico-ball"></use></svg>
-                        En recherche de projets
+                        💼 En recherche de projets
                     </div>
                     <h1 class="reveal hero-title font-display ink mb-6">
                         Développeur <br><span class="text-hoop">Full-stack</span>
@@ -666,22 +648,22 @@
 
                     <div class="grid sm:grid-cols-2 gap-5 sm:gap-6">
                         <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
-                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">1</span><span class="kick"><svg class="inline-block w-3.5 h-3.5 text-hoop align-[-2px]" aria-hidden="true"><use href="#ico-court"></use></svg> Défense</span></div>
+                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">1</span><span class="kick">🛡️ Défense</span></div>
                             <h3 class="font-display text-2xl ink mb-2">Sécurité par défaut</h3>
                             <p class="ink2 text-xs leading-relaxed">Authentification, validation des entrées et gestion des rôles pensées dès la conception, pas ajoutées après coup.</p>
                         </div>
                         <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
-                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">2</span><span class="kick"><svg class="inline-block w-3.5 h-3.5 text-hoop align-[-2px]" aria-hidden="true"><use href="#ico-court"></use></svg> Fondamentaux</span></div>
+                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">2</span><span class="kick">🧩 Fondamentaux</span></div>
                             <h3 class="font-display text-2xl ink mb-2">Typage strict</h3>
                             <p class="ink2 text-xs leading-relaxed">TypeScript en mode strict de bout en bout, pour détecter les erreurs avant qu'elles n'atteignent la production.</p>
                         </div>
                         <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
-                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">3</span><span class="kick"><svg class="inline-block w-3.5 h-3.5 text-hoop align-[-2px]" aria-hidden="true"><use href="#ico-court"></use></svg> Playbook</span></div>
+                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">3</span><span class="kick">📚 Playbook</span></div>
                             <h3 class="font-display text-2xl ink mb-2">Documentation systématique</h3>
                             <p class="ink2 text-xs leading-relaxed">Chaque API expose sa documentation Swagger/OpenAPI pour être utilisable immédiatement par une équipe front-end.</p>
                         </div>
                         <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
-                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">4</span><span class="kick"><svg class="inline-block w-3.5 h-3.5 text-hoop align-[-2px]" aria-hidden="true"><use href="#ico-court"></use></svg> Franchise player</span></div>
+                            <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">4</span><span class="kick">🎯 Franchise player</span></div>
                             <h3 class="font-display text-2xl ink mb-2">Autonomie complète</h3>
                             <p class="ink2 text-xs leading-relaxed">De la modélisation des données au déploiement cloud (Render, Vercel), je porte mes projets de bout en bout.</p>
                         </div>
@@ -701,7 +683,7 @@
                     <div><input type="email" name="email" placeholder="VOTRE EMAIL..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold transition-all duration-300"></div>
                     <div><textarea name="message" placeholder="VOTRE MESSAGE..." rows="4" required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold transition-all duration-300"></textarea></div>
                     <button type="submit" class="w-full bg-hoop text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] hover:opacity-95 transition-all active:scale-98 shadow-xl shadow-orange-700/30">
-                        <svg class="inline-block w-4 h-4 align-[-3px]" aria-hidden="true"><use href="#ico-court"></use></svg> Tirer au panier...
+                        🏀 Tirer au panier...
                     </button>
                     <p id="form-feedback" class="hidden text-xs font-bold text-emerald-400 text-center pt-1">Message prêt à être envoyé — merci !</p>
                 </form>

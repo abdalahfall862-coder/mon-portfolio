@@ -7,7 +7,7 @@ const themeLabel = document.getElementById('theme-label');
 
 function syncThemeUI() {
     const isDark = document.documentElement.classList.contains('dark');
-    themeIcon.querySelector('use').setAttribute('href', isDark ? '#ico-sun' : '#ico-moon');
+    themeIcon.textContent = isDark ? '☀️' : '🌙';
     themeLabel.textContent = isDark ? 'Mode clair' : 'Mode sombre';
     themeToggle.setAttribute('aria-label', isDark ? 'Activer le mode clair' : 'Activer le mode sombre');
 }

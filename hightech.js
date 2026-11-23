@@ -23,8 +23,6 @@
   #fx-hud .pill{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.5rem .8rem;border-radius:999px;
     background:rgba(255,255,255,.7);color:#334155;border:1px solid rgba(148,163,184,.35);backdrop-filter:blur(14px)}
   .dark #fx-hud .pill{background:rgba(15,23,42,.65);color:#cbd5e1;border-color:rgba(51,65,85,.7)}
-  #fx-hud .mark{display:inline-block;width:12px;height:2px;border-radius:2px;background:#ff6a13;margin-right:.5rem;vertical-align:3px}
-  #fx-hud .pill svg{width:11px;height:11px;vertical-align:-1px;color:#ff6a13}
   #fx-hud button.pill{cursor:pointer;transition:transform .2s}
   #fx-hud button.pill:hover{transform:translateY(-2px)}
   #fx-toast{position:fixed;right:1rem;bottom:4.2rem;z-index:95;display:none;font:700 11px ui-monospace,Menlo,monospace;
@@ -113,8 +111,8 @@
   /* ---------- HUD système ---------- */
   const hud = document.createElement('div');
   hud.id = 'fx-hud';
-  hud.innerHTML = '<div class="pill"><span class="mark"></span>SYS ONLINE · DKR <span id="fx-time">--:--:--</span> · <span id="fx-scroll">0</span>%</div>' +
-    '<div class="pill"><svg aria-hidden="true"><use href="#ico-court"></use></svg> <span id="fx-score">0</span> PTS</div>' +
+  hud.innerHTML = '<div class="pill">🖥️ SYS ONLINE · DKR <span id="fx-time">--:--:--</span> · <span id="fx-scroll">0</span>%</div>' +
+    '<div class="pill">🏀 <span id="fx-score">0</span> PTS</div>' +
     '<button class="pill" id="fx-pal-btn" aria-label="Ouvrir la palette de commandes">⌘K · Commandes</button>';
   document.body.appendChild(hud);
   const tEl = $('#fx-time'), sEl = $('#fx-scroll');
