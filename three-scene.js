@@ -296,10 +296,11 @@
     ball.visible = shadow.visible = glow.visible = onScreen;
     if (!onScreen) { burst.visible = false; return; }
 
-    const R = Math.max(22, Math.min(50, a.width * 0.18));
+    // Le rayon du ballon est calibré sur le cercle : diamètre du ballon ≈ 53 % du cercle.
+    const R = Math.max(12, Math.min(30, (Hm.w || a.width * 0.5) * 0.185));
     const cx = a.left + a.width / 2;
     const floorY = a.bottom - 6 - R;
-    const drib = Math.min(a.height * 0.55, 190);
+    const drib = Math.min(a.height * 0.45, R * 6);
     const el = t - st0;
     let k = 1, squash = 1, shOp = 1;
 
@@ -317,7 +318,7 @@
       const pass = Math.min(1, u / 0.42);
       const fall = Math.max(0, (u - 0.42) / 0.58);
       bp.x = Hm.x + Math.sin(u * Math.PI * 2) * 2 * (1 - u);
-      bp.y = Hm.y - sY + Hm.w * (0.06 + 0.5 * pass + 0.9 * fall * fall);
+      bp.y = Hm.y - sY + Hm.w * (0.04 + 0.18 * pass + 0.4 * fall * fall);
       bp.r = scoreR * (1 - 0.1 * pass - 0.2 * fall);
       squash = 1 + 0.09 * Math.sin(pass * Math.PI);   // léger étirement en traversant le filet
       k = 1 - ease(Math.max(0, (u - 0.6) / 0.4));
@@ -345,7 +346,7 @@
 
       // Le ballon redescend au niveau du cercle : on vérifie s'il passe dedans.
       if (st === 'bounce' && velY > 0 && prevY <= hy && bp.y > hy) {
-        if (Math.abs(bp.x - hx) <= Hm.w * 0.26) {
+        if (Math.abs(bp.x - hx) <= Hm.w * 0.16) {
           bp.x = hx; scoreR = bp.r;
           st = 'drop'; st0 = t;
           spawnBurst(hx, hy);
