@@ -184,7 +184,7 @@ const projectsData = {
         ],
         challenge: "Conciler la capture et l'analyse audio en temps réel avec une expérience fluide sur mobile, tout en maintenant une synchronisation fiable hors-ligne et en donnant à l'équipe administrative une vision claire de la progression des apprenants.",
         links: [
-            { label: "Télécharger sur l'App Store", url: "https://apps.apple.com/", variant: "primary" },
+            { label: "Télécharger sur l'App Store", url: "https://apps.apple.com/sn/app/tarteel/id6795987191", variant: "primary" },
             { label: "Disponible sur Google Play", url: "https://play.google.com/store", variant: "primary" },
             { label: "Dashboard admin web", url: "https://example.com/admin", variant: "secondary" }
         ]
