@@ -160,7 +160,7 @@ const projectsData = {
     tarteel: {
         title: "Tarteel",
         badge: "Mobile · Apprentissage du Coran",
-        image: "assets/tarteel.svg",
+        image: "assets/tarteel.PNG",
         type: "Application iOS & Android",
         status: "Disponible sur les deux stores",
         role: "Conception produit, développement mobile et dashboard admin web",
