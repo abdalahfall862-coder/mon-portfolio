@@ -243,7 +243,7 @@
   /* ---------- Machine à états : dribble → bounce → (drop | miss) → ret/dribble ---------- */
   let st = 'dribble', st0 = 0, lastT = 0;
   let scoreR = 30;                                // rayon du ballon au moment du panier
-  let bvx = 0, bvy = 0;                           // vitesses du rebond directionnel
+  let velX = 0, velY = 0;                         // vitesses du rebond directionnel
   let imp = 0;                                    // intensité de l'impact
   const G = 1900;                                  // gravité en px/s²
   const bp = { x: 0, y: 0, r: 30 };
@@ -262,8 +262,8 @@
     // Durée de vol assez longue pour que le sommet soit au-dessus du cercle :
     // le ballon arrive donc en descendance, comme un vrai tir au panier.
     const T = Math.max(0.78, Math.min(1.15, Math.abs(targetX - bp.x) / 520));
-    bvx = (targetX - bp.x) / T;
-    bvy = (hy - bp.y - 0.5 * G * T * T) / T;
+    velX = (targetX - bp.x) / T;
+    velY = (hy - bp.y - 0.5 * G * T * T) / T;
     imp = 1;
     st = 'bounce'; st0 = lastT;
   }
@@ -320,13 +320,13 @@
     } else if (st === 'bounce' || st === 'miss') {
       const hx = Hm.x, hy = Hm.y - sY;
       const prevY = bp.y;
-      bvy += G * dt;
-      bp.x += bvx * dt;
-      bp.y += bvy * dt;
+      velY += G * dt;
+      bp.x += velX * dt;
+      bp.y += velY * dt;
       bp.r = R;
 
       // Le ballon redescend au niveau du cercle : on vérifie s'il passe dedans.
-      if (st === 'bounce' && bvy > 0 && prevY <= hy && bp.y > hy) {
+      if (st === 'bounce' && velY > 0 && prevY <= hy && bp.y > hy) {
         if (Math.abs(bp.x - hx) <= Hm.w * 0.26) {
           bp.x = hx; scoreR = bp.r;
           st = 'drop'; st0 = t;
@@ -336,8 +336,8 @@
         } else {
           // Cercle raté : le ballon rebondit dessus puis retombe au sol.
           st = 'miss'; st0 = t;
-          bvy = -Math.abs(bvy) * 0.35;
-          bvx = (bp.x < hx ? -1 : 1) * 110;
+          velY = -Math.abs(velY) * 0.35;
+          velX = (bp.x < hx ? -1 : 1) * 110;
           hoopEl.classList.remove('swish', 'rimhit'); void hoopEl.offsetWidth; hoopEl.classList.add('rimhit');
         }
       }
@@ -345,9 +345,9 @@
 
       const above = Math.max(0, floorY - bp.y);
       imp = Math.max(0, imp - dt * 4.5);
-      squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(bvy) / 6000);
+      squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(velY) / 6000);
       shOp = Math.max(0.12, 1 - above / 260);
-      ball.rotation.y += dt * (1.6 + Math.abs(bvy) / 600);
+      ball.rotation.y += dt * (1.6 + Math.abs(velY) / 600);
       ball.rotation.z += dt * 0.5;
     } else {
       const u = Math.min(1, Math.max(0, (el - 0.5) / 0.6));
