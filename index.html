@@ -153,6 +153,22 @@
         @media (min-width: 640px) { .hero-title { font-size: clamp(3.5rem, 8vw, 5.5rem); } }
         @media (min-width: 1024px) { .hero-title { font-size: clamp(3rem, 4.6vw, 7rem); } }
 
+        /* Typographie fluide : aucun texte coupé ni débordant, de 320px à 4K */
+        .font-display, .kick { overflow-wrap: break-word; }
+        .kick { font-size: clamp(10px, 2.6vw, 11px); line-height: 1.35; letter-spacing: .14em; }
+        @media (min-width: 640px) { .kick { font-size: 11px; letter-spacing: .22em; } }
+
+        .section-title { font-size: clamp(2rem, 9vw, 3.75rem); line-height: 1; text-wrap: balance; }
+        .section-title .bar { width: 1.5rem; margin-right: .75rem; flex-shrink: 0; }
+        @media (min-width: 640px) { .section-title .bar { width: 2.5rem; margin-right: 1rem; } }
+
+        .contact-title { font-size: clamp(2.5rem, 10vw, 6rem); line-height: .95; text-wrap: balance; overflow-wrap: break-word; }
+
+        .match-label { letter-spacing: .1em; }
+        @media (min-width: 640px) { .match-label { letter-spacing: .2em; } }
+
+        .tile { font-size: clamp(9px, 2.6vw, 10px); overflow-wrap: anywhere; }
+
         /* Décors de terrain : jamais plus larges que le viewport */
         .court-deco { width: min(var(--deco-w, 560px), 115vw); max-width: none; }
 
@@ -316,8 +332,8 @@
             <div class="relative z-10 max-w-6xl mx-auto">
                 <div class="reveal mb-12">
                     <p class="kick mb-2">// Zone 02 · L'effectif</p>
-                    <h2 class="font-display text-4xl sm:text-6xl ink flex items-center"><span class="w-10 h-1.5 bg-hoop mr-4 rounded-full"></span> Compétences</h2>
-                    <p class="ink2 text-sm max-w-2xl mt-3 font-medium">Cinq postes, une seule équipe : une stack complète, du front-end à l'infrastructure de données, avec une attention particulière portée à la sécurité et à la scalabilité. <span class="text-hoop font-bold">★ = titulaire</span>.</p>
+                    <h2 class="font-display section-title ink flex items-center"><span class="bar h-1.5 bg-hoop rounded-full"></span> Compétences</h2>
+                    <p class="ink2 text-sm sm:text-base max-w-2xl mt-3 font-medium">Cinq postes, une seule équipe : une stack complète, du front-end à l'infrastructure de données, avec une attention particulière portée à la sécurité et à la scalabilité. <span class="text-hoop font-bold">★ = titulaire</span>.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -409,14 +425,14 @@
             <div class="relative z-10 max-w-6xl mx-auto">
                 <div class="reveal mb-12">
                     <p class="kick mb-2">// Zone 03 · Highlights du match</p>
-                    <h2 class="font-display text-4xl sm:text-6xl ink flex items-center"><span class="w-10 h-1.5 bg-hoop mr-4 rounded-full"></span> Mes Réalisations</h2>
-                    <p class="ink2 text-sm max-w-2xl mt-3 font-medium">Cliquez sur une carte pour ouvrir la fiche détaillée du projet : fonctionnalités, stack technique et défis rencontrés.</p>
+                    <h2 class="font-display section-title ink flex items-center"><span class="bar h-1.5 bg-hoop rounded-full"></span> Mes Réalisations</h2>
+                    <p class="ink2 text-sm sm:text-base max-w-2xl mt-3 font-medium">Cliquez sur une carte pour ouvrir la fiche détaillée du projet : fonctionnalités, stack technique et défis rencontrés.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8">
                     <!-- Projet 1 -->
                     <article class="project-card reveal group panel p-4 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer lg:col-span-2" data-project="taskmanager" role="button" tabindex="0" aria-label="Voir les détails du projet Task-manager">
-                        <div class="flex items-center justify-between px-3 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 01</span><span class="led-tag">FINAL</span></div>
+                        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-3 pb-3"><span class="font-led match-label text-[10px] font-bold text-hoop">MATCH 01</span><span class="led-tag">FINAL</span></div>
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/my-app.jpeg" alt="Task-manager" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
@@ -437,7 +453,7 @@
 
                     <!-- Projet 2 -->
                     <article class="project-card reveal group panel p-4 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer lg:col-span-4" style="transition-delay:80ms" data-project="portfolio" role="button" tabindex="0" aria-label="Voir les détails du projet Portfolio Pro">
-                        <div class="flex items-center justify-between px-3 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 02</span><span class="led-tag">FINAL</span></div>
+                        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-3 pb-3"><span class="font-led match-label text-[10px] font-bold text-hoop">MATCH 02</span><span class="led-tag">FINAL</span></div>
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/cv-web.png" alt="Portfolio Pro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
@@ -458,7 +474,7 @@
 
                     <!-- Projet 3 (vedette / MVP) -->
                     <article class="project-card reveal group panel p-5 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out lg:col-span-6 cursor-pointer" data-project="api" role="button" tabindex="0" aria-label="Voir les détails du projet API Secure and Scalable">
-                        <div class="flex items-center justify-between px-2 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 03 · PRIME TIME · LIVE</span><span class="led-tag">MVP</span></div>
+                        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-2 pb-3"><span class="font-led match-label text-[10px] font-bold text-hoop">MATCH 03 · PRIME TIME · LIVE</span><span class="led-tag">MVP</span></div>
                         <div class="h-64 sm:h-72 rounded-[2rem] mb-6 overflow-hidden relative bg-slate-200 dark:bg-slate-800 shadow-inner">
                             <img src="assets/api-swagger.png" alt="Mon API - Dexchange Infrastructure" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent"></div>
@@ -486,7 +502,7 @@
 
                     <!-- Projet 4 -->
                     <article class="project-card reveal group panel p-4 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer lg:col-span-3" data-project="methshop" role="button" tabindex="0" aria-label="Voir les détails du projet Meth-Shop">
-                        <div class="flex items-center justify-between px-3 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 04 · LIVE</span><span class="led-tag">FINAL</span></div>
+                        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-3 pb-3"><span class="font-led match-label text-[10px] font-bold text-hoop">MATCH 04 · LIVE</span><span class="led-tag">FINAL</span></div>
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/e-commerce.jpeg" alt="Meth-Shop E-commerce" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
@@ -509,7 +525,7 @@
 
                     <!-- Projet 5 : Tarteel -->
                     <article class="project-card reveal group panel p-4 rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer lg:col-span-3" data-project="tarteel" role="button" tabindex="0" aria-label="Voir les détails du projet Tarteel" style="transition-delay:120ms">
-                        <div class="flex items-center justify-between px-3 pb-3"><span class="font-led text-[10px] font-bold tracking-widest text-hoop">MATCH 05</span><span class="led-tag">LIVE</span></div>
+                        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-3 pb-3"><span class="font-led match-label text-[10px] font-bold text-hoop">MATCH 05</span><span class="led-tag">LIVE</span></div>
                         <div class="h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
                             <img src="assets/tarteel.svg" alt="Tarteel — application d'apprentissage du Coran" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
@@ -549,7 +565,7 @@
             <div class="relative z-10 max-w-4xl mx-auto">
                 <div class="reveal mb-14">
                     <p class="kick mb-2">// Zone 04 · La saison</p>
-                    <h2 class="font-display text-4xl sm:text-6xl ink flex items-center"><span class="w-10 h-1.5 bg-hoop mr-4 rounded-full"></span> Mon Parcours</h2>
+                    <h2 class="font-display section-title ink flex items-center"><span class="bar h-1.5 bg-hoop rounded-full"></span> Mon Parcours</h2>
                 </div>
 
                 <div class="relative border-l-4 border-white/85 dark:border-white/20 ml-4 md:ml-6 space-y-10">
@@ -613,8 +629,8 @@
             <div class="relative z-10 max-w-6xl mx-auto">
                 <div class="reveal mb-12">
                     <p class="kick mb-2">// Zone 05 · Le playbook</p>
-                    <h2 class="font-display text-4xl sm:text-6xl ink flex items-center"><span class="w-10 h-1.5 bg-hoop mr-4 rounded-full"></span> Ma Méthode</h2>
-                    <p class="ink2 text-sm max-w-2xl mt-3 font-medium">Au-delà des technologies, voici les principes qui guident chacun de mes projets, de la conception au déploiement.</p>
+                    <h2 class="font-display section-title ink flex items-center"><span class="bar h-1.5 bg-hoop rounded-full"></span> Ma Méthode</h2>
+                    <p class="ink2 text-sm sm:text-base max-w-2xl mt-3 font-medium">Au-delà des technologies, voici les principes qui guident chacun de mes projets, de la conception au déploiement.</p>
                 </div>
 
                 <div class="grid lg:grid-cols-[minmax(0,380px)_1fr] gap-8 items-start">
@@ -650,22 +666,22 @@
                         <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">1</span><span class="kick">🛡️ Défense</span></div>
                             <h3 class="font-display text-2xl ink mb-2">Sécurité par défaut</h3>
-                            <p class="ink2 text-xs leading-relaxed">Authentification, validation des entrées et gestion des rôles pensées dès la conception, pas ajoutées après coup.</p>
+                            <p class="ink2 text-xs sm:text-sm leading-relaxed">Authentification, validation des entrées et gestion des rôles pensées dès la conception, pas ajoutées après coup.</p>
                         </div>
                         <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">2</span><span class="kick">🧩 Fondamentaux</span></div>
                             <h3 class="font-display text-2xl ink mb-2">Typage strict</h3>
-                            <p class="ink2 text-xs leading-relaxed">TypeScript en mode strict de bout en bout, pour détecter les erreurs avant qu'elles n'atteignent la production.</p>
+                            <p class="ink2 text-xs sm:text-sm leading-relaxed">TypeScript en mode strict de bout en bout, pour détecter les erreurs avant qu'elles n'atteignent la production.</p>
                         </div>
                         <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">3</span><span class="kick">📚 Playbook</span></div>
                             <h3 class="font-display text-2xl ink mb-2">Documentation systématique</h3>
-                            <p class="ink2 text-xs leading-relaxed">Chaque API expose sa documentation Swagger/OpenAPI pour être utilisable immédiatement par une équipe front-end.</p>
+                            <p class="ink2 text-xs sm:text-sm leading-relaxed">Chaque API expose sa documentation Swagger/OpenAPI pour être utilisable immédiatement par une équipe front-end.</p>
                         </div>
                         <div class="reveal panel rounded-[1.75rem] p-6 hover:-translate-y-1 transition-all duration-300">
                             <div class="flex items-center justify-between mb-4"><span class="w-10 h-10 rounded-full bg-hoop text-white font-led font-bold flex items-center justify-center">4</span><span class="kick">🎯 Franchise player</span></div>
                             <h3 class="font-display text-2xl ink mb-2">Autonomie complète</h3>
-                            <p class="ink2 text-xs leading-relaxed">De la modélisation des données au déploiement cloud (Render, Vercel), je porte mes projets de bout en bout.</p>
+                            <p class="ink2 text-xs sm:text-sm leading-relaxed">De la modélisation des données au déploiement cloud (Render, Vercel), je porte mes projets de bout en bout.</p>
                         </div>
                     </div>
                 </div>
@@ -677,7 +693,7 @@
             <svg class="court-svg court-deco" style="--deco-w:620px;left:-160px;top:-60px;opacity:.5" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
             <div class="max-w-4xl mx-auto relative z-10 text-center">
                 <p class="kick !text-orange-400 mb-3">// Zone 06 · Lancer franc</p>
-                <h2 class="reveal font-display text-5xl sm:text-6xl md:text-8xl mb-10 leading-none">Parlez-moi de votre projet...</h2>
+                <h2 class="reveal font-display contact-title mb-10">Parlez-moi de votre projet...</h2>
                 <form id="contact-form" class="reveal space-y-4 sm:space-y-5 max-w-xl mx-auto text-left">
                     <div><input type="text" name="name" placeholder="VOTRE NOM..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold uppercase tracking-wider transition-all duration-300"></div>
                     <div><input type="email" name="email" placeholder="VOTRE EMAIL..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold transition-all duration-300"></div>
@@ -723,15 +739,15 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <div class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4">
                         <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Rôle</p>
-                        <p id="modal-role" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+                        <p id="modal-role" class="text-sm font-bold text-slate-800 dark:text-slate-200"></p>
                     </div>
                     <div class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4">
                         <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Type</p>
-                        <p id="modal-type" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+                        <p id="modal-type" class="text-sm font-bold text-slate-800 dark:text-slate-200"></p>
                     </div>
                     <div class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4 col-span-2 sm:col-span-2">
                         <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Statut</p>
-                        <p id="modal-status" class="text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400"></p>
+                        <p id="modal-status" class="text-sm font-bold text-emerald-600 dark:text-emerald-400"></p>
                     </div>
                 </div>
 

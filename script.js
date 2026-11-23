@@ -215,7 +215,7 @@ function renderProject(id) {
     featuresList.innerHTML = '';
     data.features.forEach(f => {
         const li = document.createElement('li');
-        li.className = 'flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed';
+        li.className = 'flex items-start gap-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed';
         li.innerHTML = `<span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-cobalt-500 flex-shrink-0"></span><span>${f}</span>`;
         featuresList.appendChild(li);
     });
@@ -236,7 +236,7 @@ function renderProject(id) {
         archWrap.classList.remove('hidden');
         data.architecture.forEach(a => {
             const li = document.createElement('li');
-            li.className = 'flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed';
+            li.className = 'flex items-start gap-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed';
             li.innerHTML = `<span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0"></span><span>${a}</span>`;
             archList.appendChild(li);
         });
