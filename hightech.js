@@ -24,6 +24,7 @@
     background:rgba(255,255,255,.7);color:#334155;border:1px solid rgba(148,163,184,.35);backdrop-filter:blur(14px)}
   .dark #fx-hud .pill{background:rgba(15,23,42,.65);color:#cbd5e1;border-color:rgba(51,65,85,.7)}
   #fx-hud .live{display:inline-block;width:6px;height:6px;border-radius:50%;background:#10b981;margin-right:.5rem;box-shadow:0 0 8px #10b981}
+  #fx-hud .pill svg{width:11px;height:11px;vertical-align:-1px;color:#ff6a13}
   #fx-hud button.pill{cursor:pointer;transition:transform .2s}
   #fx-hud button.pill:hover{transform:translateY(-2px)}
   #fx-toast{position:fixed;right:1rem;bottom:4.2rem;z-index:95;display:none;font:700 11px ui-monospace,Menlo,monospace;
@@ -113,7 +114,7 @@
   const hud = document.createElement('div');
   hud.id = 'fx-hud';
   hud.innerHTML = '<div class="pill"><span class="live"></span>SYS ONLINE · DKR <span id="fx-time">--:--:--</span> · <span id="fx-scroll">0</span>%</div>' +
-    '<div class="pill">🏀 <span id="fx-score">0</span> PTS</div>' +
+    '<div class="pill"><svg aria-hidden="true"><use href="#ico-court"></use></svg> <span id="fx-score">0</span> PTS</div>' +
     '<button class="pill" id="fx-pal-btn" aria-label="Ouvrir la palette de commandes">⌘K · Commandes</button>';
   document.body.appendChild(hud);
   const tEl = $('#fx-time'), sEl = $('#fx-scroll');
@@ -135,7 +136,7 @@
   ].map(([l, id]) => ({ l: 'Aller à · ' + l, k: 'Section', run: () => go(id) }));
   [['Task-manager', 'taskmanager'], ['Portfolio Pro', 'portfolio'], ['API Secure & Scalable', 'api'], ['Meth-Shop', 'methshop'], ['Tarteel', 'tarteel']]
     .forEach(([l, id]) => cmds.push({ l: 'Ouvrir le projet · ' + l, k: 'Projet', run: () => { const c = $('[data-project="' + id + '"]'); if (c) c.click(); } }));
-  cmds.push({ l: 'Lancer un tir 🏀 (touche B)', k: 'Basket', run: () => dispatchEvent(new CustomEvent('fx:shoot')) });
+  cmds.push({ l: 'Lancer un tir (touche B)', k: 'Basket', run: () => dispatchEvent(new CustomEvent('fx:shoot')) });
   cmds.push({ l: 'Basculer le thème clair / sombre', k: 'Thème', run: () => { const b = $('#theme-toggle'); if (b) b.click(); } });
 
   const ov = document.createElement('div');
