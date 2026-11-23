@@ -2,8 +2,10 @@
    Texture générée en JS : cuir pleine grain, 8 panneaux, NBA Pro Seams à double profondeur
    (3 grands cercles perpendiculaires, coutures ~6,2 mm / max FIBA 6,35 mm), logoman NBA,
    script Wilson avec inline anthracite. Rendu PBR (MeshStandardMaterial + bump map),
-   ombre douce, caméra orthographique en pixels : le ballon dribble sur #fx-ball-anchor puis
-   tire vers #fx-hoop avec un halo, un backspin et un éclat d'étincelles. Un clic hors des zones interactives fait rebondir le ballon avec gravité, amortissement et squash à l'impact. Événements 'fx:swish' et 'fx:shoot'. */
+   ombre douce, caméra orthographique en pixels : le ballon dribble sur #fx-ball-anchor et
+   tire vers #fx-hoop uniquement sur demande (bouton, clic sur le panier, touche B), avec un
+   halo, un backspin et un éclat d'étincelles. Un clic ailleurs fait rebondir le ballon avec
+   gravité, amortissement et squash à l'impact. Événements 'fx:shoot' (entrée) et 'fx:swish' (sortie). */
 (function () {
   if (typeof THREE === 'undefined') return;
   const canvas = document.getElementById('bg-canvas');
@@ -222,7 +224,8 @@
     const sy = window.scrollY;
     const a = anchor.getBoundingClientRect();
     A = { l: a.left, t: a.top + sy, w: a.width, h: a.height };
-    if (hoopEl) { const r = hoopEl.getBoundingClientRect(); Hm = { x: r.left + r.width / 2, y: r.top + sy + r.height / 2, w: r.width }; }
+    // Le cercle est à 52% de la hauteur du SVG du panier (le reste est la planche et le bras).
+    if (hoopEl) { const r = hoopEl.getBoundingClientRect(); Hm = { x: r.left + r.width / 2, y: r.top + sy + r.height * 0.52, w: r.width }; }
   }
   function resize() {
     W = innerWidth; H = innerHeight;
@@ -243,10 +246,18 @@
   let bv = 0, imp = 0;                            // vitesse verticale, intensité de l'impact
   const G = 1900;                                  // gravité en px/s²
   const bp = { x: 0, y: 0, r: 30 };
-  addEventListener('fx:shoot', () => {
-    if ((st === 'dribble' || st === 'bounce') && hoopEl && Hm.w > 0) {
+  /* Tir manuel : bouton dédié, clic sur le panier, touche B ou palette ⌘K.
+     Plus aucun tir automatique : c'est l'utilisateur qui marque ses paniers. */
+  function shoot() {
+    if ((st === 'dribble' || st === 'bounce' || st === 'ret') && hoopEl && Hm.w > 0) {
       st = 'shot'; st0 = lastT; sx0 = bp.x; sy0 = bp.y; sr = bp.r;
+      bv = 0; imp = 0;
     }
+  }
+  addEventListener('fx:shoot', shoot);
+  ['fx-shoot-btn', 'fx-hoop'].forEach((id) => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener('click', shoot);
   });
 
   /* Clic (hors liens, boutons, champs, cartes et panneaux) : le ballon rebondit.
@@ -283,10 +294,6 @@
     let k = 1, squash = 1, shOp = 1;
 
     if (st === 'dribble') {
-      if (el >= 4 && hoopEl && Hm.w > 0) {
-        st = 'shot'; st0 = t; sx0 = bp.x; sy0 = bp.y; sr = bp.r;
-        return frame(t, 0);
-      }
       const u = (el % 0.8) / 0.8, h = 4 * u * (1 - u);
       bp.x = cx + Math.sin(t * 0.6) * a.width * 0.12;   // phase continue : aucun saut latéral
       bp.y = floorY - h * drib;
@@ -296,17 +303,17 @@
       ball.rotation.y += dt * 1.6; ball.rotation.x = 0.35; ball.rotation.z += dt * 0.3;
     } else if (st === 'shot') {
       const hx = Hm.x, hy = Hm.y - sY;
-      const u = Math.min(1, el / 1.3);
+      const u = Math.min(1, el / 1.25);
       // Parabole réelle : le sommet est avant le panier, le ballon redescend dans le cercle
       const dx = hx - sx0;
-      const arc = Math.max(120, Math.min(320, Math.abs(dx) * 0.55 + 70));
+      const arc = Math.max(140, Math.min(340, Math.abs(dx) * 0.6 + 80));
       const cxp = sx0 + dx * 0.42;
       const cyp = Math.min(sy0, hy) - arc;
       const iu = 1 - u;
       bp.x = iu * iu * sx0 + 2 * iu * u * cxp + u * u * hx;
       bp.y = iu * iu * sy0 + 2 * iu * u * cyp + u * u * hy;
-      bp.r = sr * (1 - 0.25 * u);
-      ball.rotation.z = -u * Math.PI * 3.4;   // backspin régulier et lisible
+      bp.r = sr * (1 - 0.22 * u);
+      ball.rotation.z = -u * Math.PI * 3.6;   // backspin régulier et lisible
       ball.rotation.y += dt * 2.4;
       shOp = Math.max(0, 1 - u * 3);
       if (u >= 1) {
@@ -316,9 +323,14 @@
         dispatchEvent(new CustomEvent('fx:swish'));
       }
     } else if (st === 'drop') {
-      const u = Math.min(1, el / 0.35);
-      bp.x = Hm.x; bp.y = Hm.y - sY + 14 * u;
-      k = 1 - ease(u); bp.r = sr * 0.6; shOp = 0;
+      // Le ballon traverse le cercle, fouille le filet puis disparaît en douceur.
+      const u = Math.min(1, el / 0.5);
+      bp.x = Hm.x + Math.sin(u * Math.PI * 2) * 3 * (1 - u);
+      bp.y = Hm.y - sY + Hm.w * (0.12 + 1.05 * u);
+      bp.r = sr * (1 - 0.3 * u);
+      k = 1 - ease(Math.max(0, (u - 0.55) / 0.45));
+      shOp = 0;
+      ball.rotation.z += dt * 2.2;
       if (u >= 1) { st = 'ret'; st0 = t; }
     } else if (st === 'bounce') {
       bv += G * dt;

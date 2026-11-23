@@ -112,9 +112,11 @@
   const hud = document.createElement('div');
   hud.id = 'fx-hud';
   hud.innerHTML = '<div class="pill">🖥️ SYS ONLINE · DKR <span id="fx-time">--:--:--</span> · <span id="fx-scroll">0</span>%</div>' +
-    '<div class="pill">🏀 <span id="fx-score">0</span> PTS</div>' +
+    '<div class="pill">🎯 <span id="fx-score">0</span> PTS</div>' +
+    '<button class="pill" id="fx-shoot-hud" aria-label="Tirer au panier">Tirer · B</button>' +
     '<button class="pill" id="fx-pal-btn" aria-label="Ouvrir la palette de commandes">⌘K · Commandes</button>';
   document.body.appendChild(hud);
+  $('#fx-shoot-hud').addEventListener('click', () => dispatchEvent(new CustomEvent('fx:shoot')));
   const tEl = $('#fx-time'), sEl = $('#fx-scroll');
   const clock = () => {
     tEl.textContent = new Date().toLocaleTimeString('fr-FR', { timeZone: 'Africa/Dakar', hour12: false });
@@ -134,7 +136,7 @@
   ].map(([l, id]) => ({ l: 'Aller à · ' + l, k: 'Section', run: () => go(id) }));
   [['Task-manager', 'taskmanager'], ['Portfolio Pro', 'portfolio'], ['API Secure & Scalable', 'api'], ['Meth-Shop', 'methshop'], ['Tarteel', 'tarteel']]
     .forEach(([l, id]) => cmds.push({ l: 'Ouvrir le projet · ' + l, k: 'Projet', run: () => { const c = $('[data-project="' + id + '"]'); if (c) c.click(); } }));
-  cmds.push({ l: 'Lancer un tir (touche B)', k: 'Basket', run: () => dispatchEvent(new CustomEvent('fx:shoot')) });
+  cmds.push({ l: 'Tirer au panier (clic sur le cercle ou touche B)', k: 'Basket', run: () => dispatchEvent(new CustomEvent('fx:shoot')) });
   cmds.push({ l: 'Basculer le thème clair / sombre', k: 'Thème', run: () => { const b = $('#theme-toggle'); if (b) b.click(); } });
 
   const ov = document.createElement('div');
