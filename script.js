@@ -201,8 +201,10 @@ function renderProject(id) {
     const data = projectsData[id];
     if (!data) return false;
 
-    document.getElementById('modal-image').src = data.image;
-    document.getElementById('modal-image').alt = data.title;
+    const modalImage = document.getElementById('modal-image');
+    modalImage.src = data.image;
+    modalImage.alt = data.title;
+    modalImage.classList.toggle('portrait', /tarteel/i.test(data.image));
     document.getElementById('modal-badge').textContent = data.badge;
     document.getElementById('modal-title').textContent = data.title;
     document.getElementById('modal-overview').textContent = data.overview;
