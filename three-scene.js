@@ -313,17 +313,29 @@
       shOp = 1 - h * 0.6;
       ball.rotation.y += dt * 1.6; ball.rotation.x = 0.35; ball.rotation.z += dt * 0.3;
     } else if (st === 'drop') {
-      // Le ballon s'engage dans le cercle, freine dans le filet, puis tombe.
-      const u = Math.min(1, el / 0.62);
-      const pass = Math.min(1, u / 0.42);
-      const fall = Math.max(0, (u - 0.42) / 0.58);
+      // Trois temps : le cercle avale le ballon, le filet le retient, puis il ressort.
+      const u = Math.min(1, el / 0.72);
+      let depth, sq;
+      if (u < 0.3) {
+        const v = u / 0.3;
+        depth = 0.14 * ease(v);
+        sq = 1 - 0.12 * Math.sin(v * Math.PI);        // compression dans le cercle
+      } else if (u < 0.62) {
+        const v = (u - 0.3) / 0.32;
+        depth = 0.14 + 0.18 * ease(v);
+        sq = 1 + 0.09 * Math.sin(v * Math.PI);        // étirement quand le filet le capture
+      } else {
+        const v = (u - 0.62) / 0.38;
+        depth = 0.32 + 0.42 * v * v;
+        sq = 1;
+      }
       bp.x = Hm.x + Math.sin(u * Math.PI * 2) * 2 * (1 - u);
-      bp.y = Hm.y - sY + Hm.w * (0.04 + 0.18 * pass + 0.4 * fall * fall);
-      bp.r = scoreR * (1 - 0.1 * pass - 0.2 * fall);
-      squash = 1 + 0.09 * Math.sin(pass * Math.PI);   // léger étirement en traversant le filet
-      k = 1 - ease(Math.max(0, (u - 0.6) / 0.4));
+      bp.y = Hm.y - sY + Hm.w * depth;
+      bp.r = scoreR * (1 - 0.08 * Math.min(1, u * 2) - 0.18 * Math.max(0, (u - 0.62) / 0.38));
+      squash = sq;
+      k = 1 - ease(Math.max(0, (u - 0.78) / 0.22));
       shOp = 0;
-      ball.rotation.z += dt * 2.4;
+      ball.rotation.z += dt * (u < 0.62 ? 3 : 1.4);  // le filet freine la rotation
       if (u >= 1) { st = 'ret'; st0 = t; }
     } else if (st === 'bounce' || st === 'miss') {
       const hx = Hm.x, hy = Hm.y - sY;
