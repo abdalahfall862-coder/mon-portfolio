@@ -186,7 +186,7 @@ const projectsData = {
         links: [
             { label: "Télécharger sur l'App Store", url: "https://apps.apple.com/sn/app/tarteel/id6795987191", variant: "primary" },
             { label: "Disponible sur Google Play", url: "https://play.google.com/store", variant: "primary" },
-            { label: "Voir la page de présentation", url: "https://claude.ai/code/artifact/93c81938-823e-42d5-858b-d5d143f28918", variant: "secondary" },
+            { label: "Voir la page de présentation", url: "https://tarteel.sn", variant: "secondary" },
             { label: "Dashboard admin web", url: "https://example.com/admin", variant: "secondary" }
         ]
     }
