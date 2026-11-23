@@ -91,7 +91,14 @@ const projectsData = {
         ],
         stack: ["Firebase Auth", "Firestore", "JavaScript ES6", "Tailwind CSS"],
         challenge: "Garantir une synchronisation fluide en temps réel entre plusieurs sessions ouvertes simultanément, sans latence perceptible ni conflit d'écriture sur les mêmes documents Firestore.",
-        links: [{ label: "Visiter le projet", url: "https://my-app-omega-one-21.vercel.app" }]
+        links: [{ label: "Visiter le projet", url: "https://my-app-omega-one-21.vercel.app" }],
+        card: {
+            match: "MATCH 01", tag: "FINAL", span: "lg:col-span-2",
+            imgAlt: "Task-manager", kick: "Application Web · Productivité",
+            desc: "Gestionnaire de tâches intelligent avec authentification Firebase, synchronisation en temps réel entre appareils et interface épurée pensée pour la productivité quotidienne.",
+            tags: [{ label: "Firebase", primary: true }, { label: "Tailwind / JS" }],
+            link: { label: "Visiter le projet →", url: "https://my-app-omega-one-21.vercel.app" }
+        }
     },
     portfolio: {
         title: "Portfolio Pro",
@@ -110,7 +117,14 @@ const projectsData = {
         ],
         stack: ["HTML5", "Tailwind CSS", "JavaScript vanilla"],
         challenge: "Obtenir un rendu premium et des animations fluides sans dépendre d'un framework front-end, afin de garder un temps de chargement minimal sur tous les appareils.",
-        links: [{ label: "Visiter le projet", url: "https://mon-portfolio-ten-topaz.vercel.app" }]
+        links: [{ label: "Visiter le projet", url: "https://mon-portfolio-ten-topaz.vercel.app" }],
+        card: {
+            match: "MATCH 02", tag: "FINAL", span: "lg:col-span-4", delay: "80ms",
+            imgAlt: "Portfolio Pro", kick: "Site Vitrine · UX/UI",
+            desc: "Vitrine personnelle haut de gamme avec micro-interactions fluides, mode sombre natif et structure UX pensée pour transformer les visiteurs en opportunités.",
+            tags: [{ label: "HTML / Tailwind", primary: true }, { label: "Responsive" }],
+            link: { label: "Visiter le projet →", url: "https://mon-portfolio-ten-topaz.vercel.app" }
+        }
     },
     api: {
         title: "API Secure & Scalable",
@@ -135,7 +149,23 @@ const projectsData = {
             "Middleware d'authentification JWT centralisé, appliqué par groupe de routes selon les rôles requis",
             "Swagger généré à partir des schémas de validation pour que la documentation reste toujours synchronisée avec le code"
         ],
-        challenge: "Concevoir une architecture suffisamment découplée pour absorber de nouveaux modules métier sans régression, tout en maintenant un niveau de sécurité strict sur chaque endpoint exposé."
+        challenge: "Concevoir une architecture suffisamment découplée pour absorber de nouveaux modules métier sans régression, tout en maintenant un niveau de sécurité strict sur chaque endpoint exposé.",
+        card: {
+            match: "MATCH 03 · PRIME TIME · LIVE", tag: "MVP", span: "lg:col-span-6",
+            featured: true, pad: "p-5", px: "px-2",
+            imgAlt: "Mon API - Dexchange Infrastructure",
+            imgWrap: "h-64 sm:h-72 rounded-[2rem] mb-6 overflow-hidden relative bg-slate-200 dark:bg-slate-800 shadow-inner",
+            extraOverlay: '<div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent"></div>',
+            kick: "Architecture Serveur & Algorithmie",
+            desc: "Architecture backend découplée et sécurisée, orchestrant des flux de données complexes à haute disponibilité. Typage strict de bout en bout, authentification par rôles et documentation Swagger interactive.",
+            tags: [
+                { label: "TypeScript", primary: true, small: true },
+                { label: "Node.js / Express", small: true },
+                { label: "TypeORM", small: true },
+                { label: "MongoDB", small: true },
+                { label: "JWT Auth", small: true }
+            ]
+        }
     },
     methshop: {
         title: "Meth-Shop",
@@ -155,7 +185,19 @@ const projectsData = {
         ],
         stack: ["Next.js", "MongoDB Atlas", "Stripe API", "JWT Auth", "Tailwind CSS", "Vercel"],
         challenge: "Synchroniser le panier entre le stockage local et le serveur pour éviter toute perte de données lors du checkout, tout en sécurisant le flux de paiement Stripe côté serveur.",
-        links: [{ label: "Visiter la boutique", url: "https://meth-shop.vercel.app" }]
+        links: [{ label: "Visiter la boutique", url: "https://meth-shop.vercel.app" }],
+        card: {
+            match: "MATCH 04 · LIVE", tag: "FINAL", span: "lg:col-span-3",
+            imgAlt: "Meth-Shop E-commerce", kick: "E-Commerce Full-Stack",
+            desc: "Boutique en ligne complète : catalogue filtrable, panier persistant, paiement sécurisé via Stripe, authentification JWT et dashboard admin. Déployée sur Vercel avec MongoDB Atlas.",
+            tags: [
+                { label: "Next.js", primary: true },
+                { label: "MongoDB Atlas" },
+                { label: "Stripe API" },
+                { label: "JWT Auth" }
+            ],
+            link: { label: "Visiter la boutique →", url: "https://meth-shop.vercel.app" }
+        }
     },
     tarteel: {
         title: "Tarteel",
@@ -187,9 +229,71 @@ const projectsData = {
             { label: "Disponible sur Google Play", url: "https://play.google.com/store", variant: "primary" },
             { label: "Voir la page de présentation", url: "https://tarteel.sn", variant: "secondary" },
             { label: "Dashboard admin web", url: "https://example.com/admin", variant: "secondary" }
-        ]
+        ],
+        card: {
+            match: "MATCH 05", tag: "LIVE", span: "lg:col-span-3", delay: "120ms",
+            imgAlt: "Tarteel — application d'apprentissage du Coran",
+            imgWrap: "h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-gradient-to-br from-orange-500/20 via-amber-500/5 to-slate-900/10 dark:from-orange-500/25 dark:via-slate-800 dark:to-slate-900",
+            imgFit: "object-contain p-2",
+            kick: "Mobile · Éducation Islamique",
+            desc: "Application d'apprentissage et de mémorisation du Coran : récitation vocale, suivi de progression et révisions intelligentes. Disponible sur l'App Store et Google Play.",
+            tags: [{ label: "iOS / Android", primary: true }]
+        }
     }
 };
+
+/* ============ CARTES PROJETS (générées depuis projectsData) ============ */
+const TAG_PRIMARY = 'text-[10px] font-extrabold bg-orange-500/15 text-orange-700 dark:text-orange-300 px-3 py-1.5 rounded-lg uppercase tracking-wide';
+const TAG_SECONDARY = 'text-[10px] font-bold bg-black/10 dark:bg-white/10 ink2 px-3 py-1.5 rounded-lg uppercase tracking-wide';
+const TAG_PRIMARY_SM = 'text-[9px] font-extrabold bg-orange-500/15 text-orange-700 dark:text-orange-300 px-2.5 py-1.5 rounded-lg uppercase';
+const TAG_SECONDARY_SM = 'text-[9px] font-bold bg-black/10 dark:bg-white/10 ink2 px-2.5 py-1.5 rounded-lg uppercase';
+
+function renderProjectCards() {
+    const grid = document.getElementById('projects-grid');
+    if (!grid) return;
+    const html = Object.entries(projectsData).map(([id, d]) => {
+        const c = d.card;
+        if (!c) return '';
+        const featured = !!c.featured;
+        const pad = c.pad || 'p-4';
+        const px = c.px || 'px-3';
+        const delay = c.delay ? ` style="transition-delay:${c.delay}"` : '';
+        const imgWrap = c.imgWrap || 'h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800';
+        const imgFit = c.imgFit || 'object-cover';
+        const tags = c.tags.map(t => {
+            const cls = t.small
+                ? (t.primary ? TAG_PRIMARY_SM : TAG_SECONDARY_SM)
+                : (t.primary ? TAG_PRIMARY : TAG_SECONDARY);
+            return `<span class="${cls}">${t.label}</span>`;
+        }).join('');
+        const body = featured
+            ? `<div><span class="kick block mb-1">${c.kick}</span><h3 class="font-display text-3xl sm:text-4xl ink group-hover:text-hoop transition-colors">${d.title}</h3></div>
+                               <p class="ink2 font-normal text-sm sm:text-base leading-relaxed max-w-3xl">${c.desc}</p>
+                               <div class="flex flex-wrap gap-1.5 pt-1">${tags}</div>`
+            : `<span class="kick block mb-1">${c.kick}</span>
+                               <h3 class="font-display text-3xl ink mb-2 group-hover:text-hoop transition-colors">${d.title}</h3>
+                               <p class="ink2 mb-5 font-normal text-sm leading-relaxed">${c.desc}</p>
+                               <div class="flex flex-wrap gap-2">${tags}</div>`;
+        const link = c.link
+            ? `<a href="${c.link.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="relative z-10 mt-4 inline-flex items-center gap-2 text-xs font-bold text-hoop hover:opacity-80 transition-opacity">${c.link.label}</a>`
+            : '';
+        const bodyClass = featured ? 'px-2 pb-2 space-y-4' : 'px-3 pb-3';
+        return `<article class="project-card reveal group panel ${pad} rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer ${c.span}"${delay} data-project="${id}" role="button" tabindex="0" aria-label="Voir les détails du projet ${d.title}">
+                        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 ${px} pb-3"><span class="font-led match-label text-[10px] font-bold text-hoop">${c.match}</span><span class="led-tag">${c.tag}</span></div>
+                        <div class="${imgWrap}">
+                            <img src="${d.image}" alt="${c.imgAlt}" class="w-full h-full ${imgFit} transition-transform duration-700 group-hover:scale-105">
+                            ${c.extraOverlay || ''}
+                            <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
+                                <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-hoop px-4 py-2 rounded-xl">Voir la fiche projet</span>
+                            </div>
+                        </div>
+                        <div class="${bodyClass}">${body}${link}</div>
+                    </article>`;
+    }).join('');
+    grid.insertAdjacentHTML('afterbegin', html);
+    grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+renderProjectCards();
 
 /* ============ MODALE PROJET (fiche détaillée) ============ */
 const modal = document.getElementById('project-modal');
