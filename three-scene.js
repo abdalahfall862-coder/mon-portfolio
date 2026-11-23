@@ -243,7 +243,8 @@
   /* ---------- Machine à états : dribble → bounce → (drop | miss) → ret/dribble ---------- */
   let st = 'dribble', st0 = 0, lastT = 0;
   let scoreR = 30;                                // rayon du ballon au moment du panier
-  let velX = 0, velY = 0;                         // vitesses du rebond directionnel
+  let velX = 0, velY = 0;                         // vitesses instantanées (squash / rebond sur le cercle)
+  let shX0 = 0, shY0 = 0, shVY = 0, shTargetX = 0, shT = 0.9, shElapsed = 0, shCurve = 0;
   let imp = 0;                                    // intensité de l'impact
   const G = 1900;                                  // gravité en px/s²
   const bp = { x: 0, y: 0, r: 30 };
@@ -258,12 +259,15 @@
     const hx = hr.left + hr.width / 2;
     const hy = hr.top + hr.height * 0.52;
     const aim = perfect ? 0 : Math.max(-30, Math.min(30, (clientX - bp.x) * 0.16));
-    const targetX = hx + aim;
+    shX0 = bp.x; shY0 = bp.y;
+    shTargetX = hx + aim;
     // Durée de vol assez longue pour que le sommet soit au-dessus du cercle :
     // le ballon arrive donc en descendance, comme un vrai tir au panier.
-    const T = Math.max(0.78, Math.min(1.15, Math.abs(targetX - bp.x) / 520));
-    velX = (targetX - bp.x) / T;
-    velY = (hy - bp.y - 0.5 * G * T * T) / T;
+    shT = Math.max(0.82, Math.min(1.18, Math.abs(shTargetX - shX0) / 520));
+    shVY = (hy - shY0 - 0.5 * G * shT * shT) / shT;
+    // Léger renflement latéral à l'apex : la trajectoire ne part pas comme un ascenseur.
+    shCurve = (shTargetX >= shX0 ? 1 : -1) * Math.min(34, 16 + Math.abs(shTargetX - shX0) * 0.18);
+    shElapsed = 0;
     imp = 1;
     st = 'bounce'; st0 = lastT;
   }
@@ -308,21 +312,35 @@
       shOp = 1 - h * 0.6;
       ball.rotation.y += dt * 1.6; ball.rotation.x = 0.35; ball.rotation.z += dt * 0.3;
     } else if (st === 'drop') {
-      // Le ballon traverse le cercle, fouille le filet puis disparaît en douceur.
-      const u = Math.min(1, el / 0.5);
-      bp.x = Hm.x + Math.sin(u * Math.PI * 2) * 3 * (1 - u);
-      bp.y = Hm.y - sY + Hm.w * (0.12 + 1.05 * u);
-      bp.r = scoreR * (1 - 0.3 * u);
-      k = 1 - ease(Math.max(0, (u - 0.55) / 0.45));
+      // Le ballon s'engage dans le cercle, freine dans le filet, puis tombe.
+      const u = Math.min(1, el / 0.62);
+      const pass = Math.min(1, u / 0.42);
+      const fall = Math.max(0, (u - 0.42) / 0.58);
+      bp.x = Hm.x + Math.sin(u * Math.PI * 2) * 2 * (1 - u);
+      bp.y = Hm.y - sY + Hm.w * (0.06 + 0.5 * pass + 0.9 * fall * fall);
+      bp.r = scoreR * (1 - 0.1 * pass - 0.2 * fall);
+      squash = 1 + 0.09 * Math.sin(pass * Math.PI);   // léger étirement en traversant le filet
+      k = 1 - ease(Math.max(0, (u - 0.6) / 0.4));
       shOp = 0;
-      ball.rotation.z += dt * 2.2;
+      ball.rotation.z += dt * 2.4;
       if (u >= 1) { st = 'ret'; st0 = t; }
     } else if (st === 'bounce' || st === 'miss') {
       const hx = Hm.x, hy = Hm.y - sY;
       const prevY = bp.y;
-      velY += G * dt;
-      bp.x += velX * dt;
-      bp.y += velY * dt;
+      if (st === 'bounce') {
+        // Trajectoire analytique : parabole verticale + renflement latéral à l'apex.
+        shElapsed += dt;
+        const u = Math.min(1, shElapsed / shT);
+        velY = shVY + G * shElapsed;
+        velX = (shTargetX - shX0) / shT + Math.cos(u * Math.PI) * shCurve * Math.PI / shT;
+        bp.x = shX0 + (shTargetX - shX0) * u + Math.sin(u * Math.PI) * shCurve;
+        bp.y = shY0 + shVY * shElapsed + 0.5 * G * shElapsed * shElapsed;
+      } else {
+        // Rebond sur le cercle : on reprend une intégration simple jusqu'au sol.
+        velY += G * dt;
+        bp.x += velX * dt;
+        bp.y += velY * dt;
+      }
       bp.r = R;
 
       // Le ballon redescend au niveau du cercle : on vérifie s'il passe dedans.
@@ -348,7 +366,7 @@
       squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(velY) / 6000);
       shOp = Math.max(0.12, 1 - above / 260);
       ball.rotation.y += dt * (1.6 + Math.abs(velY) / 600);
-      ball.rotation.z += dt * 0.5;
+      ball.rotation.z += dt * (st === 'bounce' ? 3.2 : 0.6);
     } else {
       const u = Math.min(1, Math.max(0, (el - 0.5) / 0.6));
       bp.x = cx; bp.y = floorY; bp.r = R;
