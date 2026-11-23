@@ -83,7 +83,7 @@
   const h1 = $('#accueil h1');
   if (h1) {
     const p = document.createElement('p');
-    p.className = 'fx-in d2 font-mono text-xs sm:text-base text-cobalt-600 dark:text-cobalt-400 mb-6 min-h-[1.5rem] break-words';
+    p.className = 'fx-in font-mono text-xs sm:text-base text-cobalt-600 dark:text-cobalt-400 mb-6 min-h-[1.5rem] break-words';
     p.innerHTML = '<span class="opacity-60">&gt;</span> <span id="fx-role"></span><span class="fx-caret">▍</span>';
     h1.after(p);
     const roles = [

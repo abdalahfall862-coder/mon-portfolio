@@ -236,7 +236,6 @@
   addEventListener('resize', resize);
   addEventListener('load', measure);
   if (window.ResizeObserver) new ResizeObserver(measure).observe(document.body);
-  setTimeout(measure, 600); setTimeout(measure, 2000);
 
   /* ---------- Machine à états : dribble -> shot -> drop -> ret ---------- */
   let st = 'dribble', st0 = 0, lastT = 0;

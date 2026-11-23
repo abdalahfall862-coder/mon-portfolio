@@ -1,3 +1,5 @@
+const BASE_TITLE = "Mohamed Abdalah Fall | Portfolio · Développeur Full-Stack";
+
 /* ============ THEME TOGGLE ============ */
 const themeToggle = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
@@ -89,8 +91,7 @@ const projectsData = {
         ],
         stack: ["Firebase Auth", "Firestore", "JavaScript ES6", "Tailwind CSS"],
         challenge: "Garantir une synchronisation fluide en temps réel entre plusieurs sessions ouvertes simultanément, sans latence perceptible ni conflit d'écriture sur les mêmes documents Firestore.",
-        link: "https://my-app-omega-one-21.vercel.app",
-        linkLabel: "Visiter le projet"
+        links: [{ label: "Visiter le projet", url: "https://my-app-omega-one-21.vercel.app" }]
     },
     portfolio: {
         title: "Portfolio Pro",
@@ -109,8 +110,7 @@ const projectsData = {
         ],
         stack: ["HTML5", "Tailwind CSS", "JavaScript vanilla"],
         challenge: "Obtenir un rendu premium et des animations fluides sans dépendre d'un framework front-end, afin de garder un temps de chargement minimal sur tous les appareils.",
-        link: "https://mon-portfolio-ten-topaz.vercel.app",
-        linkLabel: "Visiter le projet"
+        links: [{ label: "Visiter le projet", url: "https://mon-portfolio-ten-topaz.vercel.app" }]
     },
     api: {
         title: "API Secure & Scalable",
@@ -155,8 +155,7 @@ const projectsData = {
         ],
         stack: ["Next.js", "MongoDB Atlas", "Stripe API", "JWT Auth", "Tailwind CSS", "Vercel"],
         challenge: "Synchroniser le panier entre le stockage local et le serveur pour éviter toute perte de données lors du checkout, tout en sécurisant le flux de paiement Stripe côté serveur.",
-        link: "https://meth-shop.vercel.app",
-        linkLabel: "Visiter la boutique"
+        links: [{ label: "Visiter la boutique", url: "https://meth-shop.vercel.app" }]
     },
     tarteel: {
         title: "Tarteel",
@@ -247,7 +246,7 @@ function renderProject(id) {
 
     const linksWrap = document.getElementById('modal-links');
     linksWrap.innerHTML = '';
-    const links = data.links || (data.link ? [{ label: data.linkLabel || 'Voir le projet', url: data.link, variant: 'primary' }] : []);
+    const links = data.links || [];
     links.forEach((item) => {
         const a = document.createElement('a');
         a.href = item.url;
@@ -277,7 +276,7 @@ function openProjectModal(id, updateHash = true) {
 function closeProjectModal(updateHash = true) {
     modal.classList.remove('open');
     document.body.classList.remove('overflow-hidden');
-    document.title = "Mohamed Abdalah Fall | Portfolio · Développeur Full-Stack";
+    document.title = BASE_TITLE;
     if (updateHash && location.hash.startsWith('#projet-')) {
         history.pushState({}, '', location.pathname + location.search);
     }
