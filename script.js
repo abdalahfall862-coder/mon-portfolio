@@ -157,6 +157,37 @@ const projectsData = {
         challenge: "Synchroniser le panier entre le stockage local et le serveur pour éviter toute perte de données lors du checkout, tout en sécurisant le flux de paiement Stripe côté serveur.",
         link: "https://meth-shop.vercel.app",
         linkLabel: "Visiter la boutique"
+    },
+    tarteel: {
+        title: "Tarteel",
+        badge: "Mobile · Apprentissage du Coran",
+        image: "assets/tarteel.svg",
+        type: "Application iOS & Android",
+        status: "Disponible sur les deux stores",
+        role: "Conception produit, développement mobile et dashboard admin web",
+        overview: "Tarteel est une application d'apprentissage et de mémorisation du Coran, reconnaissable à sa loutre mascotte. Elle accompagne l'utilisateur du premier verset jusqu'à la mémorisation complète grâce à un parcours structuré, une récitation vocale évaluée, des révisions espacées et un suivi de progression précis — sur mobile comme sur le dashboard admin web.",
+        features: [
+            "Parcours d'apprentissage structuré par juz, sourate et niveau de mémorisation",
+            "Récitation vocale avec retour immédiat sur la prononciation et le tajwid",
+            "Révisions intelligentes espacées et rappels quotidiens personnalisés",
+            "Lecture du Coran avec traductions, tafsir et signets synchronisés",
+            "Statistiques de progression, séries d'apprentissage, objectifs et badges",
+            "Mode hors-ligne, notifications push et synchronisation multi-appareils",
+            "Dashboard admin web : utilisateurs, contenus, niveaux, modération et analytics"
+        ],
+        stack: ["React Native / Expo", "TypeScript", "Node.js", "Firebase", "PostgreSQL", "Next.js (admin)"],
+        architecture: [
+            "Application mobile partagée iOS/Android avec couche de données locale pour un fonctionnement hors-ligne, puis synchronisation différentielle à la reconnexion",
+            "Traitement de la récitation côté serveur : transcription vocale, comparaison avec le texte de référence et retour pédagogique sur les erreurs de tajwid",
+            "Moteur de révisions espacées (SRS) qui adapte les rappels à la difficulté réelle de chaque verset pour l'utilisateur",
+            "Dashboard admin web séparé, alimenté par les mêmes API, avec gestion des contenus, suivi des cohortes et analytics d'engagement"
+        ],
+        challenge: "Conciler la capture et l'analyse audio en temps réel avec une expérience fluide sur mobile, tout en maintenant une synchronisation fiable hors-ligne et en donnant à l'équipe administrative une vision claire de la progression des apprenants.",
+        links: [
+            { label: "Télécharger sur l'App Store", url: "https://apps.apple.com/", variant: "primary" },
+            { label: "Disponible sur Google Play", url: "https://play.google.com/store", variant: "primary" },
+            { label: "Dashboard admin web", url: "https://example.com/admin", variant: "secondary" }
+        ]
     }
 };
 
@@ -213,14 +244,20 @@ function renderProject(id) {
         archWrap.classList.add('hidden');
     }
 
-    const linkEl = document.getElementById('modal-link');
-    if (data.link) {
-        linkEl.classList.remove('hidden');
-        linkEl.href = data.link;
-        document.getElementById('modal-link-label').textContent = data.linkLabel;
-    } else {
-        linkEl.classList.add('hidden');
-    }
+    const linksWrap = document.getElementById('modal-links');
+    linksWrap.innerHTML = '';
+    const links = data.links || (data.link ? [{ label: data.linkLabel || 'Voir le projet', url: data.link, variant: 'primary' }] : []);
+    links.forEach((item) => {
+        const a = document.createElement('a');
+        a.href = item.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = item.label + ' →';
+        a.className = item.variant === 'secondary'
+            ? 'inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-bold text-sm rounded-2xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300'
+            : 'inline-flex items-center justify-center w-full sm:w-auto px-7 py-4 bg-hoop text-white font-bold text-sm rounded-2xl shadow-xl shadow-orange-700/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300';
+        linksWrap.appendChild(a);
+    });
 
     document.title = `${data.title} — Mohamed Abdalah Fall`;
     return true;

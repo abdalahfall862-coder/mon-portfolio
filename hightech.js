@@ -133,7 +133,7 @@
     ['Accueil', 'accueil'], ['Compétences', 'competences'], ['Projets', 'projets'],
     ['Parcours', 'parcours'], ['Ma Méthode', 'methode'], ['Contact', 'contact']
   ].map(([l, id]) => ({ l: 'Aller à · ' + l, k: 'Section', run: () => go(id) }));
-  [['Task-manager', 'taskmanager'], ['Portfolio Pro', 'portfolio'], ['API Secure & Scalable', 'api'], ['Meth-Shop', 'methshop']]
+  [['Task-manager', 'taskmanager'], ['Portfolio Pro', 'portfolio'], ['API Secure & Scalable', 'api'], ['Meth-Shop', 'methshop'], ['Tarteel', 'tarteel']]
     .forEach(([l, id]) => cmds.push({ l: 'Ouvrir le projet · ' + l, k: 'Projet', run: () => { const c = $('[data-project="' + id + '"]'); if (c) c.click(); } }));
   cmds.push({ l: 'Lancer un tir 🏀 (touche B)', k: 'Basket', run: () => dispatchEvent(new CustomEvent('fx:shoot')) });
   cmds.push({ l: 'Basculer le thème clair / sombre', k: 'Thème', run: () => { const b = $('#theme-toggle'); if (b) b.click(); } });
