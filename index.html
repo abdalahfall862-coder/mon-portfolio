@@ -94,6 +94,7 @@
         .dark .hoop-net path, .dark .hoop-net ellipse { stroke: rgba(226,232,240,.8); }
         #fx-hoop.swish .hoop-net { animation: netSwish .7s cubic-bezier(.16,1,.3,1); }
         #fx-hoop.swish .hoop-rim-group { animation: rimWobble .55s ease-out; transform-box: fill-box; transform-origin: center; }
+        #fx-hoop.rimhit .hoop-rim-group { animation: rimWobble .4s ease-out; transform-box: fill-box; transform-origin: center; }
         @keyframes netSwish {
             0%   { transform: scaleY(1) rotate(0deg); }
             30%  { transform: scaleY(1.22) rotate(-3deg); }
@@ -105,8 +106,6 @@
             30%     { transform: scaleY(1.28); }
             60%     { transform: scaleY(.95); }
         }
-
-        #fx-shoot-btn { filter: drop-shadow(0 8px 14px rgba(120,45,5,.3)); }
 
         /* ===== Tableau d'affichage ===== */
         .led-board { display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: 28rem; padding: .9rem 1.3rem; border-radius: 1rem;
@@ -341,9 +340,9 @@
                         <circle class="hoopc" cx="250" cy="52" r="8"/>
                     </svg>
 
-                    <!-- Panier : planche, bras, cercle et filet. Cliquer dessus déclenche le tir. -->
-                    <button id="fx-hoop" type="button" aria-label="Tirer au panier" title="Tirer au panier"
-                            class="absolute" style="left:50%;top:15.3%;width:12%;aspect-ratio:1;transform:translate(-50%,-50%)">
+                    <!-- Panier : planche, bras, cercle et filet. Le ballon rebondit dessus. -->
+                    <div id="fx-hoop" class="absolute" aria-hidden="true"
+                         style="left:50%;top:15.3%;width:12%;aspect-ratio:1;transform:translate(-50%,-50%)">
                         <svg viewBox="0 0 100 100" aria-hidden="true">
                             <path class="hoop-arm" d="M80 8L96 2M96 -26V4"/>
                             <rect class="hoop-board" x="18" y="-6" width="64" height="42" rx="2"/>
@@ -370,14 +369,13 @@
                                 <path class="hoop-rim-front" d="M26 52A24 6 0 0 1 74 52"/>
                             </g>
                         </svg>
-                    </button>
+                    </div>
 
                     <div id="fx-ball-anchor" class="absolute" style="left:30%;top:34%;width:40%;height:50%" aria-hidden="true"></div>
 
-                    <button id="fx-shoot-btn" type="button" title="Raccourci : touche B"
-                            class="absolute bottom-[-3rem] left-1/2 -translate-x-1/2 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full panel2 ink text-xs sm:text-sm font-bold whitespace-nowrap min-h-[44px] hover:-translate-y-0.5 active:translate-y-0 transition-transform">
-                        🏀 Tirer au panier <kbd class="hidden sm:inline font-mono text-[10px] opacity-60">B</kbd>
-                    </button>
+                    <p class="absolute bottom-[-3rem] left-1/2 -translate-x-1/2 w-full text-center ink2 text-xs sm:text-sm font-semibold whitespace-nowrap">
+                        Clique sur le terrain : le ballon rebondit vers le panier. Vise juste pour marquer&nbsp;!
+                    </p>
                 </div>
             </div>
         </section>

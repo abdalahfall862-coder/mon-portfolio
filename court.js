@@ -190,7 +190,7 @@
       c.classList.toggle(
         "big",
         !!e.target.closest(
-          'a,button,input,textarea,[role="button"],.project-card',
+          'a,button,input,textarea,[role="button"],.project-card,#fx-hoop',
         ),
       );
     });
