@@ -1,9 +1,19 @@
 /* ============ THEME TOGGLE ============ */
 const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const themeLabel = document.getElementById('theme-label');
+
+function syncThemeUI() {
+    const isDark = document.documentElement.classList.contains('dark');
+    themeIcon.textContent = isDark ? '☀️' : '🌙';
+    themeLabel.textContent = isDark ? 'Mode clair' : 'Mode sombre';
+    themeToggle.setAttribute('aria-label', isDark ? 'Activer le mode clair' : 'Activer le mode sombre');
+}
 themeToggle.addEventListener('click', () => {
     document.documentElement.classList.toggle('dark');
-    themeToggle.innerHTML = document.documentElement.classList.contains('dark') ? '☀️ Mode clair' : '🌙 Mode sombre';
+    syncThemeUI();
 });
+syncThemeUI();
 
 /* ============ MENU MOBILE ============ */
 const menuBtn = document.getElementById('menu-btn');
@@ -15,17 +25,25 @@ const navLinks = document.querySelectorAll('.nav-link');
 function openMenu() {
     sidebar.classList.remove('-translate-x-full');
     overlay.classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
+    document.body.classList.add('overflow-hidden', 'menu-open');
+    sidebar.scrollTop = 0;
+    menuBtn.setAttribute('aria-expanded', 'true');
+    closeBtn.focus();
 }
 function closeMenu() {
     sidebar.classList.add('-translate-x-full');
     overlay.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
+    document.body.classList.remove('overflow-hidden', 'menu-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
 }
+menuBtn.setAttribute('aria-expanded', 'false');
 menuBtn.addEventListener('click', openMenu);
 closeBtn.addEventListener('click', closeMenu);
 overlay.addEventListener('click', closeMenu);
 navLinks.forEach(link => link.addEventListener('click', closeMenu));
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('menu-open')) closeMenu();
+});
 
 /* ============ REVEAL AU SCROLL ============ */
 const revealObserver = new IntersectionObserver((entries) => {
@@ -221,7 +239,7 @@ function openProjectModal(id, updateHash = true) {
 function closeProjectModal(updateHash = true) {
     modal.classList.remove('open');
     document.body.classList.remove('overflow-hidden');
-    document.title = "Mohamed Abdalah Fall | Portfolio Premium";
+    document.title = "Mohamed Abdalah Fall | Portfolio · Développeur Full-Stack";
     if (updateHash && location.hash.startsWith('#projet-')) {
         history.pushState({}, '', location.pathname + location.search);
     }

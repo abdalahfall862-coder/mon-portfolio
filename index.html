@@ -139,6 +139,52 @@
             .reveal, .fx-in { opacity: 1; transform: none; }
             #fx-hoop::before, #fx-hoop::after { animation: none !important; }
         }
+
+        /* ===== Responsive : ajustements fins ===== */
+        html { -webkit-text-size-adjust: 100%; }
+        :root { --sidebar-w: 280px; }
+
+        /* Titre hero fluide : reste dans sa colonne, même à 1024px avec la sidebar */
+        .hero-title {
+            font-size: clamp(2.75rem, 11vw, 4rem);
+            line-height: .92;
+            overflow-wrap: break-word;
+        }
+        @media (min-width: 640px) { .hero-title { font-size: clamp(3.5rem, 8vw, 5.5rem); } }
+        @media (min-width: 1024px) { .hero-title { font-size: clamp(3rem, 4.6vw, 7rem); } }
+
+        /* Décors de terrain : jamais plus larges que le viewport */
+        .court-deco { width: min(var(--deco-w, 560px), 115vw); max-width: none; }
+
+        /* Sidebar : vraie hauteur mobile + défilement sur écran court */
+        #sidebar { width: var(--sidebar-w); height: 100vh; height: 100dvh; overflow-y: auto; overscroll-behavior: contain; }
+        .side-brand { margin-top: 1rem; margin-bottom: 3rem; }
+        .nav-list > li + li { margin-top: .75rem; }
+        @media (max-height: 700px) and (max-width: 1023px) {
+            #sidebar { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+            .side-brand { margin-bottom: 1.25rem; }
+            .nav-list > li + li { margin-top: .3rem; }
+        }
+        @media (min-width: 1024px) { main.shell { padding-left: var(--sidebar-w); } }
+
+        /* Zones sûres iOS (encoche / barre d'outils) */
+        #top-actions { top: max(1rem, env(safe-area-inset-top)); right: max(1rem, env(safe-area-inset-right)); transition: opacity .25s ease; }
+        @media (min-width: 640px) { #top-actions { top: max(1.5rem, env(safe-area-inset-top)); right: max(1.5rem, env(safe-area-inset-right)); } }
+        body.menu-open #top-actions { opacity: 0; pointer-events: none; }
+        #site-footer { padding-bottom: calc(2rem + env(safe-area-inset-bottom)); }
+
+        /* Tableau d'affichage : tient dans 320px */
+        @media (max-width: 380px) {
+            .led-board { width: 100%; padding: .7rem .8rem; gap: .5rem; }
+            .led-team { min-width: 3.5rem; }
+            .led-score { font-size: 1.9rem; }
+            .led-mid #sb-clock { font-size: 1.1rem; }
+        }
+
+        /* Modale confortable sur mobile */
+        .modal-panel { overscroll-behavior: contain; }
+        .modal-panel .modal-body { padding-bottom: max(1.5rem, env(safe-area-inset-bottom)); }
+        @media (min-width: 640px) { .modal-panel .modal-body { padding-bottom: 2.5rem; } }
     </style>
 </head>
 <body class="court text-stone-900 dark:text-slate-100 font-sans min-h-screen antialiased transition-colors duration-500 overflow-x-hidden">
@@ -164,9 +210,10 @@
     <canvas id="bg-canvas" class="fixed inset-0 w-full h-full pointer-events-none" style="z-index:50"></canvas>
 
     <!-- Boutons Fixes Supérieurs -->
-    <div class="fixed top-4 right-4 sm:top-6 sm:right-6 z-[120] flex items-center gap-3">
-        <button id="theme-toggle" class="px-4 py-2.5 bg-white/75 dark:bg-slate-900/70 text-xs sm:text-sm font-bold rounded-2xl border border-amber-900/20 dark:border-slate-700/60 shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
-            🌙 Mode sombre
+    <div id="top-actions" class="fixed z-[120] flex items-center gap-2 sm:gap-3">
+        <button id="theme-toggle" aria-label="Activer le mode sombre" class="px-3 py-2.5 sm:px-4 bg-white/75 dark:bg-slate-900/70 text-xs sm:text-sm font-bold rounded-2xl border border-amber-900/20 dark:border-slate-700/60 shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2 min-h-[44px]">
+            <span id="theme-icon" aria-hidden="true">🌙</span>
+            <span id="theme-label" class="hidden sm:inline">Mode sombre</span>
         </button>
         <button id="menu-btn" class="lg:hidden bg-hoop text-white p-3 rounded-2xl shadow-lg transition-all hover:opacity-90 active:scale-95 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7" /></svg>
@@ -174,12 +221,12 @@
     </div>
 
     <!-- Navigation latérale (vestiaire) -->
-    <aside id="sidebar" class="fixed top-0 left-0 h-screen w-[280px] bg-[#0b0f17]/95 text-white z-[130] lg:z-[100] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col p-8 border-r-2 border-hoop/70">
+    <aside id="sidebar" aria-label="Navigation principale" class="fixed top-0 left-0 bg-[#0b0f17]/95 text-white z-[130] lg:z-[100] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col p-6 sm:p-8 border-r-2 border-hoop/70">
         <button id="close-btn" class="lg:hidden absolute top-6 right-6 text-slate-400 hover:text-white transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
 
-        <div class="mb-12 mt-4">
+        <div class="side-brand">
             <div class="flex items-end gap-3">
                 <span class="font-display text-6xl leading-none text-hoop">#01</span>
                 <div class="pb-1">
@@ -190,7 +237,7 @@
         </div>
 
         <nav class="flex-1">
-            <ul class="space-y-3 text-sm font-semibold">
+            <ul class="nav-list text-sm font-semibold">
                 <li><a href="#accueil" data-section="accueil" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Accueil</a></li>
                 <li><a href="#competences" data-section="competences" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Compétences</a></li>
                 <li><a href="#projets" data-section="projets" class="nav-link flex items-center group text-slate-400 hover:text-white transition-all py-2.5"><span class="nav-dot w-3 h-[2px] bg-slate-700 mr-4 group-hover:bg-hoop group-hover:w-8 transition-all duration-300"></span>Projets</a></li>
@@ -207,17 +254,17 @@
 
     <div id="sidebar-overlay" class="fixed inset-0 bg-slate-950/40 backdrop-blur-md z-[110] hidden lg:hidden transition-opacity"></div>
 
-    <main class="relative z-[1] w-full lg:w-auto lg:pl-[280px] transition-all duration-300 overflow-x-hidden">
+    <main class="shell relative z-[1] w-full lg:w-auto transition-all duration-300 overflow-x-hidden">
 
         <!-- ACCUEIL : la raquette -->
-        <section id="accueil" class="zone min-h-screen flex items-center px-4 sm:px-8 md:px-16 lg:px-24 py-24">
+        <section id="accueil" class="zone min-h-[100svh] flex items-center px-4 sm:px-8 md:px-16 lg:px-24 py-24">
             <div class="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
                 <div>
                     <div class="fx-in inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full panel2 text-[11px] font-bold uppercase tracking-widest ink">
                         <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
                         Disponible pour de nouveaux projets
                     </div>
-                    <h1 class="reveal font-display text-6xl sm:text-8xl lg:text-[7.5rem] leading-[.92] ink mb-6 break-words">
+                    <h1 class="reveal hero-title font-display ink mb-6">
                         Développeur <br><span class="text-hoop">Full-stack</span>
                     </h1>
                     <p class="reveal text-base sm:text-lg ink2 max-w-xl mb-8 font-medium leading-relaxed">
@@ -238,15 +285,15 @@
                         <div class="led-team"><span class="led-name">BUGS</span><span class="led-score">00</span></div>
                     </div>
 
-                    <div class="reveal mt-4 grid grid-cols-3 gap-3 max-w-md">
-                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-4xl ink"><span data-count="4">0</span></div><div class="kick mt-1">Projets en ligne</div></div>
-                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-4xl ink"><span data-count="2">0</span>+</div><div class="kick mt-1">Ans de pratique</div></div>
-                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-4xl ink"><span data-count="15">0</span>+</div><div class="kick mt-1">Technologies</div></div>
+                    <div class="reveal mt-4 grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
+                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-3xl sm:text-4xl ink"><span data-count="4">0</span></div><div class="kick mt-1">Projets en ligne</div></div>
+                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-3xl sm:text-4xl ink"><span data-count="2">0</span>+</div><div class="kick mt-1">Ans de pratique</div></div>
+                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-3xl sm:text-4xl ink"><span data-count="15">0</span>+</div><div class="kick mt-1">Technologies</div></div>
                     </div>
                 </div>
 
                 <!-- Demi-terrain : raquette, lancer franc, panier -->
-                <div class="hero-court relative w-full max-w-[560px] mx-auto lg:ml-auto lg:mr-0 aspect-[500/340]" aria-hidden="true">
+                <div class="hero-court relative w-full max-w-[min(560px,100%)] mx-auto mt-6 lg:mt-0 lg:ml-auto lg:mr-0 aspect-[500/340]" aria-hidden="true">
                     <svg class="court-svg draw absolute inset-0 w-full h-full" viewBox="0 0 500 340">
                         <rect class="paint" x="170" y="0" width="160" height="190"/>
                         <path class="cl" pathLength="1" d="M30 0V141.5A237.5 237.5 0 0 0 470 141.5V0"/>
@@ -266,7 +313,7 @@
 
         <!-- COMPÉTENCES : l'effectif -->
         <section id="competences" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
-            <svg class="court-svg" style="right:-140px;bottom:-90px;width:640px;transform:rotate(180deg)" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
+            <svg class="court-svg court-deco" style="--deco-w:640px;right:-140px;bottom:-90px;transform:rotate(180deg)" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
             <div class="relative z-10 max-w-6xl mx-auto">
                 <div class="reveal mb-12">
                     <p class="kick mb-2">// Zone 02 · L'effectif</p>
@@ -340,7 +387,7 @@
                             <div class="flex justify-between kick mb-1.5"><span>Maîtrise</span><span>80%</span></div>
                             <div class="h-2 w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-orange-400 to-hoop rounded-full" style="--fill:80%"></div></div>
                         </div>
-                        <div class="grid grid-cols-4 lg:grid-cols-3 gap-2.5 ink">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-3 gap-2.5 ink">
                             <div class="tile panel2" data-ico="mongodb">MongoDB</div>
                             <div class="tile panel2" data-ico="firebase">Firebase</div>
                             <div class="tile panel2" data-ico="swagger">Swagger</div>
@@ -357,7 +404,7 @@
 
         <!-- RÉALISATIONS : les highlights du match -->
         <section id="projets" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
-            <svg class="court-svg" style="left:50%;top:-40px;width:760px;transform:translateX(-50%)" viewBox="0 0 800 300" aria-hidden="true">
+            <svg class="court-svg court-deco" style="--deco-w:760px;left:50%;top:-40px;transform:translateX(-50%)" viewBox="0 0 800 300" aria-hidden="true">
                 <path class="cl" d="M0 150H800"/><circle class="cl" cx="400" cy="150" r="120"/><circle class="cl" cx="400" cy="150" r="42" style="fill:rgba(255,106,19,.35)"/>
             </svg>
             <div class="relative z-10 max-w-6xl mx-auto">
@@ -487,7 +534,7 @@
 
         <!-- PARCOURS : la saison -->
         <section id="parcours" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
-            <svg class="court-svg" style="right:-200px;top:40px;width:560px;transform:rotate(-90deg)" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
+            <svg class="court-svg court-deco" style="--deco-w:560px;right:-200px;top:40px;transform:rotate(-90deg)" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
             <div class="relative z-10 max-w-4xl mx-auto">
                 <div class="reveal mb-14">
                     <p class="kick mb-2">// Zone 04 · La saison</p>
@@ -616,14 +663,14 @@
 
         <!-- CONTACT : le lancer franc -->
         <section id="contact" class="zone py-20 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24 bg-gradient-to-br from-[#0b0f17] to-[#1a0e05] text-white rounded-t-[2.5rem] sm:rounded-t-[3.5rem] border-t-2 border-hoop/60">
-            <svg class="court-svg" style="left:-160px;top:-60px;width:620px;opacity:.5" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
+            <svg class="court-svg court-deco" style="--deco-w:620px;left:-160px;top:-60px;opacity:.5" viewBox="0 0 500 340" aria-hidden="true"><use href="#halfcourt"/></svg>
             <div class="max-w-4xl mx-auto relative z-10 text-center">
                 <p class="kick !text-orange-400 mb-3">// Zone 06 · Lancer franc</p>
                 <h2 class="reveal font-display text-5xl sm:text-6xl md:text-8xl mb-10 leading-none">Parlez-moi de votre projet...</h2>
                 <form id="contact-form" class="reveal space-y-4 sm:space-y-5 max-w-xl mx-auto text-left">
-                    <div><input type="text" name="name" placeholder="VOTRE NOM..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-sm font-semibold uppercase tracking-wider transition-all duration-300"></div>
-                    <div><input type="email" name="email" placeholder="VOTRE EMAIL..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-sm font-semibold transition-all duration-300"></div>
-                    <div><textarea name="message" placeholder="VOTRE MESSAGE..." rows="4" required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-sm font-semibold transition-all duration-300"></textarea></div>
+                    <div><input type="text" name="name" placeholder="VOTRE NOM..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold uppercase tracking-wider transition-all duration-300"></div>
+                    <div><input type="email" name="email" placeholder="VOTRE EMAIL..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold transition-all duration-300"></div>
+                    <div><textarea name="message" placeholder="VOTRE MESSAGE..." rows="4" required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold transition-all duration-300"></textarea></div>
                     <button type="submit" class="w-full bg-hoop text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] hover:opacity-95 transition-all active:scale-98 shadow-xl shadow-orange-700/30">
                         🏀 Tirer au panier...
                     </button>
@@ -632,7 +679,7 @@
             </div>
         </section>
 
-        <footer class="py-8 px-4 sm:px-8 md:px-16 text-slate-400 text-[11px] font-bold uppercase tracking-widest flex flex-wrap gap-3 justify-between items-center bg-[#0b0f17] border-t border-slate-800">
+        <footer id="site-footer" class="py-8 px-4 sm:px-8 md:px-16 text-slate-400 text-[11px] font-bold uppercase tracking-widest flex flex-wrap gap-3 justify-between items-center bg-[#0b0f17] border-t border-slate-800">
             <p>© 2026 Mohamed Abdalah Fall</p>
             <p class="font-led text-hoop">Fin du match · FALL ∞ — 0 BUGS</p>
             <p class="text-hoop text-right">Dakar, Sénégal</p>
@@ -642,12 +689,12 @@
     <!-- MODALE / PAGE DE DÉTAIL PROJET -->
     <div id="project-modal" class="fixed inset-0 z-[200] flex items-start sm:items-center justify-center p-0 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div id="modal-backdrop" class="absolute inset-0 bg-slate-950/70 backdrop-blur-md"></div>
-        <div class="modal-panel relative w-full sm:max-w-3xl max-h-full sm:max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 sm:rounded-[2.5rem] shadow-2xl">
+        <div class="modal-panel relative w-full sm:max-w-3xl max-h-[100dvh] sm:max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 sm:rounded-[2.5rem] shadow-2xl">
             <button id="modal-close" aria-label="Fermer la fiche projet" class="fixed sm:absolute top-4 right-4 sm:top-6 sm:right-6 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-slate-950/70 hover:bg-slate-950/90 text-white backdrop-blur-md transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
 
-            <div id="modal-hero" class="h-56 sm:h-72 w-full relative bg-slate-200 dark:bg-slate-800 overflow-hidden">
+            <div id="modal-hero" class="h-44 sm:h-72 w-full relative bg-slate-200 dark:bg-slate-800 overflow-hidden">
                 <img id="modal-image" src="" alt="" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent"></div>
                 <div class="absolute bottom-5 left-6 right-6">
@@ -656,7 +703,7 @@
                 </div>
             </div>
 
-            <div class="p-6 sm:p-10 space-y-8">
+            <div class="modal-body p-5 sm:p-10 space-y-8">
                 <div>
                     <h4 class="text-xs font-extrabold uppercase tracking-widest text-hoop mb-3">Aperçu</h4>
                     <p id="modal-overview" class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed"></p>

@@ -226,7 +226,7 @@
   }
   function resize() {
     W = innerWidth; H = innerHeight;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 640 ? 1.5 : 2));
     renderer.setSize(W, H, false);
     camera.left = 0; camera.right = W; camera.top = 0; camera.bottom = -H;
     camera.updateProjectionMatrix();
