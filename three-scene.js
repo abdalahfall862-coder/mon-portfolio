@@ -297,7 +297,7 @@
     if (!onScreen) { burst.visible = false; return; }
 
     // Le rayon du ballon est calibré sur le cercle : diamètre du ballon ≈ 53 % du cercle.
-    const R = Math.max(12, Math.min(30, (Hm.w || a.width * 0.5) * 0.185));
+    const R = Math.max(7, Math.min(30, (Hm.w || a.width * 0.5) * 0.185));
     const cx = a.left + a.width / 2;
     const floorY = a.bottom - 6 - R;
     const drib = Math.min(a.height * 0.45, R * 6);
@@ -346,7 +346,7 @@
 
       // Le ballon redescend au niveau du cercle : on vérifie s'il passe dedans.
       if (st === 'bounce' && velY > 0 && prevY <= hy && bp.y > hy) {
-        if (Math.abs(bp.x - hx) <= Hm.w * 0.16) {
+        if (Math.abs(bp.x - hx) <= Hm.w * 0.2) {
           bp.x = hx; scoreR = bp.r;
           st = 'drop'; st0 = t;
           spawnBurst(hx, hy);
