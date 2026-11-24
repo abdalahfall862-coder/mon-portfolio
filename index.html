@@ -664,7 +664,7 @@
                         LinkedIn ↗
                     </a>
                 </div>
-                <form id="contact-form" action="mailto:abdalafall862@gmail.com" method="post" enctype="text/plain" class="reveal space-y-4 sm:space-y-5 max-w-xl mx-auto text-left">
+                <form id="contact-form" action="/api/contact" method="post" class="reveal space-y-4 sm:space-y-5 max-w-xl mx-auto text-left">
                     <div><input type="text" name="name" aria-label="Votre nom" placeholder="VOTRE NOM..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold uppercase tracking-wider transition-all duration-300"></div>
                     <div><input type="email" name="email" aria-label="Votre email" placeholder="VOTRE EMAIL..." required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold transition-all duration-300"></div>
                     <div><textarea name="message" aria-label="Votre message" placeholder="VOTRE MESSAGE..." rows="4" required class="w-full bg-slate-900/70 border border-slate-700/80 rounded-2xl px-5 py-4 outline-none focus:border-hoop focus:bg-slate-900 text-base sm:text-sm font-semibold transition-all duration-300"></textarea></div>
@@ -673,7 +673,7 @@
                     </button>
                     <p id="form-feedback" class="hidden text-xs font-bold text-center pt-1" role="status" aria-live="polite"></p>
                     <p id="form-fallback" class="hidden text-xs text-center text-slate-300 pt-1" role="status"></p>
-                    <p class="text-[11px] text-slate-400 text-center leading-relaxed">Le bouton ouvre votre messagerie : pensez à appuyer sur « Envoyer » dans votre application email.</p>
+                    <p class="text-[11px] text-slate-400 text-center leading-relaxed">Votre message est envoyé directement, sans ouvrir votre messagerie.</p>
                 </form>
             </div>
         </section>

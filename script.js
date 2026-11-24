@@ -427,42 +427,63 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* ============ FORMULAIRE DE CONTACT (ouverture de la messagerie) ============ */
+/* ============ FORMULAIRE DE CONTACT (envoi via /api/contact sur Vercel) ============ */
 const contactForm = document.getElementById('contact-form');
 const formFeedback = document.getElementById('form-feedback');
 const formFallback = document.getElementById('form-fallback');
+const submitBtn = document.getElementById('contact-submit');
+const submitLabel = document.getElementById('contact-submit-label');
+const SUBMIT_LABEL = '🏀 Tirer au panier...';
 
-if (contactForm && formFeedback && formFallback) {
-    const CONTACT_EMAIL = 'abdalafall862@gmail.com';
-
+if (contactForm && formFeedback && formFallback && submitBtn && submitLabel) {
     function setFeedback(message, kind) {
         const color = kind === 'error' ? 'text-rose-400' : 'text-emerald-400';
         formFeedback.textContent = message;
         formFeedback.className = `text-xs font-bold text-center pt-1 ${color}`;
     }
 
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (submitBtn.disabled) return;
 
         const data = new FormData(contactForm);
         const name = String(data.get('name') || '').trim();
         const email = String(data.get('email') || '').trim();
         const message = String(data.get('message') || '').trim();
 
-        const subject = encodeURIComponent(`Message portfolio — ${name}`);
-        const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
-        const href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+        setFeedback('', 'success');
+        formFeedback.classList.add('hidden');
+        formFallback.classList.add('hidden');
+        submitBtn.disabled = true;
+        submitBtn.setAttribute('aria-busy', 'true');
+        submitLabel.textContent = 'Envoi en cours...';
 
-        setFeedback('Votre messagerie s’ouvre. Envoyez le mail pour me le faire parvenir.', 'success');
-        formFallback.textContent = 'Si rien ne s’ouvre : ';
-        const link = document.createElement('a');
-        link.href = href;
-        link.className = 'font-bold text-hoop underline hover:opacity-80';
-        link.textContent = 'ouvrir ma messagerie →';
-        formFallback.appendChild(link);
-        formFallback.classList.remove('hidden');
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, email: email, message: message })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok || result.success !== true) {
+                throw new Error(result.message || 'Envoi impossible');
+            }
 
-        // Le message part de la messagerie du visiteur : aucun service tiers, aucune activation.
-        window.location.href = href;
+            contactForm.reset();
+            setFeedback('Message envoyé ! Je vous réponds rapidement.', 'success');
+        } catch (error) {
+            setFeedback(error.message || 'Envoi impossible, réessayez.', 'error');
+            formFallback.textContent = 'Vous pouvez aussi m’écrire directement : ';
+            const link = document.createElement('a');
+            link.href = 'mailto:abdalafall862@gmail.com';
+            link.className = 'font-bold text-hoop underline hover:opacity-80';
+            link.textContent = 'abdalafall862@gmail.com →';
+            formFallback.appendChild(link);
+            formFallback.classList.remove('hidden');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.removeAttribute('aria-busy');
+            submitLabel.textContent = SUBMIT_LABEL;
+        }
     });
 }
