@@ -13,7 +13,7 @@ Le formulaire appelle `/api/contact` : en local avec `http.server`, cette route 
 
 ## Configurer l'envoi des messages (Resend)
 
-1. Créer un compte sur [resend.com](https://resend.com) avec `abdalafall862@gmail.com`.
+1. Créer un compte sur [resend.com](https://resend.com) avec `abdalahfall862@gmail.com`.
 2. Dans le dashboard Resend : **API Keys → Create API key**, puis copier la clé (`re_...`).
 3. Dans Vercel : **Projet → Settings → Environment Variables**, ajouter :
    - `RESEND_API_KEY` = la clé copiée

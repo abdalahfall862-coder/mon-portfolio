@@ -36,7 +36,7 @@ module.exports = async function handler(req, res) {
             body: JSON.stringify({
                 // Le domaine par défaut de Resend permet d'envoyer à l'adresse du propriétaire du compte.
                 from: 'Portfolio <onboarding@resend.dev>',
-                to: ['abdalafall862@gmail.com'],
+                to: ['abdalahfall862@gmail.com'],
                 reply_to: email,
                 subject: `Message portfolio — ${name}`,
                 text: `${message}\n\n— ${name}\n${email}`

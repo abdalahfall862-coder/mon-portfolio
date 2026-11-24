@@ -475,9 +475,9 @@ if (contactForm && formFeedback && formFallback && submitBtn && submitLabel) {
             setFeedback(error.message || 'Envoi impossible, réessayez.', 'error');
             formFallback.textContent = 'Vous pouvez aussi m’écrire directement : ';
             const link = document.createElement('a');
-            link.href = 'mailto:abdalafall862@gmail.com';
+            link.href = 'mailto:abdalahfall862@gmail.com';
             link.className = 'font-bold text-hoop underline hover:opacity-80';
-            link.textContent = 'abdalafall862@gmail.com →';
+            link.textContent = 'abdalahfall862@gmail.com →';
             formFallback.appendChild(link);
             formFallback.classList.remove('hidden');
         } finally {
