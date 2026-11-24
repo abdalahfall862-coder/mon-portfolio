@@ -7,122 +7,197 @@
    #fx-hoop déclenche un tir balistique : il ne marque que s'il traverse le cercle, sinon
    il rebondit dessus et reprend le dribble. Événements 'fx:bounce' (tir) et 'fx:swish'. */
 (function () {
-  if (typeof THREE === 'undefined') return;
-  const canvas = document.getElementById('bg-canvas');
+  if (typeof THREE === "undefined") return;
+  const canvas = document.getElementById("bg-canvas");
   if (!canvas) return;
 
   let renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); }
-  catch (e) { canvas.remove(); return; }
+  try {
+    renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+    });
+  } catch (e) {
+    canvas.remove();
+    return;
+  }
   renderer.outputEncoding = THREE.sRGBEncoding;
 
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const anchor = document.getElementById('fx-ball-anchor');
-  const hoopEl = document.getElementById('fx-hoop');
-  if (!anchor) { canvas.remove(); return; }
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const anchor = document.getElementById("fx-ball-anchor");
+  const hoopEl = document.getElementById("fx-hoop");
+  if (!anchor) {
+    canvas.remove();
+    return;
+  }
 
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(0, 1, 0, -1, -2000, 2000);
 
   /* ---------- Éclairage (salle : clé chaude, rebond parquet, contre-jour) ---------- */
   scene.add(new THREE.HemisphereLight(0xfff0dc, 0x7a4220, 0.95));
-  const key = new THREE.DirectionalLight(0xfff3e2, 1.55); key.position.set(-0.55, 0.85, 1);
-  const rimL = new THREE.DirectionalLight(0xffb070, 0.55); rimL.position.set(0.9, 0.1, -0.5);
+  const key = new THREE.DirectionalLight(0xfff3e2, 1.55);
+  key.position.set(-0.55, 0.85, 1);
+  const rimL = new THREE.DirectionalLight(0xffb070, 0.55);
+  rimL.position.set(0.9, 0.1, -0.5);
   scene.add(key, rimL);
 
   /* ---------- Texture du ballon ---------- */
   function buildTextures() {
-    const TW = 1024, TH = 512;
-    const c1 = document.createElement('canvas'), c2 = document.createElement('canvas');
-    c1.width = c2.width = TW; c1.height = c2.height = TH;
-    const x1 = c1.getContext('2d'), x2 = c2.getContext('2d');
-    const i1 = x1.createImageData(TW, TH), i2 = x2.createImageData(TW, TH);
-    const d1 = i1.data, d2 = i2.data;
+    const TW = 1024,
+      TH = 512;
+    const c1 = document.createElement("canvas"),
+      c2 = document.createElement("canvas");
+    c1.width = c2.width = TW;
+    c1.height = c2.height = TH;
+    const x1 = c1.getContext("2d"),
+      x2 = c2.getContext("2d");
+    const i1 = x1.createImageData(TW, TH),
+      i2 = x2.createImageData(TW, TH);
+    const d1 = i1.data,
+      d2 = i2.data;
 
-    const cp = new Float32Array(TW), sp = new Float32Array(TW);
-    for (let x = 0; x < TW; x++) { const ph = (x + 0.5) / TW * Math.PI * 2; cp[x] = Math.cos(ph); sp[x] = Math.sin(ph); }
+    const cp = new Float32Array(TW),
+      sp = new Float32Array(TW);
+    for (let x = 0; x < TW; x++) {
+      const ph = ((x + 0.5) / TW) * Math.PI * 2;
+      cp[x] = Math.cos(ph);
+      sp[x] = Math.sin(ph);
+    }
     /* Canaux conformes à la norme : 3 grands cercles mutuellement perpendiculaires
        (1 équateur + 2 méridiens à 90°) -> 8 panneaux, configuration classique FIBA/NBA.
        Les méridiens sont tournés de 45° pour que le marquage tombe au centre d'un panneau.
        Demi-largeur 0,026 rad ~ 6,2 mm de couture sur une taille 7 (max FIBA : 6,35 mm). */
     const q = Math.SQRT1_2;
-    const w = 0.026, F = 46;
-    const sm = (a, b, v) => { const t = Math.max(0, Math.min(1, (v - a) / (b - a))); return t * t * (3 - 2 * t); };
+    const w = 0.026,
+      F = 46;
+    const sm = (a, b, v) => {
+      const t = Math.max(0, Math.min(1, (v - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
 
     for (let y = 0; y < TH; y++) {
-      const th = (y + 0.5) / TH * Math.PI, st = Math.sin(th), ny = Math.cos(th);
+      const th = ((y + 0.5) / TH) * Math.PI,
+        st = Math.sin(th),
+        ny = Math.cos(th);
       for (let x = 0; x < TW; x++) {
-        const nx = -cp[x] * st, nz = sp[x] * st;
+        const nx = -cp[x] * st,
+          nz = sp[x] * st;
         // 3 canaux : équateur + 2 méridiens perpendiculaires (8 panneaux)
         const dEq = Math.abs(ny);
         const dMer = Math.min(Math.abs((nx - nz) * q), Math.abs((nx + nz) * q));
         const d = Math.min(dEq, dMer);
-        const dep = dMer < dEq ? 0.95 : 0.78;         // NBA Pro Seams : double profondeur
-        const g = 1 - sm(w * 0.6, w, d);              // fond du canal
-        const e = sm(w, w * 2.6, d);                   // 0 près du canal -> 1 loin
-        const pb = Math.sin(nx * F + 1.3) * Math.sin(ny * F + 0.7) * Math.sin(nz * F + 2.1);
-        const pb2 = Math.sin((nx + ny) * F * 1.6 + 0.4) * Math.sin((nz - ny) * F * 1.6 + 1.1);
+        const dep = dMer < dEq ? 0.95 : 0.78; // NBA Pro Seams : double profondeur
+        const g = 1 - sm(w * 0.6, w, d); // fond du canal
+        const e = sm(w, w * 2.6, d); // 0 près du canal -> 1 loin
+        const pb =
+          Math.sin(nx * F + 1.3) *
+          Math.sin(ny * F + 0.7) *
+          Math.sin(nz * F + 2.1);
+        const pb2 =
+          Math.sin((nx + ny) * F * 1.6 + 0.4) *
+          Math.sin((nz - ny) * F * 1.6 + 1.1);
         const p = Math.max(0, Math.min(1, 0.5 + 0.38 * pb + 0.2 * pb2));
         const tint = 0.965 + 0.035 * Math.sin(nx * 3.1 + nz * 2.3 + ny);
         const shade = (0.5 + 0.5 * e) * (0.9 + 0.13 * p) * tint;
-        let r = 0.80 * shade, gg = 0.375 * shade, b = 0.125 * shade;
-        r += (0.03 - r) * g; gg += (0.02 - gg) * g; b += (0.015 - b) * g;
+        let r = 0.8 * shade,
+          gg = 0.375 * shade,
+          b = 0.125 * shade;
+        r += (0.03 - r) * g;
+        gg += (0.02 - gg) * g;
+        b += (0.015 - b) * g;
         const o = (y * TW + x) * 4;
-        d1[o] = Math.min(255, r * 255); d1[o + 1] = Math.min(255, gg * 255); d1[o + 2] = Math.min(255, b * 255); d1[o + 3] = 255;
+        d1[o] = Math.min(255, r * 255);
+        d1[o + 1] = Math.min(255, gg * 255);
+        d1[o + 2] = Math.min(255, b * 255);
+        d1[o + 3] = 255;
 
         let h = (0.6 + 0.26 * (p - 0.5)) * (0.4 + 0.6 * e);
         h = h * (1 - g * dep);
         const ridge = Math.exp(-Math.pow((d - w * 1.4) / (w * 0.65), 2)) * 0.2;
         h += ridge * (1 - g);
         const hv = Math.max(0, Math.min(255, h * 255));
-        d2[o] = d2[o + 1] = d2[o + 2] = hv; d2[o + 3] = 255;
+        d2[o] = d2[o + 1] = d2[o + 2] = hv;
+        d2[o + 3] = 255;
       }
     }
-    x1.putImageData(i1, 0, 0); x2.putImageData(i2, 0, 0);
+    x1.putImageData(i1, 0, 0);
+    x2.putImageData(i2, 0, 0);
 
     /* Marquage du ballon officiel NBA Wilson : logoman NBA et script Wilson
        estampés dans le cuir grainé, avec l'inline anthracite du logo Wilson. */
-    x1.textAlign = 'center'; x1.textBaseline = 'middle';
+    x1.textAlign = "center";
+    x1.textBaseline = "middle";
 
     /* --- Logoman NBA : joueur en mouvement dans un cercle --- */
     (function logoman(cx, cy, R) {
-      const ink = 'rgba(26,12,5,.9)';
-      x1.save(); x1.translate(cx, cy);
-      x1.beginPath(); x1.arc(0, 0, R, 0, Math.PI * 2);
-      x1.fillStyle = 'rgba(120,52,14,.5)'; x1.fill();
-      x1.lineWidth = 7; x1.strokeStyle = ink; x1.stroke();
-      x1.fillStyle = ink; x1.strokeStyle = ink; x1.lineCap = 'round';
-      x1.beginPath(); x1.arc(-R * 0.04, -R * 0.36, R * 0.15, 0, Math.PI * 2); x1.fill();
-      x1.save(); x1.rotate(-0.22); x1.fillRect(-R * 0.14, -R * 0.2, R * 0.28, R * 0.5); x1.restore();
+      const ink = "rgba(26,12,5,.9)";
+      x1.save();
+      x1.translate(cx, cy);
+      x1.beginPath();
+      x1.arc(0, 0, R, 0, Math.PI * 2);
+      x1.fillStyle = "rgba(120,52,14,.5)";
+      x1.fill();
+      x1.lineWidth = 7;
+      x1.strokeStyle = ink;
+      x1.stroke();
+      x1.fillStyle = ink;
+      x1.strokeStyle = ink;
+      x1.lineCap = "round";
+      x1.beginPath();
+      x1.arc(-R * 0.04, -R * 0.36, R * 0.15, 0, Math.PI * 2);
+      x1.fill();
+      x1.save();
+      x1.rotate(-0.22);
+      x1.fillRect(-R * 0.14, -R * 0.2, R * 0.28, R * 0.5);
+      x1.restore();
       x1.lineWidth = R * 0.11;
-      x1.beginPath(); x1.moveTo(R * 0.08, -R * 0.06); x1.lineTo(R * 0.42, -R * 0.26); x1.stroke();
-      x1.beginPath(); x1.moveTo(-R * 0.06, R * 0.26); x1.lineTo(-R * 0.26, R * 0.56); x1.stroke();
-      x1.beginPath(); x1.moveTo(R * 0.06, R * 0.26); x1.lineTo(R * 0.28, R * 0.54); x1.stroke();
-      x1.beginPath(); x1.arc(R * 0.5, -R * 0.32, R * 0.16, 0, Math.PI * 2); x1.fill();
+      x1.beginPath();
+      x1.moveTo(R * 0.08, -R * 0.06);
+      x1.lineTo(R * 0.42, -R * 0.26);
+      x1.stroke();
+      x1.beginPath();
+      x1.moveTo(-R * 0.06, R * 0.26);
+      x1.lineTo(-R * 0.26, R * 0.56);
+      x1.stroke();
+      x1.beginPath();
+      x1.moveTo(R * 0.06, R * 0.26);
+      x1.lineTo(R * 0.28, R * 0.54);
+      x1.stroke();
+      x1.beginPath();
+      x1.arc(R * 0.5, -R * 0.32, R * 0.16, 0, Math.PI * 2);
+      x1.fill();
       x1.restore();
       x1.font = '900 22px "Arial Black", Impact, sans-serif';
       x1.fillStyle = ink;
-      x1.fillText('NBA', cx, cy + R + 16);
+      x1.fillText("NBA", cx, cy + R + 16);
     })(TW * 0.25, TH * 0.31, 58);
 
     /* --- Script Wilson + inline anthracite --- */
     (function wilson(cx, cy) {
-      x1.save(); x1.translate(cx, cy);
+      x1.save();
+      x1.translate(cx, cy);
       x1.font = 'italic 900 66px Georgia, "Times New Roman", serif';
-      x1.lineJoin = 'round'; x1.lineWidth = 9;
-      x1.strokeStyle = 'rgba(38,38,42,.92)';                 // anthracite inline
-      x1.strokeText('Wilson', 0, 0);
-      x1.fillStyle = 'rgba(58,22,6,.94)';
-      x1.fillText('Wilson', 0, 0);
+      x1.lineJoin = "round";
+      x1.lineWidth = 9;
+      x1.strokeStyle = "rgba(38,38,42,.92)"; // anthracite inline
+      x1.strokeText("Wilson", 0, 0);
+      x1.fillStyle = "rgba(58,22,6,.94)";
+      x1.fillText("Wilson", 0, 0);
       x1.font = '700 16px "Arial Black", sans-serif';
-      x1.fillStyle = 'rgba(38,38,42,.8)';
-      x1.fillText('OFFICIAL GAME BALL', 0, 50);
+      x1.fillStyle = "rgba(38,38,42,.8)";
+      x1.fillText("OFFICIAL GAME BALL", 0, 50);
       x1.restore();
     })(TW * 0.75, TH * 0.69);
     return { color: c1, bump: c2 };
   }
 
-  const ballMat = new THREE.MeshStandardMaterial({ color: 0xd2631f, roughness: 0.6, metalness: 0 });
+  const ballMat = new THREE.MeshStandardMaterial({
+    color: 0xd2631f,
+    roughness: 0.6,
+    metalness: 0,
+  });
   const ball = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 48), ballMat);
   ball.position.z = 5;
 
@@ -130,44 +205,67 @@
   setTimeout(() => {
     try {
       const t = buildTextures();
-      const map = new THREE.CanvasTexture(t.color); map.encoding = THREE.sRGBEncoding;
+      const map = new THREE.CanvasTexture(t.color);
+      map.encoding = THREE.sRGBEncoding;
       const bump = new THREE.CanvasTexture(t.bump);
-      const an = renderer.capabilities.getMaxAnisotropy ? Math.min(8, renderer.capabilities.getMaxAnisotropy()) : 1;
+      const an = renderer.capabilities.getMaxAnisotropy
+        ? Math.min(8, renderer.capabilities.getMaxAnisotropy())
+        : 1;
       map.anisotropy = bump.anisotropy = an;
       ballMat.color.setHex(0xffffff);
-      ballMat.map = map; ballMat.bumpMap = bump; ballMat.bumpScale = 3.2; ballMat.roughness = 0.58;
+      ballMat.map = map;
+      ballMat.bumpMap = bump;
+      ballMat.bumpScale = 3.2;
+      ballMat.roughness = 0.58;
       ballMat.needsUpdate = true;
-    } catch (e) { /* on garde la couleur unie */ }
+    } catch (e) {
+      /* on garde la couleur unie */
+    }
   }, 60);
 
   /* ---------- Ombre douce ---------- */
-  const sc = document.createElement('canvas'); sc.width = sc.height = 128;
-  const sctx = sc.getContext('2d');
+  const sc = document.createElement("canvas");
+  sc.width = sc.height = 128;
+  const sctx = sc.getContext("2d");
   const grad = sctx.createRadialGradient(64, 64, 4, 64, 64, 62);
-  grad.addColorStop(0, 'rgba(25,10,2,.75)'); grad.addColorStop(0.55, 'rgba(25,10,2,.35)'); grad.addColorStop(1, 'rgba(25,10,2,0)');
-  sctx.fillStyle = grad; sctx.fillRect(0, 0, 128, 128);
-  const shadowMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false });
+  grad.addColorStop(0, "rgba(25,10,2,.75)");
+  grad.addColorStop(0.55, "rgba(25,10,2,.35)");
+  grad.addColorStop(1, "rgba(25,10,2,0)");
+  sctx.fillStyle = grad;
+  sctx.fillRect(0, 0, 128, 128);
+  const shadowMat = new THREE.MeshBasicMaterial({
+    map: new THREE.CanvasTexture(sc),
+    transparent: true,
+    depthWrite: false,
+  });
   const shadow = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shadowMat);
   scene.add(shadow, ball);
 
   /* ---------- Halo doux et étincelles du panier ---------- */
   function softDot() {
-    const c = document.createElement('canvas'); c.width = c.height = 64;
-    const x = c.getContext('2d');
+    const c = document.createElement("canvas");
+    c.width = c.height = 64;
+    const x = c.getContext("2d");
     const g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
-    g.addColorStop(0, 'rgba(255,255,255,1)');
-    g.addColorStop(0.28, 'rgba(255,240,220,.85)');
-    g.addColorStop(0.65, 'rgba(255,190,120,.28)');
-    g.addColorStop(1, 'rgba(255,170,90,0)');
-    x.fillStyle = g; x.fillRect(0, 0, 64, 64);
+    g.addColorStop(0, "rgba(255,255,255,1)");
+    g.addColorStop(0.28, "rgba(255,240,220,.85)");
+    g.addColorStop(0.65, "rgba(255,190,120,.28)");
+    g.addColorStop(1, "rgba(255,170,90,0)");
+    x.fillStyle = g;
+    x.fillRect(0, 0, 64, 64);
     return new THREE.CanvasTexture(c);
   }
   const dotTex = softDot();
 
   /* Halo doux qui accompagne le ballon (s'intensifie pendant le tir) */
   const glowMat = new THREE.SpriteMaterial({
-    map: dotTex, color: 0xff8a36, transparent: true,
-    blending: THREE.AdditiveBlending, depthWrite: false, depthTest: true, opacity: 0.2
+    map: dotTex,
+    color: 0xff8a36,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true,
+    opacity: 0.2,
   });
   const glow = new THREE.Sprite(glowMat);
   glow.position.z = 4.7;
@@ -175,24 +273,38 @@
 
   /* Étincelles jaillissant du cercle au moment du swish */
   const BN = 20;
-  const bPos = new Float32Array(BN * 3), bCol = new Float32Array(BN * 3);
-  const bx = new Float32Array(BN), by = new Float32Array(BN);
-  const bvx = new Float32Array(BN), bvy = new Float32Array(BN), bLife = new Float32Array(BN);
+  const bPos = new Float32Array(BN * 3),
+    bCol = new Float32Array(BN * 3);
+  const bx = new Float32Array(BN),
+    by = new Float32Array(BN);
+  const bvx = new Float32Array(BN),
+    bvy = new Float32Array(BN),
+    bLife = new Float32Array(BN);
   const bGeo = new THREE.BufferGeometry();
-  bGeo.setAttribute('position', new THREE.BufferAttribute(bPos, 3));
-  bGeo.setAttribute('color', new THREE.BufferAttribute(bCol, 3));
-  const burst = new THREE.Points(bGeo, new THREE.PointsMaterial({
-    size: 9, map: dotTex, vertexColors: true, transparent: true,
-    blending: THREE.AdditiveBlending, depthWrite: false, depthTest: true,
-    sizeAttenuation: false
-  }));
-  burst.frustumCulled = false; burst.visible = false;
+  bGeo.setAttribute("position", new THREE.BufferAttribute(bPos, 3));
+  bGeo.setAttribute("color", new THREE.BufferAttribute(bCol, 3));
+  const burst = new THREE.Points(
+    bGeo,
+    new THREE.PointsMaterial({
+      size: 9,
+      map: dotTex,
+      vertexColors: true,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      depthTest: true,
+      sizeAttenuation: false,
+    }),
+  );
+  burst.frustumCulled = false;
+  burst.visible = false;
   scene.add(burst);
   function spawnBurst(x, y) {
     for (let i = 0; i < BN; i++) {
       const a = Math.random() * Math.PI * 2;
       const sp = 60 + Math.random() * 150;
-      bx[i] = x; by[i] = y;
+      bx[i] = x;
+      by[i] = y;
       bvx[i] = Math.cos(a) * sp * 0.55;
       bvy[i] = Math.sin(a) * sp * 0.75 - 40;
       bLife[i] = 0.45 + Math.random() * 0.45;
@@ -203,14 +315,22 @@
     if (!burst.visible || dt <= 0) return;
     let alive = false;
     for (let i = 0; i < BN; i++) {
-      if (bLife[i] <= 0) { bCol[i * 3] = bCol[i * 3 + 1] = bCol[i * 3 + 2] = 0; continue; }
+      if (bLife[i] <= 0) {
+        bCol[i * 3] = bCol[i * 3 + 1] = bCol[i * 3 + 2] = 0;
+        continue;
+      }
       alive = true;
       bLife[i] -= dt;
-      bvy[i] += 320 * dt;                     // gravité (écran : y vers le bas)
-      bx[i] += bvx[i] * dt; by[i] += bvy[i] * dt;
+      bvy[i] += 320 * dt; // gravité (écran : y vers le bas)
+      bx[i] += bvx[i] * dt;
+      by[i] += bvy[i] * dt;
       const f = Math.max(0, Math.min(1, bLife[i] / 0.9));
-      bPos[i * 3] = bx[i]; bPos[i * 3 + 1] = -by[i]; bPos[i * 3 + 2] = 4.3;
-      bCol[i * 3] = f; bCol[i * 3 + 1] = 0.55 * f * f; bCol[i * 3 + 2] = 0.12 * f * f;
+      bPos[i * 3] = bx[i];
+      bPos[i * 3 + 1] = -by[i];
+      bPos[i * 3 + 2] = 4.3;
+      bCol[i * 3] = f;
+      bCol[i * 3 + 1] = 0.55 * f * f;
+      bCol[i * 3 + 2] = 0.12 * f * f;
     }
     bGeo.attributes.position.needsUpdate = true;
     bGeo.attributes.color.needsUpdate = true;
@@ -218,104 +338,174 @@
   }
 
   /* ---------- Mesures mises en cache ---------- */
-  let W = 1, H = 1;
-  let A = { l: 0, t: 0, w: 0, h: 0 }, Hm = { x: 0, y: 0, w: 0 };
+  let W = 1,
+    H = 1;
+  let A = { l: 0, t: 0, w: 0, h: 0 },
+    Hm = { x: 0, y: 0, w: 0 };
   function measure() {
     const sy = window.scrollY;
     const a = anchor.getBoundingClientRect();
     A = { l: a.left, t: a.top + sy, w: a.width, h: a.height };
     // Le cercle est à 52% de la hauteur du SVG du panier (le reste est la planche et le bras).
-    if (hoopEl) { const r = hoopEl.getBoundingClientRect(); Hm = { x: r.left + r.width / 2, y: r.top + sy + r.height * 0.52, w: r.width }; }
+    if (hoopEl) {
+      const r = hoopEl.getBoundingClientRect();
+      Hm = {
+        x: r.left + r.width / 2,
+        y: r.top + sy + r.height * 0.52,
+        w: r.width,
+      };
+    }
   }
   function resize() {
-    W = innerWidth; H = innerHeight;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 640 ? 1.5 : 2));
+    W = innerWidth;
+    H = innerHeight;
+    renderer.setPixelRatio(
+      Math.min(devicePixelRatio, innerWidth < 640 ? 1.5 : 2),
+    );
     renderer.setSize(W, H, false);
-    camera.left = 0; camera.right = W; camera.top = 0; camera.bottom = -H;
+    camera.left = 0;
+    camera.right = W;
+    camera.top = 0;
+    camera.bottom = -H;
     camera.updateProjectionMatrix();
     measure();
   }
   resize();
-  addEventListener('resize', resize);
-  addEventListener('load', measure);
+  addEventListener("resize", resize);
+  addEventListener("load", measure);
   if (window.ResizeObserver) new ResizeObserver(measure).observe(document.body);
 
   /* ---------- Machine à états : dribble ↔ plain (rebond libre) | bounce → (drop | miss) ---------- */
-  let st = 'dribble', st0 = 0, lastT = 0;
-  let scoreR = 30;                                // rayon du ballon au moment du panier
-  let velX = 0, velY = 0;                         // vitesses instantanées (squash / rebond sur le cercle)
-  let shX0 = 0, shY0 = 0, shVY = 0, shTargetX = 0, shT = 0.9, shElapsed = 0, shCurve = 0;
-  let plainN = 0;                                 // nombre de rebonds libres déjà effectués
-  let plX0 = 0, plY0 = 0, plTX = 0, plTY = 0, plT = 0.5, plTm = 0, plVY = 0;
-  let plPhase = 0, plRX = 0;                      // 0 = saut vers le point, 1 = rebonds, 2 = retour
-  let curR = 30;                                  // rayon courant, mis à jour à chaque frame
-  let imp = 0;                                    // intensité de l'impact
-  const G = 1900;                                  // gravité en px/s²
+  let st = "dribble",
+    st0 = 0,
+    lastT = 0;
+  let scoreR = 30; // rayon du ballon au moment du panier
+  let velX = 0,
+    velY = 0; // vitesses instantanées (squash / rebond sur le cercle)
+  let shX0 = 0,
+    shY0 = 0,
+    shVY = 0,
+    shTargetX = 0,
+    shT = 0.9,
+    shElapsed = 0,
+    shCurve = 0;
+  let plainN = 0; // nombre de rebonds libres déjà effectués
+  let plX0 = 0,
+    plY0 = 0,
+    plTX = 0,
+    plTY = 0,
+    plT = 0.5,
+    plTm = 0,
+    plVY = 0;
+  let plPhase = 0,
+    plRX = 0; // 0 = saut vers le point, 1 = rebonds, 2 = retour
+  let curR = 30; // rayon courant, mis à jour à chaque frame
+  let imp = 0; // intensité de l'impact
+  const G = 1900; // gravité en px/s²
   const bp = { x: 0, y: 0, r: 30 };
   /* Rebond libre : un clic envoie le ballon sur le point choisi du terrain, puis il y
      rebondit avec amortissement avant de revenir au dribble. Pas de visée, pas de score. */
   function startPlainBounce(clientX, clientY) {
-    if (!ball.visible || st === 'drop' || st === 'miss') return;
+    if (!ball.visible || st === "drop" || st === "miss") return;
     const R = curR;
     const top = A.t - window.scrollY;
     plTX = Math.max(A.l + R, Math.min(A.l + A.w - R, clientX));
     plTY = Math.max(top + R, Math.min(top + A.h - R, clientY));
-    plX0 = bp.x; plY0 = bp.y;
+    plX0 = bp.x;
+    plY0 = bp.y;
     const dist = Math.hypot(plTX - plX0, plTY - plY0);
     plT = Math.max(0.32, Math.min(0.85, 0.3 + dist / 900));
     plVY = (plTY - plY0 - 0.5 * G * plT * plT) / plT;
-    plTm = 0; plPhase = 0; plainN = 0; velX = 0;
+    plTm = 0;
+    plPhase = 0;
+    plainN = 0;
+    velX = 0;
     imp = 1;
-    st = 'plain'; st0 = lastT;
+    st = "plain";
+    st0 = lastT;
   }
 
   /* Tir directionnel : un clic sur le panier envoie le ballon vers le cercle avec une
      trajectoire balistique. Le panier n'est validé que s'il redescend dans le cercle. */
   function startShot(clientX, perfect) {
-    if (!ball.visible || st === 'drop' || st === 'miss') return;
+    if (!ball.visible || st === "drop" || st === "miss") return;
     if (!hoopEl) return;
     const hr = hoopEl.getBoundingClientRect();
     if (hr.width <= 0) return;
     const hx = hr.left + hr.width / 2;
     const hy = hr.top + hr.height * 0.52;
-    const aim = perfect ? 0 : Math.max(-30, Math.min(30, (clientX - bp.x) * 0.16));
-    shX0 = bp.x; shY0 = bp.y;
+    const aim = perfect
+      ? 0
+      : Math.max(-30, Math.min(30, (clientX - bp.x) * 0.16));
+    shX0 = bp.x;
+    shY0 = bp.y;
     shTargetX = hx + aim;
     // Durée de vol assez longue pour que le sommet soit au-dessus du cercle :
     // le ballon arrive donc en descendance, comme un vrai tir au panier.
     shT = Math.max(0.82, Math.min(1.18, Math.abs(shTargetX - shX0) / 520));
     shVY = (hy - shY0 - 0.5 * G * shT * shT) / shT;
     // Léger renflement latéral à l'apex : la trajectoire ne part pas comme un ascenseur.
-    shCurve = (shTargetX >= shX0 ? 1 : -1) * Math.min(34, 16 + Math.abs(shTargetX - shX0) * 0.18);
+    shCurve =
+      (shTargetX >= shX0 ? 1 : -1) *
+      Math.min(34, 16 + Math.abs(shTargetX - shX0) * 0.18);
     shElapsed = 0;
     imp = 1;
-    st = 'bounce'; st0 = lastT;
+    st = "bounce";
+    st0 = lastT;
   }
 
   // Raccourci clavier / palette : tir visé centre, équivalent d'un clic sur le panier.
-  addEventListener('fx:bounce', (e) => {
+  addEventListener("fx:bounce", (e) => {
     const d = e.detail || {};
     const hr = hoopEl && hoopEl.getBoundingClientRect();
-    startShot(typeof d.clientX === 'number' ? d.clientX : (hr ? hr.left + hr.width / 2 : bp.x), !!d.perfect);
+    startShot(
+      typeof d.clientX === "number"
+        ? d.clientX
+        : hr
+          ? hr.left + hr.width / 2
+          : bp.x,
+      !!d.perfect,
+    );
   });
 
   // Clic sur le panier = tir ; clic ailleurs sur le terrain = simple rebond (sans score).
-  addEventListener('pointerdown', (e) => {
-    if (e.button !== 0) return;
-    const el = e.target;
-    if (el && el.closest && el.closest('a,button,input,textarea,select,label,[role="button"],.project-card,#project-modal,#sidebar,#top-actions,#fx-hud,#fx-pal')) return;
-    if (el && el.closest && el.closest('#fx-hoop')) startShot(e.clientX, true);
-    else startPlainBounce(e.clientX, e.clientY);
-  }, { passive: true });
+  addEventListener(
+    "pointerdown",
+    (e) => {
+      if (e.button !== 0) return;
+      const el = e.target;
+      if (
+        el &&
+        el.closest &&
+        el.closest(
+          'a,button,input,textarea,select,label,[role="button"],.project-card,#project-modal,#sidebar,#top-actions,#fx-hud,#fx-pal',
+        )
+      )
+        return;
+      if (el && el.closest && el.closest("#fx-hoop"))
+        startShot(e.clientX, true);
+      else startPlainBounce(e.clientX, e.clientY);
+    },
+    { passive: true },
+  );
 
   const ease = (u) => u * u * (3 - 2 * u);
 
   function frame(t, dt) {
     const sY = window.scrollY;
-    const a = { left: A.l, top: A.t - sY, width: A.w, height: A.h, bottom: A.t + A.h - sY };
+    const a = {
+      left: A.l,
+      top: A.t - sY,
+      width: A.w,
+      height: A.h,
+      bottom: A.t + A.h - sY,
+    };
     const onScreen = a.width > 0 && a.bottom > -60 && a.top < H + 60;
     ball.visible = shadow.visible = glow.visible = onScreen;
-    if (!onScreen) { burst.visible = false; return; }
+    if (!onScreen) {
+      burst.visible = false;
+      return;
+    }
 
     // Le rayon du ballon est calibré sur le cercle : diamètre du ballon ≈ 59 % du cercle.
     const R = Math.max(9, Math.min(36, (Hm.w || a.width * 0.5) * 0.2));
@@ -324,28 +514,33 @@
     const floorY = a.bottom - 6 - R;
     const drib = Math.min(a.height * 0.45, R * 6);
     const el = t - st0;
-    let k = 1, squash = 1, shOp = 1;
+    let k = 1,
+      squash = 1,
+      shOp = 1;
 
-    if (st === 'dribble') {
-      const u = (el % 0.8) / 0.8, h = 4 * u * (1 - u);
-      bp.x = cx + Math.sin(t * 0.6) * a.width * 0.12;   // phase continue : aucun saut latéral
+    if (st === "dribble") {
+      const u = (el % 0.8) / 0.8,
+        h = 4 * u * (1 - u);
+      bp.x = cx + Math.sin(t * 0.6) * a.width * 0.12; // phase continue : aucun saut latéral
       bp.y = floorY - h * drib;
       bp.r = R;
       squash = h < 0.06 ? 0.86 + 0.14 * (h / 0.06) : 1;
       shOp = 1 - h * 0.6;
-      ball.rotation.y += dt * 1.6; ball.rotation.x = 0.35; ball.rotation.z += dt * 0.3;
-    } else if (st === 'drop') {
+      ball.rotation.y += dt * 1.6;
+      ball.rotation.x = 0.35;
+      ball.rotation.z += dt * 0.3;
+    } else if (st === "drop") {
       // Trois temps : le cercle avale le ballon, le filet le retient, puis il ressort.
       const u = Math.min(1, el / 0.72);
       let depth, sq;
       if (u < 0.3) {
         const v = u / 0.3;
         depth = 0.14 * ease(v);
-        sq = 1 - 0.12 * Math.sin(v * Math.PI);        // compression dans le cercle
+        sq = 1 - 0.12 * Math.sin(v * Math.PI); // compression dans le cercle
       } else if (u < 0.62) {
         const v = (u - 0.3) / 0.32;
         depth = 0.14 + 0.18 * ease(v);
-        sq = 1 + 0.09 * Math.sin(v * Math.PI);        // étirement quand le filet le capture
+        sq = 1 + 0.09 * Math.sin(v * Math.PI); // étirement quand le filet le capture
       } else {
         const v = (u - 0.62) / 0.38;
         depth = 0.32 + 0.42 * v * v;
@@ -353,13 +548,18 @@
       }
       bp.x = Hm.x + Math.sin(u * Math.PI * 2) * 2 * (1 - u);
       bp.y = Hm.y - sY + Hm.w * depth;
-      bp.r = scoreR * (1 - 0.08 * Math.min(1, u * 2) - 0.18 * Math.max(0, (u - 0.62) / 0.38));
+      bp.r =
+        scoreR *
+        (1 - 0.08 * Math.min(1, u * 2) - 0.18 * Math.max(0, (u - 0.62) / 0.38));
       squash = sq;
       k = 1 - ease(Math.max(0, (u - 0.78) / 0.22));
       shOp = 0;
-      ball.rotation.z += dt * (u < 0.62 ? 3 : 1.4);  // le filet freine la rotation
-      if (u >= 1) { st = 'ret'; st0 = t; }
-    } else if (st === 'plain') {
+      ball.rotation.z += dt * (u < 0.62 ? 3 : 1.4); // le filet freine la rotation
+      if (u >= 1) {
+        st = "ret";
+        st0 = t;
+      }
+    } else if (st === "plain") {
       const driftX = cx + Math.sin(t * 0.6) * a.width * 0.12;
       if (plPhase === 0) {
         // Saut balistique vers le point exact cliqué.
@@ -373,8 +573,11 @@
           bp.x = plTX;
           bp.y = Math.min(bp.y, floorY);
           velX = 0;
-          velY = -Math.max(240, Math.abs(velY) * 0.6);   // premier bond sur le point visé
-          plPhase = 1; plTm = 0; plainN = 0; imp = 1;
+          velY = -Math.max(240, Math.abs(velY) * 0.6); // premier bond sur le point visé
+          plPhase = 1;
+          plTm = 0;
+          plainN = 0;
+          imp = 1;
         }
       } else if (plPhase === 1) {
         // Rebonds amortis à l'endroit cliqué.
@@ -386,10 +589,14 @@
           bp.y = floorY;
           if (Math.abs(velY) > 150 && plainN < 3) {
             velY = -Math.abs(velY) * 0.56;
-            plainN++; imp = 1;
+            plainN++;
+            imp = 1;
           } else {
-            velY = 0; velX = 0; plRX = bp.x;
-            plPhase = 2; plTm = 0;
+            velY = 0;
+            velX = 0;
+            plRX = bp.x;
+            plPhase = 2;
+            plTm = 0;
           }
         }
       } else {
@@ -398,8 +605,12 @@
         const u = Math.min(1, plTm / 0.45);
         bp.x = plRX + (driftX - plRX) * ease(u);
         bp.y = floorY - Math.sin(u * Math.PI) * R * 0.7;
-        velY = 0; velX = 0;
-        if (u >= 1) { st = 'dribble'; st0 = t; }
+        velY = 0;
+        velX = 0;
+        if (u >= 1) {
+          st = "dribble";
+          st0 = t;
+        }
       }
       bp.r = R;
       const above = Math.max(0, floorY - bp.y);
@@ -408,15 +619,18 @@
       shOp = Math.max(0.12, 1 - above / 260);
       ball.rotation.y += dt * (1.6 + Math.abs(velY) / 600);
       ball.rotation.z += dt * 0.6;
-    } else if (st === 'bounce' || st === 'miss') {
-      const hx = Hm.x, hy = Hm.y - sY;
+    } else if (st === "bounce" || st === "miss") {
+      const hx = Hm.x,
+        hy = Hm.y - sY;
       const prevY = bp.y;
-      if (st === 'bounce') {
+      if (st === "bounce") {
         // Trajectoire analytique : parabole verticale + renflement latéral à l'apex.
         shElapsed += dt;
         const u = Math.min(1, shElapsed / shT);
         velY = shVY + G * shElapsed;
-        velX = (shTargetX - shX0) / shT + Math.cos(u * Math.PI) * shCurve * Math.PI / shT;
+        velX =
+          (shTargetX - shX0) / shT +
+          (Math.cos(u * Math.PI) * shCurve * Math.PI) / shT;
         bp.x = shX0 + (shTargetX - shX0) * u + Math.sin(u * Math.PI) * shCurve;
         bp.y = shY0 + shVY * shElapsed + 0.5 * G * shElapsed * shElapsed;
       } else {
@@ -428,34 +642,51 @@
       bp.r = R;
 
       // Le ballon redescend au niveau du cercle : on vérifie s'il passe dedans.
-      if (st === 'bounce' && velY > 0 && prevY <= hy && bp.y > hy) {
+      if (st === "bounce" && velY > 0 && prevY <= hy && bp.y > hy) {
         if (Math.abs(bp.x - hx) <= Hm.w * 0.2) {
-          bp.x = hx; scoreR = bp.r;
-          st = 'drop'; st0 = t;
+          bp.x = hx;
+          scoreR = bp.r;
+          st = "drop";
+          st0 = t;
           spawnBurst(hx, hy);
-          hoopEl.classList.remove('swish', 'rimhit'); void hoopEl.offsetWidth; hoopEl.classList.add('swish');
-          dispatchEvent(new CustomEvent('fx:swish'));
+          hoopEl.classList.remove("swish", "rimhit");
+          void hoopEl.offsetWidth;
+          hoopEl.classList.add("swish");
+          dispatchEvent(new CustomEvent("fx:swish"));
         } else {
           // Cercle raté : le ballon rebondit dessus puis retombe au sol.
-          st = 'miss'; st0 = t;
+          st = "miss";
+          st0 = t;
           velY = -Math.abs(velY) * 0.35;
           velX = (bp.x < hx ? -1 : 1) * 110;
-          hoopEl.classList.remove('swish', 'rimhit'); void hoopEl.offsetWidth; hoopEl.classList.add('rimhit');
+          hoopEl.classList.remove("swish", "rimhit");
+          void hoopEl.offsetWidth;
+          hoopEl.classList.add("rimhit");
         }
       }
-      if (bp.y >= floorY) { bp.y = floorY; st = 'dribble'; st0 = t; }
+      if (bp.y >= floorY) {
+        bp.y = floorY;
+        st = "dribble";
+        st0 = t;
+      }
 
       const above = Math.max(0, floorY - bp.y);
       imp = Math.max(0, imp - dt * 4.5);
       squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(velY) / 6000);
       shOp = Math.max(0.12, 1 - above / 260);
       ball.rotation.y += dt * (1.6 + Math.abs(velY) / 600);
-      ball.rotation.z += dt * (st === 'bounce' ? 3.2 : 0.6);
+      ball.rotation.z += dt * (st === "bounce" ? 3.2 : 0.6);
     } else {
       const u = Math.min(1, Math.max(0, (el - 0.5) / 0.6));
-      bp.x = cx; bp.y = floorY; bp.r = R;
-      k = ease(u); shOp = u;
-      if (el > 1.1) { st = 'dribble'; st0 = t; }
+      bp.x = cx;
+      bp.y = floorY;
+      bp.r = R;
+      k = ease(u);
+      shOp = u;
+      if (el > 1.1) {
+        st = "dribble";
+        st0 = t;
+      }
     }
 
     const r = bp.r * Math.max(0.001, k);
@@ -465,20 +696,23 @@
     shadow.position.set(bp.x, -(floorY + R * 0.9), 0);
     shadow.scale.set(R * 1.15 * sh, R * 0.3 * sh, 1);
     shadowMat.opacity = shOp * sh;
-    if (st === 'drop') shadow.visible = false;
+    if (st === "drop") shadow.visible = false;
 
     glow.position.set(bp.x, -bp.y, 4.7);
     const gr = r * 3.4;
     glow.scale.set(gr, gr, 1);
-    glowMat.opacity = st === 'drop' ? 0.32 : ((st === 'bounce' || st === 'plain') ? 0.28 : 0.18);
+    glowMat.opacity =
+      st === "drop" ? 0.32 : st === "bounce" || st === "plain" ? 0.28 : 0.18;
     updateBurst(dt);
   }
 
   const clock = new THREE.Clock();
-  let running = true, raf;
+  let running = true,
+    raf;
   function loop() {
     const t = clock.getElapsedTime();
-    const dt = Math.min(0.05, t - lastT); lastT = t;
+    const dt = Math.min(0.05, t - lastT);
+    lastT = t;
     const was = ball.visible;
     frame(t, dt);
     if (ball.visible || was) renderer.render(scene, camera);
@@ -486,12 +720,25 @@
   }
   loop();
   if (reduce) {
-    addEventListener('scroll', () => { frame(lastT, 0); renderer.render(scene, camera); }, { passive: true });
-    setTimeout(() => { frame(lastT, 0); renderer.render(scene, camera); }, 400);
+    addEventListener(
+      "scroll",
+      () => {
+        frame(lastT, 0);
+        renderer.render(scene, camera);
+      },
+      { passive: true },
+    );
+    setTimeout(() => {
+      frame(lastT, 0);
+      renderer.render(scene, camera);
+    }, 400);
   }
 
-  document.addEventListener('visibilitychange', () => {
+  document.addEventListener("visibilitychange", () => {
     running = !document.hidden;
-    if (running && !reduce) { clock.getDelta(); loop(); } else cancelAnimationFrame(raf);
+    if (running && !reduce) {
+      clock.getDelta();
+      loop();
+    } else cancelAnimationFrame(raf);
   });
 })();
