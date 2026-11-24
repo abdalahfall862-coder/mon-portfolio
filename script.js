@@ -150,6 +150,7 @@ const projectsData = {
             "Swagger généré à partir des schémas de validation pour que la documentation reste toujours synchronisée avec le code"
         ],
         challenge: "Concevoir une architecture suffisamment découplée pour absorber de nouveaux modules métier sans régression, tout en maintenant un niveau de sécurité strict sur chaque endpoint exposé.",
+        links: [{ label: "Voir le code source sur GitHub", url: "https://github.com/abdalahfall862-coder/mon-api", variant: "primary" }],
         card: {
             match: "MATCH 03 · PRIME TIME · LIVE", tag: "MVP", span: "lg:col-span-6",
             featured: true, pad: "p-5", px: "px-2",
@@ -164,7 +165,8 @@ const projectsData = {
                 { label: "TypeORM", small: true },
                 { label: "MongoDB", small: true },
                 { label: "JWT Auth", small: true }
-            ]
+            ],
+            link: { label: "Voir le code source →", url: "https://github.com/abdalahfall862-coder/mon-api" }
         }
     },
     methshop: {
@@ -226,9 +228,9 @@ const projectsData = {
         challenge: "Conciler la capture et l'analyse audio en temps réel avec une expérience fluide sur mobile, tout en maintenant une synchronisation fiable hors-ligne et en donnant à l'équipe administrative une vision claire de la progression des apprenants.",
         links: [
             { label: "Télécharger sur l'App Store", url: "https://apps.apple.com/sn/app/tarteel/id6795987191", variant: "primary" },
-            { label: "Disponible sur Google Play", url: "https://play.google.com/store", variant: "primary" },
+            { label: "Disponible sur Google Play", url: "https://play.google.com/store/apps/details?id=com.tarteel.sn", variant: "primary" },
             { label: "Voir la page de présentation", url: "https://tarteel.sn", variant: "secondary" },
-            { label: "Dashboard admin web", url: "https://example.com/admin", variant: "secondary" }
+            { label: "Dashboard admin (code source)", url: "https://github.com/abdalahfall862-coder/dashboard-admin", variant: "secondary" }
         ],
         card: {
             match: "MATCH 05", tag: "LIVE", span: "lg:col-span-3", delay: "120ms",
@@ -425,12 +427,84 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* ============ FORMULAIRE DE CONTACT (retour visuel) ============ */
+/* ============ FORMULAIRE DE CONTACT (envoi réel via FormSubmit) ============ */
 const contactForm = document.getElementById('contact-form');
 const formFeedback = document.getElementById('form-feedback');
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    formFeedback.classList.remove('hidden');
-    contactForm.reset();
-    setTimeout(() => formFeedback.classList.add('hidden'), 4000);
-});
+const formFallback = document.getElementById('form-fallback');
+const submitBtn = document.getElementById('contact-submit');
+const submitLabel = document.getElementById('contact-submit-label');
+const SUBMIT_LABEL = '🏀 Tirer au panier...';
+
+if (contactForm && formFeedback && formFallback && submitBtn && submitLabel) {
+    function setFeedback(message, kind) {
+        formFeedback.textContent = message;
+        formFeedback.className = kind === 'hidden'
+            ? 'hidden text-xs font-bold text-center pt-1'
+            : `text-xs font-bold text-center pt-1 ${kind === 'success' ? 'text-emerald-400' : 'text-rose-400'}`;
+    }
+
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (submitBtn.disabled) return;
+
+        const data = new FormData(contactForm);
+        const name = String(data.get('name') || '').trim();
+        const email = String(data.get('email') || '').trim();
+        const message = String(data.get('message') || '').trim();
+        const honey = String(data.get('_honey') || '');
+
+        setFeedback('', 'hidden');
+        formFallback.classList.add('hidden');
+        submitBtn.disabled = true;
+        submitBtn.setAttribute('aria-busy', 'true');
+        submitLabel.textContent = 'Envoi en cours...';
+
+        // Honeypot : un bot remplit ce champ invisible, on simule un envoi réussi.
+        if (honey) {
+            contactForm.reset();
+            setFeedback('Message envoyé, merci !', 'success');
+            submitBtn.disabled = false;
+            submitBtn.removeAttribute('aria-busy');
+            submitLabel.textContent = SUBMIT_LABEL;
+            return;
+        }
+
+        try {
+            const response = await fetch('https://formsubmit.co/ajax/abdalafall862@gmail.com', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    _subject: 'Nouveau message depuis le portfolio',
+                    _replyto: email,
+                    _template: 'table',
+                    _captcha: 'false',
+                    _honey: honey,
+                    name: name,
+                    email: email,
+                    message: message
+                })
+            });
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            const result = await response.json().catch(() => ({}));
+            if (result.success === false) throw new Error(result.message || 'Envoi refusé');
+
+            contactForm.reset();
+            setFeedback('Message envoyé ! Je vous réponds rapidement.', 'success');
+        } catch (error) {
+            const href = 'mailto:abdalafall862@gmail.com?subject=' +
+                encodeURIComponent('Message portfolio — ' + name) +
+                '&body=' + encodeURIComponent(message + '\n\n— ' + name + '\n' + email);
+            formFallback.textContent = 'Envoi indisponible pour le moment. ';
+            const link = document.createElement('a');
+            link.href = href;
+            link.className = 'font-bold text-hoop underline hover:opacity-80';
+            link.textContent = 'Ouvrir votre messagerie →';
+            formFallback.appendChild(link);
+            formFallback.classList.remove('hidden');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.removeAttribute('aria-busy');
+            submitLabel.textContent = SUBMIT_LABEL;
+        }
+    });
+}
