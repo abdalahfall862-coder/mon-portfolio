@@ -427,84 +427,42 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* ============ FORMULAIRE DE CONTACT (envoi réel via FormSubmit) ============ */
+/* ============ FORMULAIRE DE CONTACT (ouverture de la messagerie) ============ */
 const contactForm = document.getElementById('contact-form');
 const formFeedback = document.getElementById('form-feedback');
 const formFallback = document.getElementById('form-fallback');
-const submitBtn = document.getElementById('contact-submit');
-const submitLabel = document.getElementById('contact-submit-label');
-const SUBMIT_LABEL = '🏀 Tirer au panier...';
 
-if (contactForm && formFeedback && formFallback && submitBtn && submitLabel) {
+if (contactForm && formFeedback && formFallback) {
+    const CONTACT_EMAIL = 'abdalafall862@gmail.com';
+
     function setFeedback(message, kind) {
+        const color = kind === 'error' ? 'text-rose-400' : 'text-emerald-400';
         formFeedback.textContent = message;
-        formFeedback.className = kind === 'hidden'
-            ? 'hidden text-xs font-bold text-center pt-1'
-            : `text-xs font-bold text-center pt-1 ${kind === 'success' ? 'text-emerald-400' : 'text-rose-400'}`;
+        formFeedback.className = `text-xs font-bold text-center pt-1 ${color}`;
     }
 
-    contactForm.addEventListener('submit', async (e) => {
+    contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (submitBtn.disabled) return;
 
         const data = new FormData(contactForm);
         const name = String(data.get('name') || '').trim();
         const email = String(data.get('email') || '').trim();
         const message = String(data.get('message') || '').trim();
-        const honey = String(data.get('_honey') || '');
 
-        setFeedback('', 'hidden');
-        formFallback.classList.add('hidden');
-        submitBtn.disabled = true;
-        submitBtn.setAttribute('aria-busy', 'true');
-        submitLabel.textContent = 'Envoi en cours...';
+        const subject = encodeURIComponent(`Message portfolio — ${name}`);
+        const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
+        const href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
 
-        // Honeypot : un bot remplit ce champ invisible, on simule un envoi réussi.
-        if (honey) {
-            contactForm.reset();
-            setFeedback('Message envoyé, merci !', 'success');
-            submitBtn.disabled = false;
-            submitBtn.removeAttribute('aria-busy');
-            submitLabel.textContent = SUBMIT_LABEL;
-            return;
-        }
+        setFeedback('Votre messagerie s’ouvre. Envoyez le mail pour me le faire parvenir.', 'success');
+        formFallback.textContent = 'Si rien ne s’ouvre : ';
+        const link = document.createElement('a');
+        link.href = href;
+        link.className = 'font-bold text-hoop underline hover:opacity-80';
+        link.textContent = 'ouvrir ma messagerie →';
+        formFallback.appendChild(link);
+        formFallback.classList.remove('hidden');
 
-        try {
-            const response = await fetch('https://formsubmit.co/ajax/abdalafall862@gmail.com', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({
-                    _subject: 'Nouveau message depuis le portfolio',
-                    _replyto: email,
-                    _template: 'table',
-                    _captcha: 'false',
-                    _honey: honey,
-                    name: name,
-                    email: email,
-                    message: message
-                })
-            });
-            if (!response.ok) throw new Error('HTTP ' + response.status);
-            const result = await response.json().catch(() => ({}));
-            if (result.success === false) throw new Error(result.message || 'Envoi refusé');
-
-            contactForm.reset();
-            setFeedback('Message envoyé ! Je vous réponds rapidement.', 'success');
-        } catch (error) {
-            const href = 'mailto:abdalafall862@gmail.com?subject=' +
-                encodeURIComponent('Message portfolio — ' + name) +
-                '&body=' + encodeURIComponent(message + '\n\n— ' + name + '\n' + email);
-            formFallback.textContent = 'Envoi indisponible pour le moment. ';
-            const link = document.createElement('a');
-            link.href = href;
-            link.className = 'font-bold text-hoop underline hover:opacity-80';
-            link.textContent = 'Ouvrir votre messagerie →';
-            formFallback.appendChild(link);
-            formFallback.classList.remove('hidden');
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.removeAttribute('aria-busy');
-            submitLabel.textContent = SUBMIT_LABEL;
-        }
+        // Le message part de la messagerie du visiteur : aucun service tiers, aucune activation.
+        window.location.href = href;
     });
 }
