@@ -1,0 +1,116 @@
+/* equipe.css — compétences présentées comme des équipes de basket (cinq majeur + banc).
+   Adapté à la version actuelle du portfolio : thème clair/sombre, responsive 320px+,
+   icônes injectées par court.js et animations de révélation existantes. */
+.team-tabs { display: flex; gap: .75rem; overflow-x: auto; padding: .25rem .25rem 1rem; margin-bottom: .75rem; scrollbar-width: none; }
+.team-tabs::-webkit-scrollbar { display: none; }
+.team-tab { flex: 1 0 auto; min-width: 12rem; display: flex; align-items: center; gap: .85rem; padding: .8rem 1.1rem; border-radius: 16px; text-align: left; cursor: pointer;
+  border: 1px solid rgba(120,70,20,.22); background: rgba(255,250,240,.9); color: #2b1608; transition: transform .25s, box-shadow .25s, background .25s, color .25s; min-height: 44px; }
+.dark .team-tab { background: rgba(8,12,24,.85); color: #e2e8f0; border-color: rgba(148,163,184,.22); }
+.team-tab:hover { transform: translateY(-2px); }
+.team-tab:focus-visible { outline: 3px solid #ff6a13; outline-offset: 2px; }
+.team-tab .tt-num { font: 2.2rem/1 'Bebas Neue', Impact, sans-serif; color: #ff6a13; min-width: 2.2ch; text-align: center; }
+.team-tab .tt-name { display: block; font-weight: 800; font-size: .92rem; letter-spacing: -.01em; }
+.team-tab .tt-ovr { display: block; margin-top: .15rem; font: 700 9.5px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
+.team-tab[aria-selected="true"] { color: #fff; border-color: transparent; box-shadow: 0 14px 26px -14px rgba(0,0,0,.6); }
+.team-tab[aria-selected="true"] .tt-num { color: #fff; }
+.team-tab[data-edition="white"][aria-selected="true"]  { background: linear-gradient(135deg, #0b2a5b, #1a4590); }
+.team-tab[data-edition="navy"][aria-selected="true"]   { background: linear-gradient(135deg, #0d2554, #1b3f84); }
+.team-tab[data-edition="orange"][aria-selected="true"] { background: linear-gradient(135deg, #e5560a, #ff7a2a); }
+
+.team-panel[data-edition="white"]  { --tb:#f8faff; --tb2:#e1e8f5; --tt:#0b2a5b; --ta:#ff6a13; --ts:#0b2a5b; --tm:rgba(11,42,91,.68); --tg:rgba(11,42,91,.07); }
+.team-panel[data-edition="navy"]   { --tb:#14377a; --tb2:#091a3d; --tt:#ffffff; --ta:#ff6a13; --ts:#ff6a13; --tm:rgba(255,255,255,.72); --tg:rgba(255,255,255,.06); }
+.team-panel[data-edition="orange"] { --tb:#f0661a; --tb2:#c34606; --tt:#ffffff; --ta:#0b1220; --ts:#0b1220; --tm:rgba(255,255,255,.86); --tg:rgba(0,0,0,.09); }
+.team-panel[hidden] { display: none; }
+
+/* ---- Bandeau d'équipe (liseré de maillot en bas) ---- */
+.team-banner { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center; padding: 1.5rem 1.8rem 2rem;
+  border-radius: 20px 20px 0 0; overflow: hidden; color: var(--tt); background: linear-gradient(135deg, var(--tb), var(--tb2)); }
+.team-banner::before { content: ''; position: absolute; inset: 0; opacity: .5; pointer-events: none;
+  background: repeating-linear-gradient(115deg, transparent 0 22px, var(--tg) 22px 24px); }
+.team-banner::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 14px;
+  background: linear-gradient(var(--ta) 0 4px, #fff 4px 6px, var(--ts) 6px 14px); }
+.tb-num { position: relative; font: 5.2rem/.85 'Bebas Neue', Impact, sans-serif; color: var(--ta); text-shadow: 3px 4px 0 rgba(0,0,0,.18); }
+.tb-body { position: relative; min-width: 0; }
+.tb-kick { font: 700 10px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .22em; text-transform: uppercase; color: var(--tm); }
+.tb-name { font: 2.6rem/1 'Bebas Neue', Impact, sans-serif; letter-spacing: .03em; margin: .3rem 0 .5rem; }
+.tb-desc { font-size: .84rem; line-height: 1.5; max-width: 46rem; color: var(--tt); opacity: .92; }
+.tb-meta { margin-top: .6rem; font: 700 10px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--tm); }
+.tb-ovr { position: relative; width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; align-content: center;
+  background: conic-gradient(var(--ta) calc(var(--p) * 1%), rgba(127,127,127,.3) 0); box-shadow: 0 10px 20px -10px rgba(0,0,0,.5); }
+.tb-ovr::before { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: var(--tb2); }
+.tb-ovr .n { position: relative; font: 2rem/1 'Bebas Neue', Impact, sans-serif; color: var(--tt); }
+.tb-ovr .l { position: relative; font: 700 8px 'JetBrains Mono', monospace; letter-spacing: .2em; color: var(--tm); }
+
+/* ---- Terrain : cinq majeur + banc ---- */
+.team-stage { position: relative; overflow: hidden; padding: 1.6rem; border-radius: 0 0 20px 20px;
+  background: rgba(255,250,240,.93); border: 1px solid rgba(120,70,20,.22); border-top: 0; box-shadow: 0 22px 40px -22px rgba(60,30,5,.55); }
+.dark .team-stage { background: rgba(8,12,24,.9); border-color: rgba(148,163,184,.2); }
+.team-stage::before { content: ''; position: absolute; left: 50%; top: -230px; width: 460px; height: 460px; margin-left: -230px; border-radius: 50%;
+  border: 3px solid rgba(255,106,19,.14); pointer-events: none; }
+.stage-label { position: relative; display: flex; align-items: center; gap: .8rem; margin: .1rem 0 1rem; font: 700 clamp(10px, 2.6vw, 11px)/1.35 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: .18em; text-transform: uppercase; color: #b4470b; }
+.dark .stage-label { color: #fb923c; }
+@media (min-width: 640px) { .stage-label { letter-spacing: .26em; } }
+.stage-label::after { content: ''; flex: 1; height: 1px; background: currentColor; opacity: .25; }
+.starters { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.6rem; }
+.bench { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
+
+/* ---- Fiche joueur (cinq majeur) ---- */
+.player { container-type: inline-size; position: relative; display: flex; flex-direction: column; align-items: center; aspect-ratio: 3 / 4.15; padding: 1rem .7rem .9rem; overflow: hidden; text-align: center;
+  border-radius: 16px; color: var(--tt); background: linear-gradient(165deg, var(--tb), var(--tb2)); box-shadow: 0 16px 28px -16px rgba(0,0,0,.6);
+  transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+.player::before { content: ''; position: absolute; left: -10%; right: -10%; top: 24%; height: 36%; background: var(--ta); opacity: .16; transform: skewY(-10deg); pointer-events: none; }
+.player::after { content: attr(data-num); position: absolute; right: -.5rem; bottom: -1.3rem; font: 9rem/1 'Bebas Neue', Impact, sans-serif; color: var(--tg); pointer-events: none; }
+.player:hover { transform: translateY(-6px); box-shadow: 0 24px 34px -16px rgba(0,0,0,.65); }
+.pl-num { position: absolute; top: .7rem; left: .8rem; font: 2.1rem/1 'Bebas Neue', Impact, sans-serif; color: var(--ta); z-index: 1; }
+.pl-pos { position: absolute; top: .85rem; right: .75rem; z-index: 1; padding: .22rem .5rem; border-radius: 999px; background: var(--tt); color: var(--tb2);
+  font: 700 10px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .1em; }
+.pl-portrait { position: relative; z-index: 1; display: grid; place-items: center; margin-top: 1.9rem; width: 5.4rem; height: 5.4rem; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #e8edf6); font-size: 0; line-height: 0; box-shadow: 0 0 0 4px var(--ta), 0 12px 22px rgba(0,0,0,.4); }
+.pl-portrait .ico, .pl-portrait .ico img, .pl-portrait .ico svg { width: 2.9rem; height: 2.9rem; }
+.pl-portrait .ico-fb { width: 2.9rem; height: 2.9rem; border-radius: 50%; font-size: .85rem; }
+.pl-name { position: relative; z-index: 1; margin: .95rem 0 .2rem; font: clamp(1.05rem, 12.5cqw, 1.7rem)/1 'Bebas Neue', Impact, sans-serif; letter-spacing: .04em; white-space: nowrap; }
+.bench-card .pl-name { font-size: 1.2rem; }
+.pl-role { position: relative; z-index: 1; font-size: .72rem; line-height: 1.3; font-weight: 600; color: var(--tm); }
+.pl-tag { position: relative; z-index: 1; margin-top: auto; padding-top: .45rem; font: 700 clamp(8px, 2.2vw, 9px)/1.4 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--ta); }
+.player.star { box-shadow: 0 0 0 2px #fbbf24, 0 20px 34px -14px rgba(251,191,36,.55); }
+.player.star .pl-portrait { box-shadow: 0 0 0 4px #fbbf24, 0 0 24px rgba(251,191,36,.6), 0 12px 22px rgba(0,0,0,.4); }
+.player.star .pl-tag { color: #fbbf24; text-shadow: 0 1px 0 rgba(0,0,0,.35); }
+.player.star::before { background: #fbbf24; opacity: .18; }
+
+/* ---- Banc ---- */
+.bench-card { position: relative; display: flex; align-items: center; gap: .8rem; padding: .7rem .9rem; overflow: hidden; border-radius: 14px; color: var(--tt);
+  background: linear-gradient(135deg, var(--tb), var(--tb2)); box-shadow: 0 12px 22px -14px rgba(0,0,0,.6); transition: transform .3s cubic-bezier(.16,1,.3,1); }
+.bench-card:hover { transform: translateY(-4px); }
+.bench-card .pl-portrait.sm { margin: 0; width: 3.1rem; height: 3.1rem; flex: none; box-shadow: 0 0 0 3px var(--ta), 0 6px 12px rgba(0,0,0,.35); }
+.bench-card .pl-portrait.sm .ico, .bench-card .pl-portrait.sm .ico img, .bench-card .pl-portrait.sm .ico svg { width: 1.8rem; height: 1.8rem; }
+.bench-card .pl-portrait.sm .ico-fb { width: 1.8rem; height: 1.8rem; font-size: .6rem; }
+.bench-card .bc-txt { min-width: 0; flex: 1; }
+.bench-card .pl-name { margin: 0; font-size: 1.2rem; }
+.bench-card .pl-role { font-size: .66rem; }
+.bench-card .bc-num { font: 1.5rem/1 'Bebas Neue', Impact, sans-serif; color: var(--ta); }
+
+/* ---- Présentation : les joueurs entrent un par un ---- */
+.js-team .team-panel:not(.is-active) .player,
+.js-team .team-panel:not(.is-active) .bench-card { opacity: 0; }
+.js-team .team-panel.is-active .player { animation: plIn .7s cubic-bezier(.16,1,.3,1) backwards; animation-delay: calc(var(--i, 0) * 95ms); }
+.js-team .team-panel.is-active .bench-card { animation: plIn .6s cubic-bezier(.16,1,.3,1) backwards; animation-delay: calc(var(--i, 0) * 80ms + .15s); }
+@keyframes plIn { from { opacity: 0; transform: translateY(28px) scale(.94); } }
+@media (prefers-reduced-motion: reduce) { .js-team .team-panel.is-active .player, .js-team .team-panel.is-active .bench-card { animation: none; } }
+
+@media (max-width: 1023px) {
+  .starters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bench { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .team-banner { grid-template-columns: auto 1fr; }
+  .tb-ovr { grid-column: 1 / -1; justify-self: start; }
+}
+@media (max-width: 639px) {
+  .starters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .bench { grid-template-columns: 1fr; }
+  .team-banner { grid-template-columns: 1fr; padding: 1.2rem 1.2rem 1.8rem; }
+  .tb-num { font-size: 3.6rem; }
+  .tb-name { font-size: 2.1rem; }
+  .tb-desc { font-size: .8rem; overflow-wrap: break-word; }
+  .team-stage { padding: 1.1rem 1rem 1.4rem; }
+  .team-tab { min-width: 10.5rem; }
+}
