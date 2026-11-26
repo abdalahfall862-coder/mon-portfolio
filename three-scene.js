@@ -3,7 +3,7 @@
    (3 grands cercles perpendiculaires, coutures ~6,2 mm / max FIBA 6,35 mm), logoman NBA,
    script Wilson avec inline anthracite. Rendu PBR (MeshStandardMaterial + bump map),
    ombre douce, caméra orthographique en pixels : le ballon dribble sur tout .hero-court.
-   Échelle FIBA du hero ×1,53 pour la lisibilité : 500 unités = 15 m, anneau ⌀0,69 m, ballon ⌀0,37 m.
+   Échelle FIBA du hero ×1,53 pour la lisibilité : 500 unités = 15 m, anneau ⌀0,69 m, ballon ⌀0,44 m.
    Un clic sur le terrain l'envoie au point choisi, où il rebondit puis reste dribbler
    à cette hauteur, sans descendre au bas du terrain. Un clic sur #fx-hoop déclenche un
    tir balistique : s'il marque, le ballon ressort du filet puis glisse jusqu'en bas du
@@ -503,8 +503,8 @@
     ball.visible = shadow.visible = glow.visible = onScreen;
     if (!onScreen) return;
 
-    // Ballon taille 7 : ⌀0,37 m pour un anneau ⌀0,69 m, soit ~53 % du rayon de l'anneau.
-    const R = Math.max(6, Math.min(30, (Hm.w || a.width * 0.5) * 0.067));
+    // Ballon volontairement agrandi pour la lisibilité : ⌀0,44 m pour un anneau ⌀0,69 m.
+    const R = Math.max(7, Math.min(34, (Hm.w || a.width * 0.5) * 0.08));
     curR = R;
     // Niveau où le ballon repose : point cliqué, ou juste sous le panier après un score.
     // Plus besoin de descendre jusqu'en bas du terrain à chaque fois.
