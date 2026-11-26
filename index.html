@@ -78,12 +78,12 @@
 
         /* ===== Lignes de terrain ===== */
         .court-svg { position: absolute; pointer-events: none; z-index: 0; }
-        .cl { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: .88; }
+        .cl { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: .88; }
         .dark .cl { opacity: .34; }
         .cl.dash { stroke-dasharray: 6 7; }
         .paint { fill: rgba(29,78,216,.4); }
         .dark .paint { fill: rgba(37,99,235,.26); }
-        .hoopc { fill: none; stroke: #ff6a13; stroke-width: 4; }
+        .hoopc { fill: none; stroke: #ff6a13; stroke-width: 2.5; }
         .js .court-svg.draw .cl:not(.dash) { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.4s cubic-bezier(.16,1,.3,1); }
         .js .court-svg.draw.drawn .cl:not(.dash) { stroke-dashoffset: 0; }
         .zone { position: relative; overflow: hidden; }
@@ -92,19 +92,15 @@
         #fx-hoop { filter: drop-shadow(0 6px 10px rgba(80,30,4,.35)); background: none; border: 0; padding: 0;
             cursor: pointer; -webkit-tap-highlight-color: transparent; }
         #fx-hoop svg { display: block; width: 100%; height: 100%; overflow: visible; }
-        #fx-hoop::after { content: ''; position: absolute; inset: -8%; border-radius: 50%; border: 2px solid #ff6a13;
-            opacity: 0; transform: scale(.7); pointer-events: none; }
-        #fx-hoop.swish::after { animation: swish .8s ease-out; }
-        @keyframes swish { 0% { opacity: .9; transform: scale(.7); } 100% { opacity: 0; transform: scale(2.4); } }
 
-        .hoop-board { fill: rgba(255,255,255,.78); stroke: rgba(255,255,255,.95); stroke-width: 2; }
+        .hoop-board { fill: rgba(255,255,255,.78); stroke: rgba(255,255,255,.95); stroke-width: 1; }
         .dark .hoop-board { fill: rgba(148,163,184,.18); stroke: rgba(203,213,225,.5); }
-        .hoop-square { fill: none; stroke: #ff6a13; stroke-width: 2.2; }
-        .hoop-arm { fill: none; stroke: #94a3b8; stroke-width: 4; stroke-linecap: round; }
-        .hoop-rim-back { fill: none; stroke: #8a2c0a; stroke-width: 5; }
-        .hoop-rim-front { fill: none; stroke: #ff6a13; stroke-width: 4.5; stroke-linecap: round; }
+        .hoop-square { fill: none; stroke: #ff6a13; stroke-width: 1.2; }
+        .hoop-arm { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+        .hoop-rim-back { fill: none; stroke: #8a2c0a; stroke-width: 2.8; }
+        .hoop-rim-front { fill: none; stroke: #ff6a13; stroke-width: 2.6; stroke-linecap: round; }
         .hoop-net { transform-box: fill-box; transform-origin: 50% 0%; }
-        .hoop-net path, .hoop-net ellipse { fill: none; stroke: rgba(255,255,255,.88); stroke-width: 1.15; }
+        .hoop-net path, .hoop-net ellipse { fill: none; stroke: rgba(255,255,255,.88); stroke-width: .9; }
         .dark .hoop-net path, .dark .hoop-net ellipse { stroke: rgba(226,232,240,.8); }
         #fx-hoop.swish .hoop-net { animation: netSwish .85s cubic-bezier(.16,1,.3,1); }
         #fx-hoop.swish .hoop-rim-group { animation: rimWobble .55s ease-out; transform-box: fill-box; transform-origin: center; }
@@ -150,6 +146,10 @@
         .ico img, .ico svg { width: 30px; height: 30px; object-fit: contain; }
         .ico-fb { width: 30px; height: 30px; border-radius: .6rem; display: inline-flex; align-items: center; justify-content: center; color: #fff; font: 700 11px 'JetBrains Mono', monospace; }
 
+        /* ===== Portrait du hero : zoom au survol ===== */
+        .profile-photo { transition: transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s ease; transform-origin: center; will-change: transform; }
+        .profile-photo:hover { transform: scale(1.14); box-shadow: 0 18px 32px -12px rgba(255,106,19,.75); }
+
         /* ===== Ballons ===== */
         .ball-dot { width: 24px; height: 24px; border-radius: 50%; position: relative; display: inline-block;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='.34' cy='.28' r='.85'%3E%3Cstop offset='0' stop-color='%23ffb27a'/%3E%3Cstop offset='.45' stop-color='%23d9601a'/%3E%3Cstop offset='1' stop-color='%236e2705'/%3E%3C/radialGradient%3E%3CradialGradient id='s' cx='.5' cy='.5' r='.5'%3E%3Cstop offset='.75' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='.35'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='49' fill='url(%23g)'/%3E%3Cg fill='none' stroke='%231a0a03' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M50 1V99M1 50H99'/%3E%3Cpath d='M30 8C11 33 11 67 30 92'/%3E%3Cpath d='M70 8C89 33 89 67 70 92'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='49' fill='url(%23s)'/%3E%3Cellipse cx='36' cy='26' rx='17' ry='9' fill='%23fff' opacity='.22' transform='rotate(-28 36 26)'/%3E%3C/svg%3E") center/100% 100% no-repeat; box-shadow: 0 5px 10px rgba(90,30,0,.45); }
@@ -180,9 +180,32 @@
         #project-modal .modal-panel { transform: translateY(24px) scale(.98); opacity: 0; transition: all .4s cubic-bezier(.16,1,.3,1); }
         #project-modal.open .modal-panel { transform: translateY(0) scale(1); opacity: 1; }
 
+        /* ===== Fiche documentation des technologies ===== */
+        #tech-modal { opacity: 0; pointer-events: none; transition: opacity .35s ease; z-index: 210; }
+        #tech-modal.open { opacity: 1; pointer-events: auto; }
+        #tech-modal .modal-panel { transform: translateY(24px) scale(.98); opacity: 0; transition: all .4s cubic-bezier(.16,1,.3,1); }
+        #tech-modal.open .modal-panel { transform: translateY(0) scale(1); opacity: 1; }
+        .tech-hero { background: linear-gradient(135deg, #0b2a5b, #1a4590); }
+        .tech-icon-badge { width: 84px; height: 84px; border-radius: 24px; display: grid; place-items: center; flex: none;
+            background: radial-gradient(circle at 35% 30%, #fff, #e8edf6); box-shadow: 0 0 0 4px rgba(255,106,19,.85), 0 14px 28px rgba(0,0,0,.35); }
+        .tech-icon-badge .ico, .tech-icon-badge .ico img, .tech-icon-badge .ico svg { width: 44px; height: 44px; }
+        .tech-icon-badge .ico-fb { width: 44px; height: 44px; border-radius: 14px; font-size: 1rem; }
+        .tech-section-title { font: 800 11px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .2em; text-transform: uppercase; color: #b4470b; }
+        .dark .tech-section-title { color: #fb923c; }
+        .tech-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .55rem; }
+        .tech-list li { position: relative; padding-left: 1.25rem; font-size: .875rem; line-height: 1.55; color: #475569; }
+        .dark .tech-list li { color: #cbd5e1; }
+        .tech-list li::before { content: '▹'; position: absolute; left: 0; top: 0; color: #ff6a13; font-weight: 800; }
+        .tech-code { margin: 0; padding: 1.1rem 1.25rem; border-radius: 1rem; overflow-x: auto; white-space: pre;
+            background: #090c13; color: #e2e8f0; font: 500 12px/1.7 'JetBrains Mono', ui-monospace, Menlo, monospace;
+            box-shadow: inset 0 0 20px rgba(255,106,19,.1); }
+        .tech-code::-webkit-scrollbar { height: 6px; }
+        .tech-code::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
+
         @media (prefers-reduced-motion: reduce) {
-            .reveal, .skill-bar-fill, .fx-in, #project-modal, #project-modal .modal-panel { transition: none !important; animation: none !important; }
+            .reveal, .skill-bar-fill, .fx-in, #project-modal, #project-modal .modal-panel, #tech-modal, #tech-modal .modal-panel, .profile-photo { transition: none !important; animation: none !important; }
             .reveal, .fx-in { opacity: 1; transform: none; }
+            .profile-photo:hover { transform: none; }
             #fx-hoop::after, .hoop-net, .hoop-rim-group, .hoop-rim-front { animation: none !important; }
         }
 
@@ -256,14 +279,15 @@
         <defs>
             <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#fff"/></marker>
             <symbol id="halfcourt" viewBox="0 0 500 340">
-                <rect class="paint" x="170" y="0" width="160" height="190"/>
-                <path class="cl" d="M30 0V141.5A237.5 237.5 0 0 0 470 141.5V0"/>
-                <path class="cl" d="M170 0V190H330V0"/>
-                <path class="cl" d="M190 190a60 60 0 0 1 120 0"/>
-                <path class="cl dash" d="M190 190a60 60 0 0 0 120 0"/>
-                <path class="cl" d="M210 52a40 40 0 0 0 80 0"/>
-                <path class="cl" d="M220 40H280"/>
-                <circle class="hoopc" cx="250" cy="52" r="8"/>
+                <rect class="paint" x="168.3" y="0" width="163.4" height="193.3"/>
+                <path class="cl" d="M30 0H470"/>
+                <path class="cl" d="M30 0V99.7A225 225 0 0 0 470 99.7V0"/>
+                <path class="cl" d="M168.3 0V193.3H331.7V0"/>
+                <path class="cl" d="M190 193.3a60 60 0 0 0 120 0"/>
+                <path class="cl dash" d="M190 193.3a60 60 0 0 1 120 0"/>
+                <path class="cl" d="M208.3 52.5a41.7 41.7 0 0 0 83.4 0"/>
+                <path class="cl" d="M160 58.3h10M160 83.3h10M160 108.3h10M330 58.3h10M330 83.3h10M330 108.3h10"/>
+                <circle class="hoopc" cx="250" cy="52.5" r="11.5"/>
             </symbol>
         </defs>
     </svg>
@@ -334,8 +358,12 @@
         <section id="accueil" class="zone min-h-[100svh] flex items-center px-4 sm:px-8 md:px-16 lg:px-24 py-24">
             <div class="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
                 <div>
-                    <div class="fx-in inline-flex items-center gap-2.5 mb-6 px-4 py-2 rounded-full panel2 text-[11px] font-bold uppercase tracking-widest ink">
-                        💼 En recherche de projets
+                    <div class="fx-in flex items-center gap-3 mb-6">
+                        <img src="assets/moi.jpg" alt="Portrait de Mohamed Abdalah Fall" width="96" height="96" loading="eager" decoding="async"
+                             class="profile-photo w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-top border-2 border-hoop shadow-lg shadow-orange-700/25 flex-none">
+                        <span class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full panel2 text-[11px] font-bold uppercase tracking-widest ink">
+                            💼 En recherche de projets
+                        </span>
                     </div>
                     <h1 class="reveal hero-title font-display ink mb-6">
                         Développeur <br><span class="text-hoop">Full-stack</span>
@@ -361,47 +389,45 @@
                     <div class="reveal mt-4 grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
                         <div class="panel2 rounded-2xl p-3"><div class="font-display text-3xl sm:text-4xl ink"><span data-count="5">0</span></div><div class="kick mt-1">Projets en ligne</div></div>
                         <div class="panel2 rounded-2xl p-3"><div class="font-display text-3xl sm:text-4xl ink"><span data-count="2">0</span>+</div><div class="kick mt-1">Ans de pratique</div></div>
-                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-3xl sm:text-4xl ink"><span data-count="15">0</span>+</div><div class="kick mt-1">Technologies</div></div>
+                        <div class="panel2 rounded-2xl p-3"><div class="font-display text-3xl sm:text-4xl ink"><span data-count="33">0</span>+</div><div class="kick mt-1">Technologies</div></div>
                     </div>
                 </div>
 
-                <!-- Demi-terrain : raquette, lancer franc, panier -->
+                <!-- Demi-terrain FIBA : 500 unités = 15 m, soit 1 unité = 3 cm. -->
                 <div class="hero-court relative w-full max-w-[min(860px,100%)] mx-auto mt-6 lg:mt-0 lg:ml-auto lg:mr-0 aspect-[500/340]">
                     <svg class="court-svg draw absolute inset-0 w-full h-full" viewBox="0 0 500 340" aria-hidden="true">
-                        <rect class="paint" x="170" y="0" width="160" height="190"/>
-                        <path class="cl" pathLength="1" d="M30 0V141.5A237.5 237.5 0 0 0 470 141.5V0"/>
-                        <path class="cl" pathLength="1" d="M170 0V190H330V0"/>
-                        <path class="cl" pathLength="1" d="M190 190a60 60 0 0 1 120 0"/>
-                        <path class="cl dash" d="M190 190a60 60 0 0 0 120 0"/>
-                        <path class="cl" pathLength="1" d="M210 52a40 40 0 0 0 80 0"/>
-                        <path class="cl" pathLength="1" d="M220 40H280"/>
-                        <path class="cl" pathLength="1" d="M160 40h10M160 80h10M160 120h10M160 160h10M330 40h10M330 80h10M330 120h10M330 160h10"/>
-                        <circle class="hoopc" cx="250" cy="52" r="27"/>
+                        <rect class="paint" x="168.3" y="0" width="163.4" height="193.3"/>
+                        <path class="cl" pathLength="1" d="M30 0H470"/>
+                        <path class="cl" pathLength="1" d="M30 0V99.7A225 225 0 0 0 470 99.7V0"/>
+                        <path class="cl" pathLength="1" d="M168.3 0V193.3H331.7V0"/>
+                        <path class="cl" pathLength="1" d="M190 193.3a60 60 0 0 0 120 0"/>
+                        <path class="cl dash" d="M190 193.3a60 60 0 0 1 120 0"/>
+                        <path class="cl" pathLength="1" d="M208.3 52.5a41.7 41.7 0 0 0 83.4 0"/>
+                        <path class="cl" pathLength="1" d="M160 58.3h10M160 83.3h10M160 108.3h10M330 58.3h10M330 83.3h10M330 108.3h10"/>
+                        <circle class="hoopc" cx="250" cy="52.5" r="11.5"/>
                     </svg>
 
-                    <!-- Panier : planche, bras, cercle et filet. Le ballon rebondit dessus. -->
+                    <!-- Cotes FIBA ×1,53 pour la lisibilité : planche 2,75 × 1,61 m, carré 0,90 × 0,69 m. -->
                     <div id="fx-hoop" class="absolute" aria-hidden="true"
-                         style="left:50%;top:15.3%;width:16%;aspect-ratio:1;transform:translate(-50%,-50%)">
+                         style="left:50%;top:15.4%;width:18.4%;aspect-ratio:1;transform:translate(-50%,-50%)">
                         <svg viewBox="0 0 100 100" aria-hidden="true">
-                         <g transform="translate(50 52) scale(1.42) translate(-50 -52)">
-                            <path class="hoop-arm" d="M80 8L96 2M96 -26V4"/>
-                            <rect class="hoop-board" x="18" y="-6" width="64" height="42" rx="2"/>
-                            <rect class="hoop-square" x="32" y="8" width="36" height="26"/>
-                            <rect x="48" y="36" width="4" height="10" rx="1" fill="#ff6a13"/>
+                            <path class="hoop-arm" d="M78 -6L92 -12M92 -30V-10"/>
+                            <rect class="hoop-board" x="0" y="0" width="100" height="58.3" rx="1"/>
+                            <rect class="hoop-square" x="33.6" y="25" width="32.8" height="25"/>
+                            <rect x="48.8" y="46" width="2.4" height="4" rx=".6" fill="#ff6a13"/>
                             <!-- Arrière du panier : le ballon 3D passe devant. L'avant est ajouté par hoop.js. -->
                             <g class="hoop-net">
-                                <path d="M29.2 49Q33.5 66 37.9 78.2"/>
-                                <path d="M38 46.8Q40.5 65 43 77"/>
-                                <path d="M50 46Q50 64 50 76.5"/>
-                                <path d="M62 46.8Q59.5 65 57 77"/>
-                                <path d="M70.8 49Q66.5 66 62.1 78.2"/>
-                                <ellipse cx="50" cy="62" rx="21" ry="5" stroke-dasharray="2 2"/>
-                                <ellipse cx="50" cy="71" rx="17" ry="4" stroke-dasharray="2 2"/>
+                                <path d="M37.5 50Q40 62 44 73.3"/>
+                                <path d="M43.8 51Q45 63 47 74"/>
+                                <path d="M50 52Q50 64 50 74.5"/>
+                                <path d="M56.2 51Q55 63 53 74"/>
+                                <path d="M62.5 50Q60 62 56 73.3"/>
+                                <ellipse cx="50" cy="60" rx="11" ry="2.6" stroke-dasharray="1.5 1.5"/>
+                                <ellipse cx="50" cy="68" rx="9" ry="2.2" stroke-dasharray="1.5 1.5"/>
                             </g>
                             <g class="hoop-rim-group">
-                                <ellipse class="hoop-rim-back" cx="50" cy="52" rx="24" ry="6"/>
+                                <ellipse class="hoop-rim-back" cx="50" cy="50" rx="12.5" ry="3.5"/>
                             </g>
-                         </g>
                         </svg>
                     </div>
 
@@ -427,15 +453,15 @@
                     <div class="team-tabs reveal" role="tablist" aria-label="Équipes de compétences">
                         <button type="button" role="tab" id="tab-front" aria-controls="team-front" aria-selected="true" class="team-tab" data-edition="white">
                             <span class="tt-num">10</span>
-                            <span><span class="tt-name">Front-End</span><span class="tt-ovr">OVR 85 · 6 joueurs</span></span>
+                            <span><span class="tt-name">Front-End</span><span class="tt-ovr">OVR 85 · 9 joueurs</span></span>
                         </button>
                         <button type="button" role="tab" id="tab-back" aria-controls="team-back" aria-selected="false" tabindex="-1" class="team-tab" data-edition="navy">
                             <span class="tt-num">5</span>
-                            <span><span class="tt-name">Back-End</span><span class="tt-ovr">OVR 90 · 9 joueurs</span></span>
+                            <span><span class="tt-name">Back-End</span><span class="tt-ovr">OVR 90 · 13 joueurs</span></span>
                         </button>
                         <button type="button" role="tab" id="tab-data" aria-controls="team-data" aria-selected="false" tabindex="-1" class="team-tab" data-edition="orange">
                             <span class="tt-num">23</span>
-                            <span><span class="tt-name">Données &amp; Outils</span><span class="tt-ovr">OVR 80 · 8 joueurs</span></span>
+                            <span><span class="tt-name">Données &amp; Outils</span><span class="tt-ovr">OVR 80 · 11 joueurs</span></span>
                         </button>
                     </div>
 
@@ -446,7 +472,7 @@
                                 <p class="tb-kick">Présentation d'équipe · Édition Association</p>
                                 <h3 class="tb-name">Front-End</h3>
                                 <p class="tb-desc">Interfaces immersives et réactives : composants réutilisables en React, animations pilotées par scroll, et design system Tailwind cohérent du mobile au desktop.</p>
-                                <p class="tb-meta">5 titulaires · 1 remplaçant · Coach : Mohamed Abdalah Fall</p>
+                                <p class="tb-meta">5 titulaires · 4 remplaçants · Coach : Mohamed Abdalah Fall</p>
                             </div>
                             <div class="tb-ovr" style="--p:85" role="img" aria-label="Maîtrise 85%"><span class="n">85</span><span class="l">OVR</span></div>
                         </div>
@@ -496,6 +522,21 @@
                                     <div class="bc-txt"><h5 class="pl-name">CSS3</h5><p class="pl-role">Mise en page et styles</p></div>
                                     <span class="bc-num">#12</span>
                                 </article>
+                                <article class="bench-card" style="--i:6" data-num="20">
+                                    <span class="pl-portrait sm" data-ico="vite">Vite</span>
+                                    <div class="bc-txt"><h5 class="pl-name">VITE</h5><p class="pl-role">Build et HMR rapide</p></div>
+                                    <span class="bc-num">#20</span>
+                                </article>
+                                <article class="bench-card" style="--i:7" data-num="30">
+                                    <span class="pl-portrait sm" data-ico="expo">Expo</span>
+                                    <div class="bc-txt"><h5 class="pl-name">EXPO</h5><p class="pl-role">Mobile iOS &amp; Android</p></div>
+                                    <span class="bc-num">#30</span>
+                                </article>
+                                <article class="bench-card" style="--i:8" data-num="24">
+                                    <span class="pl-portrait sm" data-ico="figma">Figma</span>
+                                    <div class="bc-txt"><h5 class="pl-name">FIGMA</h5><p class="pl-role">Maquettes et design system</p></div>
+                                    <span class="bc-num">#24</span>
+                                </article>
                             </div>
                         </div>
                     </div>
@@ -507,7 +548,7 @@
                                 <p class="tb-kick">Présentation d'équipe · Édition Icon</p>
                                 <h3 class="tb-name">Back-End</h3>
                                 <p class="tb-desc">Conception d'API REST typées et sécurisées avec Node.js et NestJS : authentification JWT, hashing Bcrypt, validation stricte des entrées et architecture en couches (routes / controllers / services / repositories).</p>
-                                <p class="tb-meta">5 titulaires · 4 remplaçants · Coach : Mohamed Abdalah Fall</p>
+                                <p class="tb-meta">5 titulaires · 8 remplaçants · Coach : Mohamed Abdalah Fall</p>
                             </div>
                             <div class="tb-ovr" style="--p:90" role="img" aria-label="Maîtrise 90%"><span class="n">90</span><span class="l">OVR</span></div>
                         </div>
@@ -572,6 +613,26 @@
                                     <div class="bc-txt"><h5 class="pl-name">SOCKET.IO</h5><p class="pl-role">Temps réel</p></div>
                                     <span class="bc-num">#9</span>
                                 </article>
+                                <article class="bench-card" style="--i:9" data-num="16">
+                                    <span class="pl-portrait sm" data-ico="postgresql">PostgreSQL</span>
+                                    <div class="bc-txt"><h5 class="pl-name">POSTGRESQL</h5><p class="pl-role">Base relationnelle &amp; SQL</p></div>
+                                    <span class="bc-num">#16</span>
+                                </article>
+                                <article class="bench-card" style="--i:10" data-num="18">
+                                    <span class="pl-portrait sm" data-ico="redis">Redis</span>
+                                    <div class="bc-txt"><h5 class="pl-name">REDIS</h5><p class="pl-role">Cache et sessions</p></div>
+                                    <span class="bc-num">#18</span>
+                                </article>
+                                <article class="bench-card" style="--i:11" data-num="27">
+                                    <span class="pl-portrait sm" data-ico="jest">Jest</span>
+                                    <div class="bc-txt"><h5 class="pl-name">JEST</h5><p class="pl-role">Tests unitaires &amp; intégration</p></div>
+                                    <span class="bc-num">#27</span>
+                                </article>
+                                <article class="bench-card" style="--i:12" data-num="31">
+                                    <span class="pl-portrait sm" data-ico="graphql">GraphQL</span>
+                                    <div class="bc-txt"><h5 class="pl-name">GRAPHQL</h5><p class="pl-role">API typée et flexible</p></div>
+                                    <span class="bc-num">#31</span>
+                                </article>
                             </div>
                         </div>
                     </div>
@@ -583,7 +644,7 @@
                                 <p class="tb-kick">Présentation d'équipe · Édition Statement</p>
                                 <h3 class="tb-name">Données &amp; Outils</h3>
                                 <p class="tb-desc">Modélisation de bases NoSQL et relationnelles, documentation d'API auto-générée avec Swagger, workflow Git structuré (branches, PR, revue de code) et déploiement cloud.</p>
-                                <p class="tb-meta">5 titulaires · 3 remplaçants · Coach : Mohamed Abdalah Fall</p>
+                                <p class="tb-meta">5 titulaires · 6 remplaçants · Coach : Mohamed Abdalah Fall</p>
                             </div>
                             <div class="tb-ovr" style="--p:80" role="img" aria-label="Maîtrise 80%"><span class="n">80</span><span class="l">OVR</span></div>
                         </div>
@@ -642,6 +703,21 @@
                                     <span class="pl-portrait sm" data-ico="render">Render</span>
                                     <div class="bc-txt"><h5 class="pl-name">RENDER</h5><p class="pl-role">Déploiement de l'API</p></div>
                                     <span class="bc-num">#24</span>
+                                </article>
+                                <article class="bench-card" style="--i:8" data-num="28">
+                                    <span class="pl-portrait sm" data-ico="docker">Docker</span>
+                                    <div class="bc-txt"><h5 class="pl-name">DOCKER</h5><p class="pl-role">Conteneurs reproductibles</p></div>
+                                    <span class="bc-num">#28</span>
+                                </article>
+                                <article class="bench-card" style="--i:9" data-num="32">
+                                    <span class="pl-portrait sm" data-ico="githubactions">GitHub Actions</span>
+                                    <div class="bc-txt"><h5 class="pl-name">GITHUB ACTIONS</h5><p class="pl-role">CI/CD et déploiement auto</p></div>
+                                    <span class="bc-num">#32</span>
+                                </article>
+                                <article class="bench-card" style="--i:10" data-num="34">
+                                    <span class="pl-portrait sm" data-ico="linux">Linux</span>
+                                    <div class="bc-txt"><h5 class="pl-name">LINUX</h5><p class="pl-role">Serveurs et ligne de commande</p></div>
+                                    <span class="bc-num">#34</span>
                                 </article>
                             </div>
                         </div>
@@ -852,6 +928,81 @@
         </footer>
     </main>
 
+    <!-- MODALE / FICHE DE DOCUMENTATION TECHNOLOGIE -->
+    <div id="tech-modal" class="fixed inset-0 flex items-start sm:items-center justify-center p-0 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="tech-modal-title">
+        <div id="tech-backdrop" class="absolute inset-0 bg-slate-950/70 backdrop-blur-md"></div>
+        <div class="modal-panel relative w-full sm:max-w-3xl max-h-[100dvh] sm:max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 sm:rounded-[2.5rem] shadow-2xl">
+            <button id="tech-modal-close" aria-label="Fermer la fiche technologie" class="fixed sm:absolute top-4 right-4 sm:top-6 sm:right-6 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-slate-950/70 hover:bg-slate-950/90 text-white backdrop-blur-md transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+
+            <div class="tech-hero p-6 sm:p-10 text-white relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                <div class="relative flex items-center gap-5 sm:gap-7">
+                    <div id="tech-icon-badge" class="tech-icon-badge" aria-hidden="true"></div>
+                    <div class="min-w-0">
+                        <p id="tech-hero-category" class="text-[10px] font-extrabold uppercase tracking-[.22em] text-orange-300 mb-2"></p>
+                        <h3 id="tech-modal-title" class="text-3xl sm:text-5xl font-black leading-none break-words"></h3>
+                        <p id="tech-hero-tagline" class="text-sm sm:text-base text-slate-200 mt-3 font-medium"></p>
+                    </div>
+                </div>
+                <div class="relative mt-6 flex flex-wrap items-center gap-3">
+                    <span id="tech-hero-num" class="px-3 py-1.5 rounded-full bg-white/10 border border-white/20 font-led text-[11px] font-bold tracking-widest"></span>
+                    <span id="tech-hero-level" class="px-3 py-1.5 rounded-full bg-hoop text-white font-led text-[11px] font-bold tracking-widest"></span>
+                </div>
+            </div>
+
+            <div class="p-5 sm:p-10 space-y-8">
+                <div>
+                    <h4 class="tech-section-title mb-3">Aperçu</h4>
+                    <p id="tech-overview" class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed"></p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4">
+                        <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Rôle sur le terrain</p>
+                        <p id="tech-role" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+                    </div>
+                    <div class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4">
+                        <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Équipe</p>
+                        <p id="tech-team" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-3 gap-6 sm:gap-8">
+                    <div>
+                        <h4 class="tech-section-title mb-3">Concepts clés</h4>
+                        <ul id="tech-concepts" class="tech-list"></ul>
+                    </div>
+                    <div>
+                        <h4 class="tech-section-title mb-3">Points forts</h4>
+                        <ul id="tech-strengths" class="tech-list"></ul>
+                    </div>
+                    <div>
+                        <h4 class="tech-section-title mb-3">Cas d'usage</h4>
+                        <ul id="tech-use-cases" class="tech-list"></ul>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="tech-section-title mb-3">Exemple rapide</h4>
+                    <p id="tech-code-lang" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2"></p>
+                    <pre class="tech-code"><code id="tech-code"></code></pre>
+                </div>
+
+                <div id="tech-projects-wrap" class="hidden">
+                    <h4 class="tech-section-title mb-3">Utilisé dans mes projets</h4>
+                    <div id="tech-projects" class="flex flex-wrap gap-2"></div>
+                </div>
+
+                <div>
+                    <h4 class="tech-section-title mb-3">Aller plus loin</h4>
+                    <div id="tech-links" class="flex flex-col sm:flex-row flex-wrap gap-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODALE / PAGE DE DÉTAIL PROJET -->
     <div id="project-modal" class="fixed inset-0 z-[200] flex items-start sm:items-center justify-center p-0 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div id="modal-backdrop" class="absolute inset-0 bg-slate-950/70 backdrop-blur-md"></div>
@@ -921,6 +1072,7 @@
     <script src="hightech.js"></script>
     <script src="court.js"></script>
     <script src="equipe.js?v=20261126"></script>
+    <script src="technologies.js?v=20261126"></script>
     <script src="hoop.js?v=20261126"></script>
     <script src="script.js?v=20261124"></script>
 </body>

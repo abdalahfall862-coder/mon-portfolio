@@ -34,6 +34,16 @@
     stripe: { s: "stripe", c: "635BFF" },
     vercel: { s: "vercel", c: "8A8A8A" },
     render: { s: "render", c: "46E3B7" },
+    vite: { s: "vite", c: "646CFF" },
+    expo: { s: "expo", c: "000020" },
+    figma: { s: "figma", c: "F24E1E" },
+    postgresql: { s: "postgresql", c: "4169E1" },
+    redis: { s: "redis", c: "DC382D" },
+    jest: { s: "jest", c: "C21325" },
+    graphql: { s: "graphql", c: "E10098" },
+    docker: { s: "docker", c: "2496ED" },
+    githubactions: { s: "githubactions", c: "2088FF" },
+    linux: { s: "linux", c: "FCB817" },
   };
 
   $$("[data-ico]").forEach((el) => {

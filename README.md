@@ -28,6 +28,7 @@ Les messages arrivent alors dans la boîte Gmail du propriétaire du compte Rese
 - `index.html` — pages et sections (effectif en 3 équipes, modale projets, formulaire)
 - `script.js` — données projets, cartes, modale, formulaire
 - `equipe.css`, `equipe.js` — onglets d'équipes et présentation des joueurs
+- `technologies.js` — fiches de documentation ouvertes au clic sur chaque technologie
 - `hoop.js` — demi-cercle/filet avant du panier, au-dessus du canvas 3D
 - `court.js`, `hightech.js`, `three-scene.js` — effets (icônes, HUD, balle 3D)
 - `api/contact.js` — fonction Vercel : validation + envoi via Resend

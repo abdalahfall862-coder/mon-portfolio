@@ -1,7 +1,7 @@
-/* hoop.js — adapté au panier actuel de index.html (viewBox 0 0 100 100, géométrie scale 1.42).
-   Le canvas 3D (z-index 50) est pris en sandwich : l'arrière du cercle/filet reste dans
-   #fx-hoop (sous le canvas), l'avant est recopié dans #fx-hoop-front (z-index 51).
-   Clic et animations restent pilotés par #fx-hoop / three-scene.js. */
+/* hoop.js — couche avant du panier, calée sur la géométrie FIBA ×1,53 de index.html :
+   viewBox 0 0 100 100, anneau ⌀25, carré 32,8 × 25, planche 100 × 58,3. Le canvas 3D
+   (z-index 50) est pris en sandwich : l'arrière reste dans #fx-hoop, l'avant est recopié
+   dans #fx-hoop-front (z-index 51). */
 (function () {
   const hoop = document.getElementById('fx-hoop');
   if (!hoop || document.getElementById('fx-hoop-front')) return;
@@ -11,19 +11,16 @@
   svg.id = 'fx-hoop-front';
   svg.setAttribute('viewBox', '0 0 100 100');
   svg.setAttribute('aria-hidden', 'true');
+  // Balayage 0 : demi-cercle inférieur, donc le vrai bord avant passe devant la balle.
   svg.innerHTML =
-    '<g transform="translate(50 52) scale(1.42) translate(-50 -52)">' +
-      '<g class="hoop-net">' +
-        '<path d="M74 52Q69 67 64 80"/>' +
-        '<path d="M70.8 55Q66.5 67 62.1 81.8"/>' +
-        '<path d="M62 57.2Q59.5 68 57 83"/>' +
-        '<path d="M50 58Q50 68 50 83.5"/>' +
-        '<path d="M38 57.2Q40.5 68 43 83"/>' +
-        '<path d="M29.2 55Q33.5 67 37.9 81.8"/>' +
-        '<path d="M26 52Q31 67 36 80"/>' +
-      '</g>' +
-      '<path class="hoop-rim-front" d="M26 52A24 6 0 0 1 74 52"/>' +
-    '</g>';
+    '<g class="hoop-net">' +
+      '<path d="M62.5 50Q60 62 56 73.3"/>' +
+      '<path d="M56.2 51Q55 63 53 74"/>' +
+      '<path d="M50 52Q50 64 50 74.5"/>' +
+      '<path d="M43.8 51Q45 63 47 74"/>' +
+      '<path d="M37.5 50Q40 62 44 73.3"/>' +
+    '</g>' +
+    '<path class="hoop-rim-front" d="M37.5 50A12.5 3.5 0 0 0 62.5 50"/>';
   document.body.appendChild(svg);
 
   // Calage sur #fx-hoop en coordonnées document (suit le scroll sans recalcul)

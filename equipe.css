@@ -90,6 +90,10 @@
 .bench-card .pl-role { font-size: .66rem; }
 .bench-card .bc-num { font: 1.5rem/1 'Bebas Neue', Impact, sans-serif; color: var(--ta); }
 
+/* ---- Cartes cliquables : ouverture de la fiche documentation ---- */
+.js-tech .player, .js-tech .bench-card { cursor: pointer; }
+.js-tech .player:focus-visible, .js-tech .bench-card:focus-visible { outline: 3px solid #ff6a13; outline-offset: 3px; }
+
 /* ---- Présentation : les joueurs entrent un par un ---- */
 .js-team .team-panel:not(.is-active) .player,
 .js-team .team-panel:not(.is-active) .bench-card { opacity: 0; }

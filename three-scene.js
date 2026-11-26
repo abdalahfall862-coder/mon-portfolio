@@ -1,11 +1,14 @@
-/* three-scene.js v8 — ballon de basket officiel NBA Wilson.
+/* three-scene.js v9 — ballon de basket officiel NBA Wilson.
    Texture générée en JS : cuir pleine grain, 8 panneaux, NBA Pro Seams à double profondeur
    (3 grands cercles perpendiculaires, coutures ~6,2 mm / max FIBA 6,35 mm), logoman NBA,
    script Wilson avec inline anthracite. Rendu PBR (MeshStandardMaterial + bump map),
-   ombre douce, caméra orthographique en pixels : le ballon dribble sur #fx-ball-anchor.
-   Un clic sur le terrain le fait simplement rebondir sur place (sans score). Un clic sur
-   #fx-hoop déclenche un tir balistique : il ne marque que s'il traverse le cercle, sinon
-   il rebondit dessus et reprend le dribble. Événements 'fx:bounce' (tir) et 'fx:swish'. */
+   ombre douce, caméra orthographique en pixels : le ballon dribble sur tout .hero-court.
+   Échelle FIBA du hero ×1,53 pour la lisibilité : 500 unités = 15 m, anneau ⌀0,69 m, ballon ⌀0,37 m.
+   Un clic sur le terrain l'envoie au point choisi, où il rebondit puis reste dribbler
+   à cette hauteur, sans descendre au bas du terrain. Un clic sur #fx-hoop déclenche un
+   tir balistique : s'il marque, le ballon ressort du filet puis glisse jusqu'en bas du
+   terrain avant de reprendre son dribble, sans jamais disparaître. Événements
+   'fx:bounce' et 'fx:swish'. */
 (function () {
   if (typeof THREE === "undefined") return;
   const canvas = document.getElementById("bg-canvas");
@@ -26,6 +29,7 @@
 
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const anchor = document.getElementById("fx-ball-anchor");
+  const courtEl = document.querySelector(".hero-court");
   const hoopEl = document.getElementById("fx-hoop");
   if (!anchor) {
     canvas.remove();
@@ -271,72 +275,6 @@
   glow.position.z = 4.7;
   scene.add(glow);
 
-  /* Étincelles jaillissant du cercle au moment du swish */
-  const BN = 20;
-  const bPos = new Float32Array(BN * 3),
-    bCol = new Float32Array(BN * 3);
-  const bx = new Float32Array(BN),
-    by = new Float32Array(BN);
-  const bvx = new Float32Array(BN),
-    bvy = new Float32Array(BN),
-    bLife = new Float32Array(BN);
-  const bGeo = new THREE.BufferGeometry();
-  bGeo.setAttribute("position", new THREE.BufferAttribute(bPos, 3));
-  bGeo.setAttribute("color", new THREE.BufferAttribute(bCol, 3));
-  const burst = new THREE.Points(
-    bGeo,
-    new THREE.PointsMaterial({
-      size: 9,
-      map: dotTex,
-      vertexColors: true,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      depthTest: true,
-      sizeAttenuation: false,
-    }),
-  );
-  burst.frustumCulled = false;
-  burst.visible = false;
-  scene.add(burst);
-  function spawnBurst(x, y) {
-    for (let i = 0; i < BN; i++) {
-      const a = Math.random() * Math.PI * 2;
-      const sp = 60 + Math.random() * 150;
-      bx[i] = x;
-      by[i] = y;
-      bvx[i] = Math.cos(a) * sp * 0.55;
-      bvy[i] = Math.sin(a) * sp * 0.75 - 40;
-      bLife[i] = 0.45 + Math.random() * 0.45;
-    }
-    burst.visible = true;
-  }
-  function updateBurst(dt) {
-    if (!burst.visible || dt <= 0) return;
-    let alive = false;
-    for (let i = 0; i < BN; i++) {
-      if (bLife[i] <= 0) {
-        bCol[i * 3] = bCol[i * 3 + 1] = bCol[i * 3 + 2] = 0;
-        continue;
-      }
-      alive = true;
-      bLife[i] -= dt;
-      bvy[i] += 320 * dt; // gravité (écran : y vers le bas)
-      bx[i] += bvx[i] * dt;
-      by[i] += bvy[i] * dt;
-      const f = Math.max(0, Math.min(1, bLife[i] / 0.9));
-      bPos[i * 3] = bx[i];
-      bPos[i * 3 + 1] = -by[i];
-      bPos[i * 3 + 2] = 4.3;
-      bCol[i * 3] = f;
-      bCol[i * 3 + 1] = 0.55 * f * f;
-      bCol[i * 3 + 2] = 0.12 * f * f;
-    }
-    bGeo.attributes.position.needsUpdate = true;
-    bGeo.attributes.color.needsUpdate = true;
-    if (!alive) burst.visible = false;
-  }
-
   /* ---------- Mesures mises en cache ---------- */
   let W = 1,
     H = 1;
@@ -344,14 +282,16 @@
     Hm = { x: 0, y: 0, w: 0 };
   function measure() {
     const sy = window.scrollY;
-    const a = anchor.getBoundingClientRect();
-    A = { l: a.left, t: a.top + sy, w: a.width, h: a.height };
-    // Le cercle est à 52% de la hauteur du SVG du panier (le reste est la planche et le bras).
+    // Toute la surface du demi-terrain est jouable : le ballon peut aller dans les
+    // coins, pas seulement dans la petite zone centrale de l'ancien ancrage.
+    const zone = (courtEl || anchor).getBoundingClientRect();
+    A = { l: zone.left, t: zone.top + sy, w: zone.width, h: zone.height };
+    // L'anneau est au centre du SVG du panier (le reste est la planche et le bras).
     if (hoopEl) {
       const r = hoopEl.getBoundingClientRect();
       Hm = {
         x: r.left + r.width / 2,
-        y: r.top + sy + r.height * 0.52,
+        y: r.top + sy + r.height * 0.5,
         w: r.width,
       };
     }
@@ -375,10 +315,14 @@
   addEventListener("load", measure);
   if (window.ResizeObserver) new ResizeObserver(measure).observe(document.body);
 
-  /* ---------- Machine à états : dribble ↔ plain (rebond libre) | bounce → (drop | miss) ---------- */
+  /* ---------- Machine à états : dribble ↔ plain | bounce → (drop → slide | miss) ---------- */
   let st = "dribble",
     st0 = 0,
     lastT = 0;
+  // Position du dribble après interaction, en relatif au terrain (résiste au scroll/resize).
+  // null = ballon itinérant avant le premier clic. homeRY = 1 correspond au bas du terrain.
+  let homeRX = null,
+    homeRY = 1;
   let scoreR = 30; // rayon du ballon au moment du panier
   let velX = 0,
     velY = 0; // vitesses instantanées (squash / rebond sur le cercle)
@@ -397,20 +341,32 @@
     plT = 0.5,
     plTm = 0,
     plVY = 0;
-  let plPhase = 0,
-    plRX = 0; // 0 = saut vers le point, 1 = rebonds, 2 = retour
+  let plPhase = 0; // 0 = saut vers le point, 1 = rebonds, 2 = tassement final
+  let slX0 = 0,
+    slY0 = 0,
+    slTX = 0,
+    slTY = 0; // glissement après un panier
   let curR = 30; // rayon courant, mis à jour à chaque frame
   let imp = 0; // intensité de l'impact
   const G = 1900; // gravité en px/s²
   const bp = { x: 0, y: 0, r: 30 };
-  /* Rebond libre : un clic envoie le ballon sur le point choisi du terrain, puis il y
-     rebondit avec amortissement avant de revenir au dribble. Pas de visée, pas de score. */
+  /* Rebond libre : un clic envoie le ballon sur le point choisi du terrain. Il y rebondit
+     avec amortissement, puis continue de dribbler exactement à cet endroit. Pas de score. */
   function startPlainBounce(clientX, clientY) {
-    if (!ball.visible || st === "drop" || st === "miss") return;
+    if (!ball.visible || st === "drop" || st === "miss" || st === "slide") return;
     const R = curR;
     const top = A.t - window.scrollY;
     plTX = Math.max(A.l + R, Math.min(A.l + A.w - R, clientX));
     plTY = Math.max(top + R, Math.min(top + A.h - R, clientY));
+    const zone = {
+      left: A.l,
+      top,
+      width: A.w,
+      height: A.h,
+      bottom: top + A.h,
+    };
+    homeRX = xToRatio(plTX, zone, R); // le ballon garde le point choisi, pas seulement en X
+    homeRY = yToRatio(plTY, zone, R);
     plX0 = bp.x;
     plY0 = bp.y;
     const dist = Math.hypot(plTX - plX0, plTY - plY0);
@@ -428,15 +384,16 @@
   /* Tir directionnel : un clic sur le panier envoie le ballon vers le cercle avec une
      trajectoire balistique. Le panier n'est validé que s'il redescend dans le cercle. */
   function startShot(clientX, perfect) {
-    if (!ball.visible || st === "drop" || st === "miss") return;
+    if (!ball.visible || st === "drop" || st === "miss" || st === "slide") return;
     if (!hoopEl) return;
     const hr = hoopEl.getBoundingClientRect();
     if (hr.width <= 0) return;
     const hx = hr.left + hr.width / 2;
-    const hy = hr.top + hr.height * 0.52;
+    const hy = hr.top + hr.height * 0.5;
+    const aimLimit = hr.width * 0.08; // tolérance proportionnelle au vrai anneau
     const aim = perfect
       ? 0
-      : Math.max(-30, Math.min(30, (clientX - bp.x) * 0.16));
+      : Math.max(-aimLimit, Math.min(aimLimit, (clientX - bp.x) * 0.16));
     shX0 = bp.x;
     shY0 = bp.y;
     shTargetX = hx + aim;
@@ -447,7 +404,7 @@
     // Léger renflement latéral à l'apex : la trajectoire ne part pas comme un ascenseur.
     shCurve =
       (shTargetX >= shX0 ? 1 : -1) *
-      Math.min(34, 16 + Math.abs(shTargetX - shX0) * 0.18);
+      Math.min(hr.width * 0.25, 10 + Math.abs(shTargetX - shX0) * 0.12);
     shElapsed = 0;
     imp = 1;
     st = "bounce";
@@ -490,6 +447,48 @@
   );
 
   const ease = (u) => u * u * (3 - 2 * u);
+  /* Avant le premier clic, le dribble parcourt lentement tout le terrain. Après une
+     interaction, il reste à l'endroit choisi par l'utilisateur. */
+  function roamX(t, a, radius) {
+    const margin = Math.min(
+      a.width * 0.45,
+      Math.max(radius * 1.4, a.width * 0.06),
+    );
+    const span = Math.max(0, a.width - margin * 2);
+    return a.left + margin + (0.5 + 0.5 * Math.sin(t * 0.42)) * span;
+  }
+  const clamp01 = (v) => Math.max(0, Math.min(1, v));
+  function xRange(a, radius) {
+    const margin = Math.min(
+      a.width * 0.45,
+      Math.max(radius * 1.4, a.width * 0.04),
+    );
+    return { start: a.left + margin, span: Math.max(1, a.width - margin * 2) };
+  }
+  function yRange(a, radius) {
+    const start = a.top + radius;
+    const end = a.bottom - 6 - radius;
+    return { start, span: Math.max(1, end - start) };
+  }
+  function xToRatio(x, a, radius) {
+    const r = xRange(a, radius);
+    return clamp01((x - r.start) / r.span);
+  }
+  function yToRatio(y, a, radius) {
+    const r = yRange(a, radius);
+    return clamp01((y - r.start) / r.span);
+  }
+  function ratioToX(a, radius) {
+    const r = xRange(a, radius);
+    return r.start + homeRX * r.span;
+  }
+  function ratioToY(a, radius) {
+    const r = yRange(a, radius);
+    return r.start + homeRY * r.span;
+  }
+  function dribbleX(t, a, radius) {
+    return homeRX === null ? roamX(t, a, radius) : ratioToX(a, radius);
+  }
 
   function frame(t, dt) {
     const sY = window.scrollY;
@@ -502,17 +501,18 @@
     };
     const onScreen = a.width > 0 && a.bottom > -60 && a.top < H + 60;
     ball.visible = shadow.visible = glow.visible = onScreen;
-    if (!onScreen) {
-      burst.visible = false;
-      return;
-    }
+    if (!onScreen) return;
 
-    // Le rayon du ballon est calibré sur le cercle : diamètre du ballon ≈ 59 % du cercle.
-    const R = Math.max(9, Math.min(36, (Hm.w || a.width * 0.5) * 0.2));
+    // Ballon taille 7 : ⌀0,37 m pour un anneau ⌀0,69 m, soit ~53 % du rayon de l'anneau.
+    const R = Math.max(6, Math.min(30, (Hm.w || a.width * 0.5) * 0.067));
     curR = R;
-    const cx = a.left + a.width / 2;
-    const floorY = a.bottom - 6 - R;
-    const drib = Math.min(a.height * 0.45, R * 6);
+    // Niveau où le ballon repose : point cliqué, ou juste sous le panier après un score.
+    // Plus besoin de descendre jusqu'en bas du terrain à chaque fois.
+    const groundY = ratioToY(a, R);
+    const drib = Math.max(
+      0,
+      Math.min(a.height * 0.45, R * 6, groundY - a.top - R),
+    );
     const el = t - st0;
     let k = 1,
       squash = 1,
@@ -521,8 +521,8 @@
     if (st === "dribble") {
       const u = (el % 0.8) / 0.8,
         h = 4 * u * (1 - u);
-      bp.x = cx + Math.sin(t * 0.6) * a.width * 0.12; // phase continue : aucun saut latéral
-      bp.y = floorY - h * drib;
+      bp.x = dribbleX(t, a, R); // reste sur le point choisi, ou itinérant avant le premier clic
+      bp.y = groundY - h * drib;
       bp.r = R;
       squash = h < 0.06 ? 0.86 + 0.14 * (h / 0.06) : 1;
       shOp = 1 - h * 0.6;
@@ -535,15 +535,15 @@
       let depth, sq;
       if (u < 0.3) {
         const v = u / 0.3;
-        depth = 0.14 * ease(v);
+        depth = 0.05 * ease(v);
         sq = 1 - 0.12 * Math.sin(v * Math.PI); // compression dans le cercle
       } else if (u < 0.62) {
         const v = (u - 0.3) / 0.32;
-        depth = 0.14 + 0.18 * ease(v);
+        depth = 0.05 + 0.07 * ease(v);
         sq = 1 + 0.09 * Math.sin(v * Math.PI); // étirement quand le filet le capture
       } else {
         const v = (u - 0.62) / 0.38;
-        depth = 0.32 + 0.42 * v * v;
+        depth = 0.12 + 0.12 * v * v; // ~0,42 m de filet
         sq = 1;
       }
       bp.x = Hm.x + Math.sin(u * Math.PI * 2) * 2 * (1 - u);
@@ -552,15 +552,42 @@
         scoreR *
         (1 - 0.08 * Math.min(1, u * 2) - 0.18 * Math.max(0, (u - 0.62) / 0.38));
       squash = sq;
-      k = 1 - ease(Math.max(0, (u - 0.78) / 0.22));
+      // Le ballon ne disparaît pas : le filet le ralentit, puis il ressort et retombe.
+      k = 1;
       shOp = 0;
       ball.rotation.z += dt * (u < 0.62 ? 3 : 1.4); // le filet freine la rotation
       if (u >= 1) {
-        st = "ret";
+        slX0 = bp.x;
+        slY0 = bp.y;
+        slTX = bp.x; // descente verticale sous le cercle
+        slTY = a.bottom - 6 - R; // jusqu'au bas du terrain
+        homeRX = xToRatio(slTX, a, R);
+        homeRY = 1; // le dribble reprendra en bas, après le glissement
+        bp.r = R;
+        velX = 0;
+        velY = 0;
+        imp = 0;
+        st = "slide";
+        st0 = t;
+      }
+    } else if (st === "slide") {
+      // Après un panier : descente douce et continue jusqu'au bas du terrain.
+      const u = Math.min(1, el / 0.85);
+      const e = ease(u);
+      bp.x = slX0 + (slTX - slX0) * e;
+      bp.y = slY0 + (slTY - slY0) * e;
+      bp.r = R;
+      squash = 1 - 0.06 * Math.sin(u * Math.PI);
+      shOp = 0.15 + 0.85 * u;
+      ball.rotation.x += dt * 2.4; // effet de roulement pendant la descente
+      ball.rotation.z += dt * 0.8;
+      if (u >= 1) {
+        bp.y = slTY;
+        st = "dribble";
         st0 = t;
       }
     } else if (st === "plain") {
-      const driftX = cx + Math.sin(t * 0.6) * a.width * 0.12;
+      const driftX = dribbleX(t, a, R);
       if (plPhase === 0) {
         // Saut balistique vers le point exact cliqué.
         plTm += dt;
@@ -569,9 +596,9 @@
         velY = plVY + G * plTm;
         bp.x = plX0 + (plTX - plX0) * u;
         bp.y = plY0 + plVY * plTm + 0.5 * G * plTm * plTm;
-        if (u >= 1 || bp.y >= floorY) {
+        if (u >= 1 || bp.y >= groundY) {
           bp.x = plTX;
-          bp.y = Math.min(bp.y, floorY);
+          bp.y = Math.min(bp.y, groundY);
           velX = 0;
           velY = -Math.max(240, Math.abs(velY) * 0.6); // premier bond sur le point visé
           plPhase = 1;
@@ -585,8 +612,8 @@
         velX += (driftX - bp.x) * dt * 2.5;
         bp.x += velX * dt;
         bp.y += velY * dt;
-        if (bp.y >= floorY) {
-          bp.y = floorY;
+        if (bp.y >= groundY) {
+          bp.y = groundY;
           if (Math.abs(velY) > 150 && plainN < 3) {
             velY = -Math.abs(velY) * 0.56;
             plainN++;
@@ -594,17 +621,18 @@
           } else {
             velY = 0;
             velX = 0;
-            plRX = bp.x;
+            homeRX = xToRatio(bp.x, a, R);
+            homeRY = yToRatio(bp.y, a, R);
             plPhase = 2;
             plTm = 0;
           }
         }
       } else {
-        // Retour en douceur vers le dribble, sans saut latéral.
+        // Dernier tassement sur place, puis reprise du dribble au même endroit.
         plTm += dt;
-        const u = Math.min(1, plTm / 0.45);
-        bp.x = plRX + (driftX - plRX) * ease(u);
-        bp.y = floorY - Math.sin(u * Math.PI) * R * 0.7;
+        const u = Math.min(1, plTm / 0.28);
+        bp.x = driftX;
+        bp.y = groundY - Math.sin(u * Math.PI) * R * 0.35;
         velY = 0;
         velX = 0;
         if (u >= 1) {
@@ -613,7 +641,7 @@
         }
       }
       bp.r = R;
-      const above = Math.max(0, floorY - bp.y);
+      const above = Math.max(0, groundY - bp.y);
       imp = Math.max(0, imp - dt * 4.5);
       squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(velY) / 6000);
       shOp = Math.max(0.12, 1 - above / 260);
@@ -641,22 +669,34 @@
       }
       bp.r = R;
 
+      // Guidage final : en descente près de l'anneau, la balle revient progressivement
+      // vers le centre au lieu d'être recalée d'un coup au moment du score.
+      if (st === "bounce" && velY > 0) {
+        const near = Hm.w * 0.75;
+        if (bp.y > hy - near) {
+          const g = Math.min(1, (bp.y - (hy - near)) / near);
+          bp.x += (hx - bp.x) * g * 0.45;
+        }
+      }
+
       // Le ballon redescend au niveau du cercle : on vérifie s'il passe dedans.
       if (st === "bounce" && velY > 0 && prevY <= hy && bp.y > hy) {
-        if (Math.abs(bp.x - hx) <= Hm.w * 0.2) {
+        const entryTol = Math.max(2, Hm.w * 0.125 - R * 0.35);
+        if (Math.abs(bp.x - hx) <= entryTol) {
           bp.x = hx;
           scoreR = bp.r;
           st = "drop";
           st0 = t;
-          spawnBurst(hx, hy);
           hoopEl.classList.remove("swish", "rimhit");
           void hoopEl.offsetWidth;
           hoopEl.classList.add("swish");
           dispatchEvent(new CustomEvent("fx:swish"));
         } else {
-          // Cercle raté : le ballon rebondit dessus puis retombe au sol.
+          // Cercle raté : le ballon rebondit dessus puis reste au niveau du cercle.
           st = "miss";
           st0 = t;
+          homeRX = xToRatio(bp.x, a, R);
+          homeRY = yToRatio(hy + Hm.w * 0.12, a, R);
           velY = -Math.abs(velY) * 0.35;
           velX = (bp.x < hx ? -1 : 1) * 110;
           hoopEl.classList.remove("swish", "rimhit");
@@ -664,36 +704,29 @@
           hoopEl.classList.add("rimhit");
         }
       }
-      if (bp.y >= floorY) {
-        bp.y = floorY;
+      const landingY = ratioToY(a, R);
+      if (bp.y >= landingY) {
+        bp.y = landingY;
+        homeRX = xToRatio(bp.x, a, R); // le ballon reste là où il est retombé
+        homeRY = yToRatio(bp.y, a, R);
         st = "dribble";
         st0 = t;
       }
 
-      const above = Math.max(0, floorY - bp.y);
+      const above = Math.max(0, landingY - bp.y);
       imp = Math.max(0, imp - dt * 4.5);
       squash = 1 - 0.22 * imp + Math.min(0.1, Math.abs(velY) / 6000);
       shOp = Math.max(0.12, 1 - above / 260);
       ball.rotation.y += dt * (1.6 + Math.abs(velY) / 600);
       ball.rotation.z += dt * (st === "bounce" ? 3.2 : 0.6);
-    } else {
-      const u = Math.min(1, Math.max(0, (el - 0.5) / 0.6));
-      bp.x = cx;
-      bp.y = floorY;
-      bp.r = R;
-      k = ease(u);
-      shOp = u;
-      if (el > 1.1) {
-        st = "dribble";
-        st0 = t;
-      }
     }
 
     const r = bp.r * Math.max(0.001, k);
     ball.position.set(bp.x, -bp.y, 5);
     ball.scale.set(r * (1 + (1 - squash) * 0.55), r * squash, r);
-    const sh = Math.max(0.35, 1 - (floorY - bp.y) / 260);
-    shadow.position.set(bp.x, -(floorY + R * 0.9), 0);
+    const landingY = ratioToY(a, R);
+    const sh = Math.max(0.35, 1 - (landingY - bp.y) / 260);
+    shadow.position.set(bp.x, -(landingY + R * 0.9), 0);
     shadow.scale.set(R * 1.15 * sh, R * 0.3 * sh, 1);
     shadowMat.opacity = shOp * sh;
     if (st === "drop") shadow.visible = false;
@@ -702,8 +735,11 @@
     const gr = r * 3.4;
     glow.scale.set(gr, gr, 1);
     glowMat.opacity =
-      st === "drop" ? 0.32 : st === "bounce" || st === "plain" ? 0.28 : 0.18;
-    updateBurst(dt);
+      st === "drop"
+        ? 0.32
+        : st === "bounce" || st === "plain" || st === "slide"
+          ? 0.28
+          : 0.18;
   }
 
   const clock = new THREE.Clock();
