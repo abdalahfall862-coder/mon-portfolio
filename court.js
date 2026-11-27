@@ -7,78 +7,22 @@
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
 
-  /* ---------- Icônes des technologies (Simple Icons, avec repli) ---------- */
-  const LOCK =
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="#b45309"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="#b45309" stroke-width="2"/></svg>';
-  const ICONS = {
-    html5: { s: "html5", c: "E34F26" },
-    css3: { s: ["css3", "css"], c: "1572B6" },
-    js: { s: "javascript", c: "F7DF1E" },
-    ts: { s: "typescript", c: "3178C6" },
-    tailwind: { s: "tailwindcss", c: "06B6D4" },
-    react: { s: "react", c: "61DAFB" },
-    next: { s: "nextdotjs", c: "8A8A8A" },
-    node: { s: "nodedotjs", c: "5FA04E" },
-    express: { s: "express", c: "8A8A8A" },
-    fastify: { s: "fastify", c: "8A8A8A" },
-    nest: { s: "nestjs", c: "E0234E" },
-    typeorm: { s: "typeorm", c: "E83524" },
-    jwt: { s: "jsonwebtokens", c: "D63AFF" },
-    bcrypt: { svg: LOCK, c: "B45309" },
-    socket: { s: "socketdotio", c: "8A8A8A" },
-    mongodb: { s: "mongodb", c: "47A248" },
-    firebase: { s: "firebase", c: "FFCA28" },
-    swagger: { s: "swagger", c: "85EA2D" },
-    git: { s: "git", c: "F05032" },
-    github: { s: "github", c: "8A8A8A" },
-    stripe: { s: "stripe", c: "635BFF" },
-    vercel: { s: "vercel", c: "8A8A8A" },
-    render: { s: "render", c: "46E3B7" },
-    vite: { s: "vite", c: "646CFF" },
-    expo: { s: "expo", c: "000020" },
-    figma: { s: "figma", c: "F24E1E" },
-    postgresql: { s: "postgresql", c: "4169E1" },
-    redis: { s: "redis", c: "DC382D" },
-    jest: { s: "jest", c: "C21325" },
-    graphql: { s: "graphql", c: "E10098" },
-    docker: { s: "docker", c: "2496ED" },
-    githubactions: { s: "githubactions", c: "2088FF" },
-    linux: { s: "linux", c: "FCB817" },
-  };
+  /* ---------- Icônes des technologies : un sprite local au lieu de 33 appels CDN ---------- */
+  const ICON_KEYS = new Set([
+    "html5", "css3", "js", "ts", "tailwind", "react", "next", "node",
+    "express", "fastify", "nest", "typeorm", "jwt", "bcrypt", "socket",
+    "mongodb", "firebase", "swagger", "git", "github", "stripe", "vercel",
+    "render", "vite", "expo", "figma", "postgresql", "redis", "jest",
+    "graphql", "docker", "githubactions", "linux",
+  ]);
 
   $$("[data-ico]").forEach((el) => {
-    const cfg = ICONS[el.dataset.ico];
-    if (!cfg) return;
-    const label = el.textContent.trim();
+    const key = el.dataset.ico;
+    if (!ICON_KEYS.has(key)) return;
     const wrap = document.createElement("span");
     wrap.className = "ico";
-    const fallback = () => {
-      wrap.innerHTML = "";
-      const fb = document.createElement("span");
-      fb.className = "ico-fb";
-      fb.style.background = "#" + cfg.c;
-      fb.textContent = label.slice(0, 2).toUpperCase();
-      wrap.appendChild(fb);
-    };
-    if (cfg.svg) wrap.innerHTML = cfg.svg;
-    else {
-      const slugs = [].concat(cfg.s);
-      let i = 0;
-      const img = new Image();
-      img.alt = "";
-      img.width = 30;
-      img.height = 30;
-      img.loading = "lazy";
-      img.decoding = "async";
-      img.onerror = () => {
-        i++;
-        if (i < slugs.length)
-          img.src = "https://cdn.simpleicons.org/" + slugs[i] + "/" + cfg.c;
-        else fallback();
-      };
-      img.src = "https://cdn.simpleicons.org/" + slugs[0] + "/" + cfg.c;
-      wrap.appendChild(img);
-    }
+    wrap.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#ico-' + key + '"/></svg>';
     el.prepend(wrap);
   });
 
@@ -150,6 +94,7 @@
     };
     paint();
     setInterval(() => {
+      if (document.hidden) return; // rien à animer dans un onglet masqué
       secs--;
       if (secs < 0) {
         secs = 12 * 60;

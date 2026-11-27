@@ -17,6 +17,8 @@
             }
         }
     </script>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -391,7 +393,7 @@
             <div class="relative z-10 w-full max-w-7xl mx-auto grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-8 lg:gap-10 items-center">
                 <div>
                     <div class="fx-in flex items-center gap-3 mb-6">
-                        <img src="assets/moi.jpg" alt="Portrait de Mohamed Abdalah Fall" width="96" height="96" loading="eager" decoding="async"
+                        <img src="assets/moi.jpg" alt="Portrait de Mohamed Abdalah Fall" width="96" height="96" loading="eager" fetchpriority="high" decoding="async"
                              class="profile-photo w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-top border-2 border-hoop shadow-lg shadow-orange-700/25 flex-none">
                         <span class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full panel2 text-[11px] font-bold uppercase tracking-widest ink">
                             💼 En recherche de projets

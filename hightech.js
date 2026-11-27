@@ -119,7 +119,7 @@
   const clock = () => {
     tEl.textContent = new Date().toLocaleTimeString('fr-FR', { timeZone: 'Africa/Dakar', hour12: false });
   };
-  clock(); setInterval(clock, 1000);
+  clock(); setInterval(() => { if (!document.hidden) clock(); }, 1000);
   let maxScroll = 1, tick = false;
   const calc = () => { maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight); };
   const sc = () => { tick = false; sEl.textContent = Math.min(100, Math.round((scrollY / maxScroll) * 100)); };

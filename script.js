@@ -77,7 +77,7 @@ const projectsData = {
     taskmanager: {
         title: "Task-manager",
         badge: "Application Web · Productivité",
-        image: "assets/my-app.jpeg",
+        image: "assets/my-app.jpg",
         type: "Application web",
         status: "En ligne",
         role: "Conception & développement front-end, intégration Firebase",
@@ -103,7 +103,7 @@ const projectsData = {
     portfolio: {
         title: "Portfolio Pro",
         badge: "Site Vitrine · UX/UI",
-        image: "assets/cv-web.png",
+        image: "assets/cv-web.jpg",
         type: "Site vitrine",
         status: "En ligne",
         role: "Design UI, intégration et développement complet en solo",
@@ -129,7 +129,7 @@ const projectsData = {
     api: {
         title: "API Secure & Scalable",
         badge: "Backend · Architecture API",
-        image: "assets/api-swagger.png",
+        image: "assets/api-swagger.jpg",
         type: "API REST documentée",
         status: "Live on Render",
         role: "Architecture, développement backend et documentation technique",
@@ -204,7 +204,7 @@ const projectsData = {
     tarteel: {
         title: "Tarteel",
         badge: "Mobile · Apprentissage du Coran",
-        image: "assets/tarteel.PNG",
+        image: "assets/tarteel.jpg",
         type: "Application iOS & Android",
         status: "Disponible sur les deux stores",
         role: "Conception produit, développement mobile et dashboard admin web",
@@ -283,7 +283,7 @@ function renderProjectCards() {
         return `<article class="project-card reveal group panel ${pad} rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer ${c.span}"${delay} data-project="${id}" role="button" tabindex="0" aria-label="Voir les détails du projet ${d.title}">
                         <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 ${px} pb-3"><span class="font-led match-label text-[10px] font-bold text-hoop">${c.match}</span><span class="led-tag">${c.tag}</span></div>
                         <div class="${imgWrap}">
-                            <img src="${d.image}" alt="${c.imgAlt}" class="w-full h-full ${imgFit} transition-transform duration-700 group-hover:scale-105">
+                            <img src="${d.image}" alt="${c.imgAlt}" loading="lazy" decoding="async" class="w-full h-full ${imgFit} transition-transform duration-700 group-hover:scale-105">
                             ${c.extraOverlay || ''}
                             <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
                                 <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-hoop px-4 py-2 rounded-xl">Voir la fiche projet</span>

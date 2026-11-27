@@ -49,8 +49,10 @@
 
   /* ---------- Texture du ballon ---------- */
   function buildTextures() {
-    const TW = 1024,
-      TH = 512;
+    // 768×384 au lieu de 1024×512 : même aspect, 56 % de pixels en moins.
+    const TW = 768,
+      TH = 384,
+      S = TW / 1024;
     const c1 = document.createElement("canvas"),
       c2 = document.createElement("canvas");
     c1.width = c2.width = TW;
@@ -143,7 +145,7 @@
       x1.arc(0, 0, R, 0, Math.PI * 2);
       x1.fillStyle = "rgba(120,52,14,.5)";
       x1.fill();
-      x1.lineWidth = 7;
+      x1.lineWidth = 7 * S;
       x1.strokeStyle = ink;
       x1.stroke();
       x1.fillStyle = ink;
@@ -173,25 +175,25 @@
       x1.arc(R * 0.5, -R * 0.32, R * 0.16, 0, Math.PI * 2);
       x1.fill();
       x1.restore();
-      x1.font = '900 22px "Arial Black", Impact, sans-serif';
+      x1.font = `900 ${22 * S}px "Arial Black", Impact, sans-serif`;
       x1.fillStyle = ink;
-      x1.fillText("NBA", cx, cy + R + 16);
-    })(TW * 0.25, TH * 0.31, 58);
+      x1.fillText("NBA", cx, cy + R + 16 * S);
+    })(TW * 0.25, TH * 0.31, 58 * S);
 
     /* --- Script Wilson + inline anthracite --- */
     (function wilson(cx, cy) {
       x1.save();
       x1.translate(cx, cy);
-      x1.font = 'italic 900 66px Georgia, "Times New Roman", serif';
+      x1.font = `italic 900 ${66 * S}px Georgia, "Times New Roman", serif`;
       x1.lineJoin = "round";
-      x1.lineWidth = 9;
+      x1.lineWidth = 9 * S;
       x1.strokeStyle = "rgba(38,38,42,.92)"; // anthracite inline
       x1.strokeText("Wilson", 0, 0);
       x1.fillStyle = "rgba(58,22,6,.94)";
       x1.fillText("Wilson", 0, 0);
-      x1.font = '700 16px "Arial Black", sans-serif';
+      x1.font = `700 ${16 * S}px "Arial Black", sans-serif`;
       x1.fillStyle = "rgba(38,38,42,.8)";
-      x1.fillText("OFFICIAL GAME BALL", 0, 50);
+      x1.fillText("OFFICIAL GAME BALL", 0, 50 * S);
       x1.restore();
     })(TW * 0.75, TH * 0.69);
     return { color: c1, bump: c2 };
@@ -202,11 +204,14 @@
     roughness: 0.6,
     metalness: 0,
   });
-  const ball = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 48), ballMat);
+  const ball = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), ballMat);
   ball.position.z = 5;
 
-  // La texture est générée juste après le premier affichage (ne bloque pas le chargement)
-  setTimeout(() => {
+  // La texture est générée au repos du navigateur (ne bloque pas le chargement)
+  const scheduleTexture = window.requestIdleCallback
+    ? (cb) => window.requestIdleCallback(cb, { timeout: 600 })
+    : (cb) => setTimeout(cb, 60);
+  scheduleTexture(() => {
     try {
       const t = buildTextures();
       const map = new THREE.CanvasTexture(t.color);
@@ -225,7 +230,7 @@
     } catch (e) {
       /* on garde la couleur unie */
     }
-  }, 60);
+  });
 
   /* ---------- Ombre douce ---------- */
   const sc = document.createElement("canvas");
@@ -299,9 +304,8 @@
   function resize() {
     W = innerWidth;
     H = innerHeight;
-    renderer.setPixelRatio(
-      Math.min(devicePixelRatio, innerWidth < 640 ? 1.5 : 2),
-    );
+    // Plafond à 1,5 : sur écran Retina, 2× doublait le coût de rendu pour peu de gain.
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
     renderer.setSize(W, H, false);
     camera.left = 0;
     camera.right = W;
@@ -742,20 +746,48 @@
           : 0.18;
   }
 
-  const clock = new THREE.Clock();
-  let running = true,
-    raf;
-  function loop() {
-    const t = clock.getElapsedTime();
-    const dt = Math.min(0.05, t - lastT);
-    lastT = t;
-    const was = ball.visible;
-    frame(t, dt);
-    if (ball.visible || was) renderer.render(scene, camera);
-    if (running && !reduce) raf = requestAnimationFrame(loop);
+  let tabVisible = !document.hidden;
+  let inView = true;
+  let raf = 0;
+  // Temps de simulation : il ne progresse que pendant les frames actives,
+  // donc une pause hors écran ne fait pas sauter les phases du ballon.
+  let lastWall = performance.now();
+
+  const active = () => tabVisible && inView;
+  function start() {
+    if (!active() || raf || reduce) return;
+    lastWall = performance.now();
+    raf = requestAnimationFrame(loop);
   }
-  loop();
+  function stop() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  }
+  function loop(now) {
+    raf = 0;
+    const dt = Math.min(0.05, Math.max(0, (now - lastWall) / 1000));
+    lastWall = now;
+    lastT += dt;
+    const was = ball.visible;
+    frame(lastT, dt);
+    if (ball.visible || was) renderer.render(scene, camera);
+    if (active()) raf = requestAnimationFrame(loop);
+  }
+
+  // Le ballon ne tourne que lorsque le hero est à l'écran et l'onglet actif.
+  if ("IntersectionObserver" in window && courtEl) {
+    new IntersectionObserver(
+      (entries) => {
+        inView = entries.some((e) => e.isIntersecting);
+        if (inView) start();
+        else stop();
+      },
+      { rootMargin: "120px" },
+    ).observe(courtEl);
+  }
   if (reduce) {
+    frame(lastT, 0);
+    renderer.render(scene, camera);
     addEventListener(
       "scroll",
       () => {
@@ -768,13 +800,13 @@
       frame(lastT, 0);
       renderer.render(scene, camera);
     }, 400);
+  } else if (active()) {
+    start();
   }
 
   document.addEventListener("visibilitychange", () => {
-    running = !document.hidden;
-    if (running && !reduce) {
-      clock.getDelta();
-      loop();
-    } else cancelAnimationFrame(raf);
+    tabVisible = !document.hidden;
+    if (active()) start();
+    else stop();
   });
 })();
