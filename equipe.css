@@ -65,16 +65,12 @@
 .pl-num { position: absolute; top: .7rem; left: .8rem; font: 2.1rem/1 'Bebas Neue', Impact, sans-serif; color: var(--ta); z-index: 1; }
 .pl-pos { position: absolute; top: .85rem; right: .75rem; z-index: 1; padding: .22rem .5rem; border-radius: 999px; background: var(--tt); color: var(--tb2);
   font: 700 10px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .1em; }
-.pl-portrait { position: relative; z-index: 1; display: grid; place-items: center; margin-top: 1.9rem; width: 5.4rem; height: 5.4rem; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff, #e8edf6); font-size: 0; line-height: 0; box-shadow: 0 0 0 4px var(--ta), 0 12px 22px rgba(0,0,0,.4); }
-.pl-portrait .ico, .pl-portrait .ico img, .pl-portrait .ico svg { width: 2.9rem; height: 2.9rem; }
-.pl-portrait .ico-fb { width: 2.9rem; height: 2.9rem; border-radius: 50%; font-size: .85rem; }
 .pl-name { position: relative; z-index: 1; margin: .95rem 0 .2rem; font: clamp(1.05rem, 12.5cqw, 1.7rem)/1 'Bebas Neue', Impact, sans-serif; letter-spacing: .04em; white-space: nowrap; }
 .bench-card .pl-name { font-size: 1.2rem; }
 .pl-role { position: relative; z-index: 1; font-size: .72rem; line-height: 1.3; font-weight: 600; color: var(--tm); }
 .pl-tag { position: relative; z-index: 1; margin-top: auto; padding-top: .45rem; font: 700 clamp(8px, 2.2vw, 9px)/1.4 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--ta); }
 .player.star { box-shadow: 0 0 0 2px #fbbf24, 0 20px 34px -14px rgba(251,191,36,.55); }
-.player.star .pl-portrait { box-shadow: 0 0 0 4px #fbbf24, 0 0 24px rgba(251,191,36,.6), 0 12px 22px rgba(0,0,0,.4); }
+.player.star .pl-jersey { filter: drop-shadow(0 0 14px rgba(251,191,36,.65)) drop-shadow(0 12px 10px rgba(0,0,0,.42)); }
 .player.star .pl-tag { color: #fbbf24; text-shadow: 0 1px 0 rgba(0,0,0,.35); }
 .player.star::before { background: #fbbf24; opacity: .18; }
 
@@ -82,9 +78,6 @@
 .bench-card { position: relative; display: flex; align-items: center; gap: .8rem; padding: .7rem .9rem; overflow: hidden; border-radius: 14px; color: var(--tt);
   background: linear-gradient(135deg, var(--tb), var(--tb2)); box-shadow: 0 12px 22px -14px rgba(0,0,0,.6); transition: transform .3s cubic-bezier(.16,1,.3,1); }
 .bench-card:hover { transform: translateY(-4px); }
-.bench-card .pl-portrait.sm { margin: 0; width: 3.1rem; height: 3.1rem; flex: none; box-shadow: 0 0 0 3px var(--ta), 0 6px 12px rgba(0,0,0,.35); }
-.bench-card .pl-portrait.sm .ico, .bench-card .pl-portrait.sm .ico img, .bench-card .pl-portrait.sm .ico svg { width: 1.8rem; height: 1.8rem; }
-.bench-card .pl-portrait.sm .ico-fb { width: 1.8rem; height: 1.8rem; font-size: .6rem; }
 .bench-card .bc-txt { min-width: 0; flex: 1; }
 .bench-card .pl-name { margin: 0; font-size: 1.2rem; }
 .bench-card .pl-role { font-size: .66rem; }
@@ -117,4 +110,48 @@
   .tb-desc { font-size: .8rem; overflow-wrap: break-word; }
   .team-stage { padding: 1.1rem 1rem 1.4rem; }
   .team-tab { min-width: 10.5rem; }
+}
+
+/* ---- Maillots NBA : les technologies portent le maillot de leur équipe ---- */
+.pl-jersey { position: relative; z-index: 1; width: 10.6rem; max-width: 96%; margin-top: 1.1rem;
+  filter: drop-shadow(0 12px 10px rgba(0,0,0,.42)); }
+.pl-jersey::before { content: ''; position: absolute; inset: -6% -14% 4%; z-index: -1; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255,255,255,.34), transparent 72%); }
+.nj-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.nj-num { font: 58px 'Bebas Neue', Impact, 'Arial Black', sans-serif; text-anchor: middle;
+  fill: var(--jn); stroke: var(--jno); stroke-width: 1.6px; paint-order: stroke fill; }
+.nj-num.nj-sh { fill: rgba(0,0,0,.3); stroke: rgba(0,0,0,.3); stroke-width: 7px; stroke-linejoin: round; }
+.nj-num.nj-out { fill: var(--jno); stroke: var(--jno); stroke-width: 6px; stroke-linejoin: round; }
+.nj-num.nj-st { fill: none; stroke: #fff; stroke-opacity: .55; stroke-width: .7px; stroke-dasharray: 1.4 1.6; }
+.nj-word { font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif; fill: var(--jn);
+  text-anchor: middle; letter-spacing: 1px; }
+.nj-patch { position: absolute; left: 50%; top: 41.5%; width: 23%; aspect-ratio: 1;
+  transform: translate(-50%, -50%); display: grid; place-items: center; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 0 1.5px var(--jt), 0 2px 5px rgba(0,0,0,.45);
+  font-size: 0; line-height: 0; }
+.nj-patch .ico { width: 68%; height: 68%; }
+.nj-patch .ico img, .nj-patch .ico svg { width: 100%; height: 100%; }
+.nj-patch .ico-fb { width: 100%; height: 100%; border-radius: 50%; font-size: .5rem; }
+
+/* Le maillot remplace la vignette ronde et le numéro flottant. */
+.player { aspect-ratio: auto; padding: .7rem .5rem .9rem; }
+.player::after { display: none; }
+.player .pl-name { margin-top: .7rem; }
+.bench-card .pl-jersey.sm { width: 3.9rem; margin: 0; flex: none;
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,.4)); }
+.bench-card .pl-jersey.sm .nj-word { display: none; }
+.bench-card .pl-jersey.sm .nj-num { font-size: 44px; }
+.bench-card .pl-jersey.sm .nj-patch { width: 27%; top: 38%; }
+.bench-card .bc-num { display: none; }
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .pl-jersey { width: 9.5rem; }
+}
+@media (max-width: 639px) {
+  .pl-jersey { width: 9rem; }
+  .nj-patch .ico { width: 72%; height: 72%; }
+  .bench-card .pl-jersey.sm { width: 3.4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pl-jersey, .nj-svg { filter: none; }
 }

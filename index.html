@@ -289,6 +289,38 @@
                 <path class="cl" d="M160 58.3h10M160 83.3h10M160 108.3h10M330 58.3h10M330 83.3h10M330 108.3h10"/>
                 <circle class="hoopc" cx="250" cy="52.5" r="11.5"/>
             </symbol>
+<pattern id="njmesh" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="1" cy="1" r=".55" fill="rgba(0,0,0,.16)"/><circle cx="3" cy="3" r=".55" fill="rgba(0,0,0,.16)"/></pattern>
+<linearGradient id="njshade" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".3"/><stop offset=".22" stop-color="#000" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>
+<linearGradient id="njsheen" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></linearGradient>
+<linearGradient id="njfold" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#000" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+<clipPath id="njclip"><path d="M68 4L46 9C50 40 42 68 26 90L22 232Q100 244 178 232L174 90C158 68 150 40 154 9L132 4C131 34 116 58 100 58C84 58 69 34 68 4Z"/></clipPath>
+<g id="nj">
+  <g fill="none" stroke="#a3acba" stroke-width="2.6" stroke-linecap="round"><path d="M100 -3C100 -10 107 -11 107 -16C107 -22 94 -22 94 -15"/><path d="M100 -3L56 8M100 -3L144 8"/></g>
+  <path d="M68 4L46 9C50 40 42 68 26 90L22 232Q100 244 178 232L174 90C158 68 150 40 154 9L132 4C131 34 116 58 100 58C84 58 69 34 68 4Z" style="fill:var(--jb)"/>
+  <g clip-path="url(#njclip)">
+    <path d="M26 90L41 90L39 250L10 250Z" style="fill:var(--jt)"/>
+    <path d="M174 90L159 90L161 250L190 250Z" style="fill:var(--jt)"/>
+    <path d="M31 94L27 250M169 94L173 250" fill="none" style="stroke:var(--ja)" stroke-width="2.4"/>
+    <path d="M35 94L31 250M165 94L169 250" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="1.2"/>
+    <path d="M41 92L39 232M159 92L161 232" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width=".7" stroke-dasharray="2 2"/>
+    <rect x="0" y="208" width="200" height="3.6" style="fill:var(--ja)"/>
+    <rect x="0" y="216" width="200" height="40" style="fill:var(--jt)"/>
+    <rect x="0" y="-30" width="200" height="290" fill="url(#njmesh)"/>
+    <rect x="0" y="-30" width="200" height="290" fill="url(#njfold)"/>
+    <rect x="0" y="-30" width="200" height="290" fill="url(#njshade)"/>
+    <rect x="0" y="-30" width="200" height="290" fill="url(#njsheen)"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M68 4L46 9M132 4L154 9" style="stroke:var(--jt)" stroke-width="5"/>
+    <path d="M46 9C50 40 42 68 26 90M154 9C150 40 158 68 174 90" style="stroke:var(--jt)" stroke-width="7"/>
+    <path d="M52 12C56 40 48 66 34 86M148 12C144 40 152 66 166 86" style="stroke:var(--ja)" stroke-width="1.8"/>
+    <path d="M68 4C69 34 84 58 100 58C116 58 131 34 132 4" style="stroke:var(--jt)" stroke-width="7"/>
+    <path d="M72 8C73 34 86 52 100 52C114 52 127 34 128 8" style="stroke:var(--ja)" stroke-width="1.8"/>
+    <path d="M72 8C73 34 86 52 100 52C114 52 127 34 128 8" stroke="#fff" stroke-opacity=".55" stroke-width=".6" stroke-dasharray="2 2" transform="translate(0 3.4)"/>
+    <path d="M68 7L47 12M132 7L153 12" stroke="#fff" stroke-opacity=".5" stroke-width=".6" stroke-dasharray="2 2"/>
+  </g>
+  <rect x="30" y="198" width="15" height="8" rx="1.6" fill="#fff" opacity=".95"/><rect x="30" y="198" width="15" height="2.4" rx="1" style="fill:var(--ja)"/>
+</g>
         </defs>
     </svg>
 
@@ -479,37 +511,52 @@
                         <div class="team-stage">
                             <p class="stage-label">Cinq majeur</p>
                             <div class="starters">
-                                <article class="player star" style="--i:0" data-num="10">
-                                    <span class="pl-num">10</span><span class="pl-pos">PG</span>
-                                    <span class="pl-portrait" data-ico="react">React</span>
+                                <article class="player star" style="--i:0;--jb:#0e1d33;--jt:#61DAFB;--ja:#ffffff;--jn:#61DAFB;--jno:#ffffff" data-num="10"><span class="pl-pos">PG</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">10</text><text x="100" y="152" class="nj-num nj-out">10</text><text x="100" y="152" class="nj-num">10</text><text x="100" y="152" class="nj-num nj-st">10</text>
+                                        <text x="100" y="178" class="nj-word" textLength="47" lengthAdjust="spacingAndGlyphs" style="font-size:13px">REACT</text>
+                                    </svg><span class="nj-patch" data-ico="react">React</span></div>
                                     <h4 class="pl-name">REACT</h4>
                                     <p class="pl-role">Composants UI réutilisables</p>
                                     <span class="pl-tag">★ Franchise player</span>
                                 </article>
-                                <article class="player" style="--i:1" data-num="7">
-                                    <span class="pl-num">7</span><span class="pl-pos">SG</span>
-                                    <span class="pl-portrait" data-ico="next">Next.js</span>
+                                <article class="player" style="--i:1;--jb:#0a0a0a;--jt:#ffffff;--ja:#8a8a8a;--jn:#ffffff;--jno:#8a8a8a" data-num="7"><span class="pl-pos">SG</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">7</text><text x="100" y="152" class="nj-num nj-out">7</text><text x="100" y="152" class="nj-num">7</text><text x="100" y="152" class="nj-num nj-st">7</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:13px">NEXT.JS</text>
+                                    </svg><span class="nj-patch" data-ico="next">Next.js</span></div>
                                     <h4 class="pl-name">NEXT.JS</h4>
                                     <p class="pl-role">Rendu et routing full-stack</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:2" data-num="5">
-                                    <span class="pl-num">5</span><span class="pl-pos">SF</span>
-                                    <span class="pl-portrait" data-ico="js">JavaScript</span>
+                                <article class="player" style="--i:2;--jb:#F7DF1E;--jt:#111111;--ja:#111111;--jn:#111111;--jno:#ffffff" data-num="5"><span class="pl-pos">SF</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">5</text><text x="100" y="152" class="nj-num nj-out">5</text><text x="100" y="152" class="nj-num">5</text><text x="100" y="152" class="nj-num nj-st">5</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:11.5px">JAVASCRIPT</text>
+                                    </svg><span class="nj-patch" data-ico="js">JavaScript</span></div>
                                     <h4 class="pl-name">JAVASCRIPT</h4>
                                     <p class="pl-role">Logique ES6 côté client</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:3" data-num="3">
-                                    <span class="pl-num">3</span><span class="pl-pos">PF</span>
-                                    <span class="pl-portrait" data-ico="tailwind">Tailwind</span>
+                                <article class="player" style="--i:3;--jb:#06B6D4;--jt:#083344;--ja:#ffffff;--jn:#ffffff;--jno:#083344" data-num="3"><span class="pl-pos">PF</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">3</text><text x="100" y="152" class="nj-num nj-out">3</text><text x="100" y="152" class="nj-num">3</text><text x="100" y="152" class="nj-num nj-st">3</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:11.5px">TAILWIND</text>
+                                    </svg><span class="nj-patch" data-ico="tailwind">Tailwind</span></div>
                                     <h4 class="pl-name">TAILWIND</h4>
                                     <p class="pl-role">Design system utilitaire</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:4" data-num="1">
-                                    <span class="pl-num">1</span><span class="pl-pos">C</span>
-                                    <span class="pl-portrait" data-ico="html5">HTML5</span>
+                                <article class="player" style="--i:4;--jb:#E34F26;--jt:#1c1c1c;--ja:#ffffff;--jn:#ffffff;--jno:#1c1c1c" data-num="1"><span class="pl-pos">C</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">1</text><text x="100" y="152" class="nj-num nj-out">1</text><text x="100" y="152" class="nj-num">1</text><text x="100" y="152" class="nj-num nj-st">1</text>
+                                        <text x="100" y="178" class="nj-word" textLength="47" lengthAdjust="spacingAndGlyphs" style="font-size:13px">HTML5</text>
+                                    </svg><span class="nj-patch" data-ico="html5">HTML5</span></div>
                                     <h4 class="pl-name">HTML5</h4>
                                     <p class="pl-role">Structure sémantique</p>
                                     <span class="pl-tag">5 majeur</span>
@@ -517,23 +564,35 @@
                             </div>
                             <p class="stage-label">Banc</p>
                             <div class="bench">
-                                <article class="bench-card" style="--i:5" data-num="12">
-                                    <span class="pl-portrait sm" data-ico="css3">CSS3</span>
+                                <article class="bench-card" style="--i:5;--jb:#1572B6;--jt:#ffffff;--ja:#33a9dc;--jn:#ffffff;--jno:#0b4a7a" data-num="12">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">12</text><text x="100" y="152" class="nj-num nj-out">12</text><text x="100" y="152" class="nj-num">12</text><text x="100" y="152" class="nj-num nj-st">12</text>
+                                    </svg><span class="nj-patch" data-ico="css3">CSS3</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">CSS3</h5><p class="pl-role">Mise en page et styles</p></div>
                                     <span class="bc-num">#12</span>
                                 </article>
-                                <article class="bench-card" style="--i:6" data-num="20">
-                                    <span class="pl-portrait sm" data-ico="vite">Vite</span>
+                                <article class="bench-card" style="--i:6;--jb:#646CFF;--jt:#1b1c3a;--ja:#ffffff;--jn:#ffffff;--jno:#1b1c3a" data-num="20">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">20</text><text x="100" y="152" class="nj-num nj-out">20</text><text x="100" y="152" class="nj-num">20</text><text x="100" y="152" class="nj-num nj-st">20</text>
+                                    </svg><span class="nj-patch" data-ico="vite">Vite</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">VITE</h5><p class="pl-role">Build et HMR rapide</p></div>
                                     <span class="bc-num">#20</span>
                                 </article>
-                                <article class="bench-card" style="--i:7" data-num="30">
-                                    <span class="pl-portrait sm" data-ico="expo">Expo</span>
+                                <article class="bench-card" style="--i:7;--jb:#fafafa;--jt:#000020;--ja:#000020;--jn:#000020;--jno:#ffffff" data-num="30">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">30</text><text x="100" y="152" class="nj-num nj-out">30</text><text x="100" y="152" class="nj-num">30</text><text x="100" y="152" class="nj-num nj-st">30</text>
+                                    </svg><span class="nj-patch" data-ico="expo">Expo</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">EXPO</h5><p class="pl-role">Mobile iOS &amp; Android</p></div>
                                     <span class="bc-num">#30</span>
                                 </article>
-                                <article class="bench-card" style="--i:8" data-num="24">
-                                    <span class="pl-portrait sm" data-ico="figma">Figma</span>
+                                <article class="bench-card" style="--i:8;--jb:#f24e1e;--jt:#1c1c1c;--ja:#ffffff;--jn:#ffffff;--jno:#1c1c1c" data-num="24">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">24</text><text x="100" y="152" class="nj-num nj-out">24</text><text x="100" y="152" class="nj-num">24</text><text x="100" y="152" class="nj-num nj-st">24</text>
+                                    </svg><span class="nj-patch" data-ico="figma">Figma</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">FIGMA</h5><p class="pl-role">Maquettes et design system</p></div>
                                     <span class="bc-num">#24</span>
                                 </article>
@@ -555,37 +614,52 @@
                         <div class="team-stage">
                             <p class="stage-label">Cinq majeur</p>
                             <div class="starters">
-                                <article class="player star" style="--i:0" data-num="5">
-                                    <span class="pl-num">5</span><span class="pl-pos">C</span>
-                                    <span class="pl-portrait" data-ico="nest">NestJS</span>
+                                <article class="player star" style="--i:0;--jb:#E0234E;--jt:#1a1a1a;--ja:#ffffff;--jn:#ffffff;--jno:#1a1a1a" data-num="5"><span class="pl-pos">C</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">5</text><text x="100" y="152" class="nj-num nj-out">5</text><text x="100" y="152" class="nj-num">5</text><text x="100" y="152" class="nj-num nj-st">5</text>
+                                        <text x="100" y="178" class="nj-word" textLength="56" lengthAdjust="spacingAndGlyphs" style="font-size:13px">NESTJS</text>
+                                    </svg><span class="nj-patch" data-ico="nest">NestJS</span></div>
                                     <h4 class="pl-name">NESTJS</h4>
                                     <p class="pl-role">Architecture modulaire</p>
                                     <span class="pl-tag">★ Franchise player</span>
                                 </article>
-                                <article class="player" style="--i:1" data-num="4">
-                                    <span class="pl-num">4</span><span class="pl-pos">PF</span>
-                                    <span class="pl-portrait" data-ico="node">Node.js</span>
+                                <article class="player" style="--i:1;--jb:#4c9a3f;--jt:#1b1b1b;--ja:#ffffff;--jn:#ffffff;--jno:#1b1b1b" data-num="4"><span class="pl-pos">PF</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">4</text><text x="100" y="152" class="nj-num nj-out">4</text><text x="100" y="152" class="nj-num">4</text><text x="100" y="152" class="nj-num nj-st">4</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:13px">NODE.JS</text>
+                                    </svg><span class="nj-patch" data-ico="node">Node.js</span></div>
                                     <h4 class="pl-name">NODE.JS</h4>
                                     <p class="pl-role">Runtime serveur</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:2" data-num="8">
-                                    <span class="pl-num">8</span><span class="pl-pos">SF</span>
-                                    <span class="pl-portrait" data-ico="ts">TypeScript</span>
+                                <article class="player" style="--i:2;--jb:#3178C6;--jt:#ffffff;--ja:#0e3f78;--jn:#ffffff;--jno:#0e3f78" data-num="8"><span class="pl-pos">SF</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">8</text><text x="100" y="152" class="nj-num nj-out">8</text><text x="100" y="152" class="nj-num">8</text><text x="100" y="152" class="nj-num nj-st">8</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:11.5px">TYPESCRIPT</text>
+                                    </svg><span class="nj-patch" data-ico="ts">TypeScript</span></div>
                                     <h4 class="pl-name">TYPESCRIPT</h4>
                                     <p class="pl-role">Typage strict de bout en bout</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:3" data-num="2">
-                                    <span class="pl-num">2</span><span class="pl-pos">SG</span>
-                                    <span class="pl-portrait" data-ico="typeorm">TypeORM</span>
+                                <article class="player" style="--i:3;--jb:#fafafa;--jt:#E83524;--ja:#111111;--jn:#E83524;--jno:#111111" data-num="2"><span class="pl-pos">SG</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">2</text><text x="100" y="152" class="nj-num nj-out">2</text><text x="100" y="152" class="nj-num">2</text><text x="100" y="152" class="nj-num nj-st">2</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:13px">TYPEORM</text>
+                                    </svg><span class="nj-patch" data-ico="typeorm">TypeORM</span></div>
                                     <h4 class="pl-name">TYPEORM</h4>
                                     <p class="pl-role">ORM typé et migrations</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:4" data-num="11">
-                                    <span class="pl-num">11</span><span class="pl-pos">PG</span>
-                                    <span class="pl-portrait" data-ico="jwt">JWT</span>
+                                <article class="player" style="--i:4;--jb:#0b0b14;--jt:#D63AFF;--ja:#00F2E6;--jn:#00F2E6;--jno:#D63AFF" data-num="11"><span class="pl-pos">PG</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">11</text><text x="100" y="152" class="nj-num nj-out">11</text><text x="100" y="152" class="nj-num">11</text><text x="100" y="152" class="nj-num nj-st">11</text>
+                                        <text x="100" y="178" class="nj-word" textLength="28" lengthAdjust="spacingAndGlyphs" style="font-size:13px">JWT</text>
+                                    </svg><span class="nj-patch" data-ico="jwt">JWT</span></div>
                                     <h4 class="pl-name">JWT</h4>
                                     <p class="pl-role">Authentification par rôles</p>
                                     <span class="pl-tag">5 majeur</span>
@@ -593,43 +667,67 @@
                             </div>
                             <p class="stage-label">Banc</p>
                             <div class="bench">
-                                <article class="bench-card" style="--i:5" data-num="14">
-                                    <span class="pl-portrait sm" data-ico="express">Express</span>
+                                <article class="bench-card" style="--i:5;--jb:#f1f1f1;--jt:#111111;--ja:#7a7a7a;--jn:#111111;--jno:#7a7a7a" data-num="14">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">14</text><text x="100" y="152" class="nj-num nj-out">14</text><text x="100" y="152" class="nj-num">14</text><text x="100" y="152" class="nj-num nj-st">14</text>
+                                    </svg><span class="nj-patch" data-ico="express">Express</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">EXPRESS</h5><p class="pl-role">Routage HTTP</p></div>
                                     <span class="bc-num">#14</span>
                                 </article>
-                                <article class="bench-card" style="--i:6" data-num="15">
-                                    <span class="pl-portrait sm" data-ico="fastify">Fastify</span>
+                                <article class="bench-card" style="--i:6;--jb:#fafafa;--jt:#111111;--ja:#00b8ff;--jn:#111111;--jno:#00b8ff" data-num="15">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">15</text><text x="100" y="152" class="nj-num nj-out">15</text><text x="100" y="152" class="nj-num">15</text><text x="100" y="152" class="nj-num nj-st">15</text>
+                                    </svg><span class="nj-patch" data-ico="fastify">Fastify</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">FASTIFY</h5><p class="pl-role">API haute performance</p></div>
                                     <span class="bc-num">#15</span>
                                 </article>
-                                <article class="bench-card" style="--i:7" data-num="21">
-                                    <span class="pl-portrait sm" data-ico="bcrypt">Bcrypt</span>
+                                <article class="bench-card" style="--i:7;--jb:#b45309;--jt:#2a1400;--ja:#fde68a;--jn:#fde68a;--jno:#2a1400" data-num="21">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">21</text><text x="100" y="152" class="nj-num nj-out">21</text><text x="100" y="152" class="nj-num">21</text><text x="100" y="152" class="nj-num nj-st">21</text>
+                                    </svg><span class="nj-patch" data-ico="bcrypt">Bcrypt</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">BCRYPT</h5><p class="pl-role">Hash des mots de passe</p></div>
                                     <span class="bc-num">#21</span>
                                 </article>
-                                <article class="bench-card" style="--i:8" data-num="9">
-                                    <span class="pl-portrait sm" data-ico="socket">Socket.IO</span>
+                                <article class="bench-card" style="--i:8;--jb:#fafafa;--jt:#010101;--ja:#7a7a7a;--jn:#010101;--jno:#7a7a7a" data-num="9">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">9</text><text x="100" y="152" class="nj-num nj-out">9</text><text x="100" y="152" class="nj-num">9</text><text x="100" y="152" class="nj-num nj-st">9</text>
+                                    </svg><span class="nj-patch" data-ico="socket">Socket.IO</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">SOCKET.IO</h5><p class="pl-role">Temps réel</p></div>
                                     <span class="bc-num">#9</span>
                                 </article>
-                                <article class="bench-card" style="--i:9" data-num="16">
-                                    <span class="pl-portrait sm" data-ico="postgresql">PostgreSQL</span>
+                                <article class="bench-card" style="--i:9;--jb:#4169E1;--jt:#0b1a3a;--ja:#ffffff;--jn:#ffffff;--jno:#0b1a3a" data-num="16">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">16</text><text x="100" y="152" class="nj-num nj-out">16</text><text x="100" y="152" class="nj-num">16</text><text x="100" y="152" class="nj-num nj-st">16</text>
+                                    </svg><span class="nj-patch" data-ico="postgresql">PostgreSQL</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">POSTGRESQL</h5><p class="pl-role">Base relationnelle &amp; SQL</p></div>
                                     <span class="bc-num">#16</span>
                                 </article>
-                                <article class="bench-card" style="--i:10" data-num="18">
-                                    <span class="pl-portrait sm" data-ico="redis">Redis</span>
+                                <article class="bench-card" style="--i:10;--jb:#DC382D;--jt:#241010;--ja:#ffffff;--jn:#ffffff;--jno:#241010" data-num="18">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">18</text><text x="100" y="152" class="nj-num nj-out">18</text><text x="100" y="152" class="nj-num">18</text><text x="100" y="152" class="nj-num nj-st">18</text>
+                                    </svg><span class="nj-patch" data-ico="redis">Redis</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">REDIS</h5><p class="pl-role">Cache et sessions</p></div>
                                     <span class="bc-num">#18</span>
                                 </article>
-                                <article class="bench-card" style="--i:11" data-num="27">
-                                    <span class="pl-portrait sm" data-ico="jest">Jest</span>
+                                <article class="bench-card" style="--i:11;--jb:#C21325;--jt:#fafafa;--ja:#fafafa;--jn:#fafafa;--jno:#7a0d18" data-num="27">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">27</text><text x="100" y="152" class="nj-num nj-out">27</text><text x="100" y="152" class="nj-num">27</text><text x="100" y="152" class="nj-num nj-st">27</text>
+                                    </svg><span class="nj-patch" data-ico="jest">Jest</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">JEST</h5><p class="pl-role">Tests unitaires &amp; intégration</p></div>
                                     <span class="bc-num">#27</span>
                                 </article>
-                                <article class="bench-card" style="--i:12" data-num="31">
-                                    <span class="pl-portrait sm" data-ico="graphql">GraphQL</span>
+                                <article class="bench-card" style="--i:12;--jb:#E10098;--jt:#1a0a14;--ja:#ffffff;--jn:#ffffff;--jno:#1a0a14" data-num="31">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">31</text><text x="100" y="152" class="nj-num nj-out">31</text><text x="100" y="152" class="nj-num">31</text><text x="100" y="152" class="nj-num nj-st">31</text>
+                                    </svg><span class="nj-patch" data-ico="graphql">GraphQL</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">GRAPHQL</h5><p class="pl-role">API typée et flexible</p></div>
                                     <span class="bc-num">#31</span>
                                 </article>
@@ -651,37 +749,52 @@
                         <div class="team-stage">
                             <p class="stage-label">Cinq majeur</p>
                             <div class="starters">
-                                <article class="player" style="--i:0" data-num="23">
-                                    <span class="pl-num">23</span><span class="pl-pos">C</span>
-                                    <span class="pl-portrait" data-ico="mongodb">MongoDB</span>
+                                <article class="player" style="--i:0;--jb:#13aa52;--jt:#001e2b;--ja:#ffffff;--jn:#ffffff;--jno:#001e2b" data-num="23"><span class="pl-pos">C</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">23</text><text x="100" y="152" class="nj-num nj-out">23</text><text x="100" y="152" class="nj-num">23</text><text x="100" y="152" class="nj-num nj-st">23</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:13px">MONGODB</text>
+                                    </svg><span class="nj-patch" data-ico="mongodb">MongoDB</span></div>
                                     <h4 class="pl-name">MONGODB</h4>
                                     <p class="pl-role">Base de données NoSQL</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:1" data-num="7">
-                                    <span class="pl-num">7</span><span class="pl-pos">PF</span>
-                                    <span class="pl-portrait" data-ico="firebase">Firebase</span>
+                                <article class="player" style="--i:1;--jb:#FFCA28;--jt:#DD2C00;--ja:#111111;--jn:#DD2C00;--jno:#111111" data-num="7"><span class="pl-pos">PF</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">7</text><text x="100" y="152" class="nj-num nj-out">7</text><text x="100" y="152" class="nj-num">7</text><text x="100" y="152" class="nj-num nj-st">7</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:11.5px">FIREBASE</text>
+                                    </svg><span class="nj-patch" data-ico="firebase">Firebase</span></div>
                                     <h4 class="pl-name">FIREBASE</h4>
                                     <p class="pl-role">Auth et temps réel</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:2" data-num="3">
-                                    <span class="pl-num">3</span><span class="pl-pos">SF</span>
-                                    <span class="pl-portrait" data-ico="git">Git</span>
+                                <article class="player" style="--i:2;--jb:#F05032;--jt:#2b2b2b;--ja:#ffffff;--jn:#ffffff;--jno:#2b2b2b" data-num="3"><span class="pl-pos">SF</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">3</text><text x="100" y="152" class="nj-num nj-out">3</text><text x="100" y="152" class="nj-num">3</text><text x="100" y="152" class="nj-num nj-st">3</text>
+                                        <text x="100" y="178" class="nj-word" textLength="28" lengthAdjust="spacingAndGlyphs" style="font-size:13px">GIT</text>
+                                    </svg><span class="nj-patch" data-ico="git">Git</span></div>
                                     <h4 class="pl-name">GIT</h4>
                                     <p class="pl-role">Versionnement structuré</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:3" data-num="6">
-                                    <span class="pl-num">6</span><span class="pl-pos">SG</span>
-                                    <span class="pl-portrait" data-ico="swagger">Swagger</span>
+                                <article class="player" style="--i:3;--jb:#85EA2D;--jt:#173647;--ja:#173647;--jn:#173647;--jno:#ffffff" data-num="6"><span class="pl-pos">SG</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">6</text><text x="100" y="152" class="nj-num nj-out">6</text><text x="100" y="152" class="nj-num">6</text><text x="100" y="152" class="nj-num nj-st">6</text>
+                                        <text x="100" y="178" class="nj-word" textLength="66" lengthAdjust="spacingAndGlyphs" style="font-size:13px">SWAGGER</text>
+                                    </svg><span class="nj-patch" data-ico="swagger">Swagger</span></div>
                                     <h4 class="pl-name">SWAGGER</h4>
                                     <p class="pl-role">Documentation d'API</p>
                                     <span class="pl-tag">5 majeur</span>
                                 </article>
-                                <article class="player" style="--i:4" data-num="1">
-                                    <span class="pl-num">1</span><span class="pl-pos">PG</span>
-                                    <span class="pl-portrait" data-ico="vercel">Vercel</span>
+                                <article class="player" style="--i:4;--jb:#0a0a0a;--jt:#ffffff;--ja:#8a8a8a;--jn:#ffffff;--jno:#8a8a8a" data-num="1"><span class="pl-pos">PG</span>
+                                    <div class="pl-jersey">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">1</text><text x="100" y="152" class="nj-num nj-out">1</text><text x="100" y="152" class="nj-num">1</text><text x="100" y="152" class="nj-num nj-st">1</text>
+                                        <text x="100" y="178" class="nj-word" textLength="56" lengthAdjust="spacingAndGlyphs" style="font-size:13px">VERCEL</text>
+                                    </svg><span class="nj-patch" data-ico="vercel">Vercel</span></div>
                                     <h4 class="pl-name">VERCEL</h4>
                                     <p class="pl-role">Déploiement du front</p>
                                     <span class="pl-tag">5 majeur</span>
@@ -689,33 +802,51 @@
                             </div>
                             <p class="stage-label">Banc</p>
                             <div class="bench">
-                                <article class="bench-card" style="--i:5" data-num="12">
-                                    <span class="pl-portrait sm" data-ico="github">GitHub</span>
+                                <article class="bench-card" style="--i:5;--jb:#24292f;--jt:#ffffff;--ja:#8b949e;--jn:#ffffff;--jno:#8b949e" data-num="12">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">12</text><text x="100" y="152" class="nj-num nj-out">12</text><text x="100" y="152" class="nj-num">12</text><text x="100" y="152" class="nj-num nj-st">12</text>
+                                    </svg><span class="nj-patch" data-ico="github">GitHub</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">GITHUB</h5><p class="pl-role">Collaboration et PR</p></div>
                                     <span class="bc-num">#12</span>
                                 </article>
-                                <article class="bench-card" style="--i:6" data-num="30">
-                                    <span class="pl-portrait sm" data-ico="stripe">Stripe</span>
+                                <article class="bench-card" style="--i:6;--jb:#635BFF;--jt:#0a2540;--ja:#ffffff;--jn:#ffffff;--jno:#0a2540" data-num="30">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">30</text><text x="100" y="152" class="nj-num nj-out">30</text><text x="100" y="152" class="nj-num">30</text><text x="100" y="152" class="nj-num nj-st">30</text>
+                                    </svg><span class="nj-patch" data-ico="stripe">Stripe</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">STRIPE</h5><p class="pl-role">Paiements sécurisés</p></div>
                                     <span class="bc-num">#30</span>
                                 </article>
-                                <article class="bench-card" style="--i:7" data-num="24">
-                                    <span class="pl-portrait sm" data-ico="render">Render</span>
+                                <article class="bench-card" style="--i:7;--jb:#0b0b0f;--jt:#46E3B7;--ja:#ffffff;--jn:#46E3B7;--jno:#ffffff" data-num="24">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">24</text><text x="100" y="152" class="nj-num nj-out">24</text><text x="100" y="152" class="nj-num">24</text><text x="100" y="152" class="nj-num nj-st">24</text>
+                                    </svg><span class="nj-patch" data-ico="render">Render</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">RENDER</h5><p class="pl-role">Déploiement de l'API</p></div>
                                     <span class="bc-num">#24</span>
                                 </article>
-                                <article class="bench-card" style="--i:8" data-num="28">
-                                    <span class="pl-portrait sm" data-ico="docker">Docker</span>
+                                <article class="bench-card" style="--i:8;--jb:#2496ED;--jt:#0b1c2a;--ja:#ffffff;--jn:#ffffff;--jno:#0b1c2a" data-num="28">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">28</text><text x="100" y="152" class="nj-num nj-out">28</text><text x="100" y="152" class="nj-num">28</text><text x="100" y="152" class="nj-num nj-st">28</text>
+                                    </svg><span class="nj-patch" data-ico="docker">Docker</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">DOCKER</h5><p class="pl-role">Conteneurs reproductibles</p></div>
                                     <span class="bc-num">#28</span>
                                 </article>
-                                <article class="bench-card" style="--i:9" data-num="32">
-                                    <span class="pl-portrait sm" data-ico="githubactions">GitHub Actions</span>
+                                <article class="bench-card" style="--i:9;--jb:#2088FF;--jt:#0b1526;--ja:#ffffff;--jn:#ffffff;--jno:#0b1526" data-num="32">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">32</text><text x="100" y="152" class="nj-num nj-out">32</text><text x="100" y="152" class="nj-num">32</text><text x="100" y="152" class="nj-num nj-st">32</text>
+                                    </svg><span class="nj-patch" data-ico="githubactions">GitHub Actions</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">GITHUB ACTIONS</h5><p class="pl-role">CI/CD et déploiement auto</p></div>
                                     <span class="bc-num">#32</span>
                                 </article>
-                                <article class="bench-card" style="--i:10" data-num="34">
-                                    <span class="pl-portrait sm" data-ico="linux">Linux</span>
+                                <article class="bench-card" style="--i:10;--jb:#FCB817;--jt:#1c1c1c;--ja:#1c1c1c;--jn:#1c1c1c;--jno:#ffffff" data-num="34">
+                                    <div class="pl-jersey sm">
+                                        <svg class="nj-svg" viewBox="14 -24 172 270" aria-hidden="true"><use href="#nj"/>
+                                        <text x="102" y="155" class="nj-num nj-sh">34</text><text x="100" y="152" class="nj-num nj-out">34</text><text x="100" y="152" class="nj-num">34</text><text x="100" y="152" class="nj-num nj-st">34</text>
+                                    </svg><span class="nj-patch" data-ico="linux">Linux</span></div>
                                     <div class="bc-txt"><h5 class="pl-name">LINUX</h5><p class="pl-role">Serveurs et ligne de commande</p></div>
                                     <span class="bc-num">#34</span>
                                 </article>
