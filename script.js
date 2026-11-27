@@ -124,6 +124,9 @@ const projectsData = {
         ],
         card: {
             match: "MATCH 02", tag: "FINAL", span: "lg:col-span-4", delay: "80ms",
+            eager: true, fallback: "assets/cv-web.jpg",
+            imgWrap: "h-56 sm:h-72 rounded-[2rem] mb-5 overflow-hidden relative bg-gradient-to-br from-orange-500/15 via-amber-500/5 to-slate-900/10 dark:from-orange-500/20 dark:via-slate-800 dark:to-slate-900",
+            imgFit: "object-contain p-2",
             imgAlt: "Mon Portfolio — développeur full-stack à Dakar", kick: "Site Vitrine · Full-Stack",
             desc: "Vitrine interactive avec balle 3D, compétitions en maillots NBA, fiches projets détaillées et mode sombre. Fluide, accessible et optimisée.",
             tags: [{ label: "HTML / Tailwind", primary: true }, { label: "Three.js" }],
@@ -266,6 +269,8 @@ function renderProjectCards() {
         const delay = c.delay ? ` style="transition-delay:${c.delay}"` : '';
         const imgWrap = c.imgWrap || 'h-48 sm:h-56 rounded-[2rem] mb-5 overflow-hidden relative bg-slate-200 dark:bg-slate-800';
         const imgFit = c.imgFit || 'object-cover';
+        const loading = c.eager ? 'eager' : 'lazy';
+        const fallback = c.fallback ? ` data-fallback="${c.fallback}"` : '';
         const tags = c.tags.map(t => {
             const cls = t.small
                 ? (t.primary ? TAG_PRIMARY_SM : TAG_SECONDARY_SM)
@@ -287,7 +292,7 @@ function renderProjectCards() {
         return `<article class="project-card reveal group panel ${pad} rounded-[2.5rem] hover:-translate-y-2 hover:border-hoop/50 transition-all duration-500 ease-out cursor-pointer ${c.span}"${delay} data-project="${id}" role="button" tabindex="0" aria-label="Voir les détails du projet ${d.title}">
                         <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 ${px} pb-3"><span class="font-led match-label text-[10px] font-bold text-hoop">${c.match}</span><span class="led-tag">${c.tag}</span></div>
                         <div class="${imgWrap}">
-                            <img src="${d.image}" alt="${c.imgAlt}" loading="lazy" decoding="async" class="w-full h-full ${imgFit} transition-transform duration-700 group-hover:scale-105">
+                            <img src="${d.image}" alt="${c.imgAlt}" loading="${loading}" decoding="async"${fallback} class="w-full h-full ${imgFit} transition-transform duration-700 group-hover:scale-105">
                             ${c.extraOverlay || ''}
                             <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/25 transition-colors flex items-center justify-center">
                                 <span class="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white text-xs font-extrabold uppercase tracking-widest bg-hoop px-4 py-2 rounded-xl">Voir la fiche projet</span>
@@ -298,6 +303,12 @@ function renderProjectCards() {
     }).join('');
     grid.insertAdjacentHTML('afterbegin', html);
     grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    grid.querySelectorAll('img[data-fallback]').forEach(img => {
+        img.addEventListener('error', () => {
+            img.removeAttribute('data-fallback');
+            img.src = img.dataset.fallback;
+        }, { once: true });
+    });
 }
 renderProjectCards();
 
