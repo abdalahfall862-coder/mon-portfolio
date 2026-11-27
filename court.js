@@ -1,9 +1,7 @@
-/* court.js — icônes de compétences, tableau d'affichage, compteurs, lignes de terrain, curseur ballon */
+/* court.js — icônes de compétences, tableau d'affichage, compteurs, lignes de terrain */
 (function () {
   document.documentElement.classList.add("js");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const fine =
-    matchMedia("(hover: hover) and (pointer: fine)").matches && !reduce;
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
 
@@ -108,58 +106,4 @@
     });
   }
 
-  /* ---------- Curseur ballon ---------- */
-  if (fine) {
-    const c = document.createElement("div");
-    c.className = "fx-ball-cursor ball-dot";
-    document.body.appendChild(c);
-    document.documentElement.classList.add("court-cursor");
-    let mx = innerWidth / 2,
-      my = innerHeight / 2,
-      x = mx,
-      y = my,
-      raf = 0;
-    const loop = () => {
-      x += (mx - x) * 0.25;
-      y += (my - y) * 0.25;
-      c.style.transform = "translate3d(" + x + "px," + y + "px,0)";
-      raf =
-        Math.abs(mx - x) > 0.1 || Math.abs(my - y) > 0.1
-          ? requestAnimationFrame(loop)
-          : 0;
-    };
-    addEventListener(
-      "pointermove",
-      (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-        document.body.classList.add("fx-on");
-        if (!raf) raf = requestAnimationFrame(loop);
-      },
-      { passive: true },
-    );
-    document.addEventListener("mouseleave", () =>
-      document.body.classList.remove("fx-on"),
-    );
-    document.addEventListener("mouseover", (e) => {
-      c.classList.toggle(
-        "big",
-        !!e.target.closest(
-          'a,button,input,textarea,[role="button"],.project-card,#fx-hoop',
-        ),
-      );
-    });
-
-    // Au-dessus du terrain, on manipule le ballon 3D : on efface le curseur-ballon
-    // et on réaffiche le curseur système pour ne pas voir deux ballons à la fois.
-    const court = document.querySelector(".hero-court");
-    if (court) {
-      court.addEventListener("pointerenter", () =>
-        document.documentElement.classList.add("over-court"),
-      );
-      court.addEventListener("pointerleave", () =>
-        document.documentElement.classList.remove("over-court"),
-      );
-    }
-  }
 })();
