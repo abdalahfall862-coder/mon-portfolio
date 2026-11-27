@@ -1,10 +1,10 @@
-/* equipe.css — compétences présentées comme des équipes de basket (cinq majeur + banc).
-   Adapté à la version actuelle du portfolio : thème clair/sombre, responsive 320px+,
-   icônes injectées par court.js et animations de révélation existantes. */
+/* equipe.css — compétences présentées comme un vestiaire NBA (casiers + banc).
+   Adapté à la version actuelle : 33 joueurs (9/13/11), icônes injectées par court.js,
+   fiches technologies (technologies.js), thème clair/sombre et reduced-motion. */
 .team-tabs { display: flex; gap: .75rem; overflow-x: auto; padding: .25rem .25rem 1rem; margin-bottom: .75rem; scrollbar-width: none; }
 .team-tabs::-webkit-scrollbar { display: none; }
-.team-tab { flex: 1 0 auto; min-width: 12rem; display: flex; align-items: center; gap: .85rem; padding: .8rem 1.1rem; border-radius: 16px; text-align: left; cursor: pointer;
-  border: 1px solid rgba(120,70,20,.22); background: rgba(255,250,240,.9); color: #2b1608; transition: transform .25s, box-shadow .25s, background .25s, color .25s; min-height: 44px; }
+.team-tab { flex: 1 0 auto; min-width: 12rem; min-height: 44px; display: flex; align-items: center; gap: .85rem; padding: .8rem 1.1rem; border-radius: 16px; text-align: left; cursor: pointer;
+  border: 1px solid rgba(120,70,20,.22); background: rgba(255,250,240,.9); color: #2b1608; transition: transform .25s, box-shadow .25s, background .25s, color .25s; }
 .dark .team-tab { background: rgba(8,12,24,.85); color: #e2e8f0; border-color: rgba(148,163,184,.22); }
 .team-tab:hover { transform: translateY(-2px); }
 .team-tab:focus-visible { outline: 3px solid #ff6a13; outline-offset: 2px; }
@@ -41,117 +41,123 @@
 .tb-ovr .n { position: relative; font: 2rem/1 'Bebas Neue', Impact, sans-serif; color: var(--tt); }
 .tb-ovr .l { position: relative; font: 700 8px 'JetBrains Mono', monospace; letter-spacing: .2em; color: var(--tm); }
 
-/* ---- Terrain : cinq majeur + banc ---- */
-.team-stage { position: relative; overflow: hidden; padding: 1.6rem; border-radius: 0 0 20px 20px;
-  background: rgba(255,250,240,.93); border: 1px solid rgba(120,70,20,.22); border-top: 0; box-shadow: 0 22px 40px -22px rgba(60,30,5,.55); }
-.dark .team-stage { background: rgba(8,12,24,.9); border-color: rgba(148,163,184,.2); }
-.team-stage::before { content: ''; position: absolute; left: 50%; top: -230px; width: 460px; height: 460px; margin-left: -230px; border-radius: 50%;
-  border: 3px solid rgba(255,106,19,.14); pointer-events: none; }
-.stage-label { position: relative; display: flex; align-items: center; gap: .8rem; margin: .1rem 0 1rem; font: 700 clamp(10px, 2.6vw, 11px)/1.35 'JetBrains Mono', ui-monospace, monospace;
-  letter-spacing: .18em; text-transform: uppercase; color: #b4470b; }
-.dark .stage-label { color: #fb923c; }
-@media (min-width: 640px) { .stage-label { letter-spacing: .26em; } }
-.stage-label::after { content: ''; flex: 1; height: 1px; background: currentColor; opacity: .25; }
-.starters { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.6rem; }
-.bench { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
-
-/* ---- Fiche joueur (cinq majeur) ---- */
-.player { container-type: inline-size; position: relative; display: flex; flex-direction: column; align-items: center; aspect-ratio: 3 / 4.15; padding: 1rem .7rem .9rem; overflow: hidden; text-align: center;
-  border-radius: 16px; color: var(--tt); background: linear-gradient(165deg, var(--tb), var(--tb2)); box-shadow: 0 16px 28px -16px rgba(0,0,0,.6);
-  transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
-.player::before { content: ''; position: absolute; left: -10%; right: -10%; top: 24%; height: 36%; background: var(--ta); opacity: .16; transform: skewY(-10deg); pointer-events: none; }
-.player::after { content: attr(data-num); position: absolute; right: -.5rem; bottom: -1.3rem; font: 9rem/1 'Bebas Neue', Impact, sans-serif; color: var(--tg); pointer-events: none; }
-.player:hover { transform: translateY(-6px); box-shadow: 0 24px 34px -16px rgba(0,0,0,.65); }
-.pl-num { position: absolute; top: .7rem; left: .8rem; font: 2.1rem/1 'Bebas Neue', Impact, sans-serif; color: var(--ta); z-index: 1; }
-.pl-pos { position: absolute; top: .85rem; right: .75rem; z-index: 1; padding: .22rem .5rem; border-radius: 999px; background: var(--tt); color: var(--tb2);
-  font: 700 10px 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .1em; }
-.pl-name { position: relative; z-index: 1; margin: .95rem 0 .2rem; font: clamp(1.05rem, 12.5cqw, 1.7rem)/1 'Bebas Neue', Impact, sans-serif; letter-spacing: .04em; white-space: nowrap; }
-.bench-card .pl-name { font-size: 1.2rem; }
-.pl-role { position: relative; z-index: 1; font-size: .72rem; line-height: 1.3; font-weight: 600; color: var(--tm); }
-.pl-tag { position: relative; z-index: 1; margin-top: auto; padding-top: .45rem; font: 700 clamp(8px, 2.2vw, 9px)/1.4 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--ta); }
-.player.star { box-shadow: 0 0 0 2px #fbbf24, 0 20px 34px -14px rgba(251,191,36,.55); }
-.player.star .pl-jersey { filter: drop-shadow(0 0 10px rgba(251,191,36,.6)) drop-shadow(0 8px 6px rgba(0,0,0,.38)); }
-.player.star .pl-tag { color: #fbbf24; text-shadow: 0 1px 0 rgba(0,0,0,.35); }
-.player.star::before { background: #fbbf24; opacity: .18; }
-
-/* ---- Banc ---- */
-.bench-card { position: relative; display: flex; align-items: center; gap: .8rem; padding: .7rem .9rem; overflow: hidden; border-radius: 14px; color: var(--tt);
-  background: linear-gradient(135deg, var(--tb), var(--tb2)); box-shadow: 0 12px 22px -14px rgba(0,0,0,.6); transition: transform .3s cubic-bezier(.16,1,.3,1); }
-.bench-card:hover { transform: translateY(-4px); }
-.bench-card .bc-txt { min-width: 0; flex: 1; }
-.bench-card .pl-name { margin: 0; font-size: 1.2rem; }
-.bench-card .pl-role { font-size: .66rem; }
-.bench-card .bc-num { font: 1.5rem/1 'Bebas Neue', Impact, sans-serif; color: var(--ta); }
-
-/* ---- Cartes cliquables : ouverture de la fiche documentation ---- */
-.js-tech .player, .js-tech .bench-card { cursor: pointer; }
-.js-tech .player:focus-visible, .js-tech .bench-card:focus-visible { outline: 3px solid #ff6a13; outline-offset: 3px; }
-
-/* ---- Présentation : les joueurs entrent un par un ---- */
-.js-team .team-panel:not(.is-active) .player,
-.js-team .team-panel:not(.is-active) .bench-card { opacity: 0; }
-.js-team .team-panel.is-active .player { animation: plIn .7s cubic-bezier(.16,1,.3,1) backwards; animation-delay: calc(var(--i, 0) * 95ms); }
-.js-team .team-panel.is-active .bench-card { animation: plIn .6s cubic-bezier(.16,1,.3,1) backwards; animation-delay: calc(var(--i, 0) * 80ms + .15s); }
-@keyframes plIn { from { opacity: 0; transform: translateY(28px) scale(.94); } }
-@media (prefers-reduced-motion: reduce) { .js-team .team-panel.is-active .player, .js-team .team-panel.is-active .bench-card { animation: none; } }
-
-@media (max-width: 1023px) {
-  .starters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .bench { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .team-banner { grid-template-columns: auto 1fr; }
-  .tb-ovr { grid-column: 1 / -1; justify-self: start; }
-}
-@media (max-width: 639px) {
-  .starters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
-  .bench { grid-template-columns: 1fr; }
-  .team-banner { grid-template-columns: 1fr; padding: 1.2rem 1.2rem 1.8rem; }
-  .tb-num { font-size: 3.6rem; }
-  .tb-name { font-size: 2.1rem; }
-  .tb-desc { font-size: .8rem; overflow-wrap: break-word; }
-  .team-stage { padding: 1.1rem 1rem 1.4rem; }
-  .team-tab { min-width: 10.5rem; }
-}
-
-/* ---- Maillots NBA : les technologies portent le maillot de leur équipe ---- */
-.pl-jersey { position: relative; z-index: 1; width: 10.6rem; max-width: 96%; margin-top: 1.1rem;
-  filter: drop-shadow(0 8px 6px rgba(0,0,0,.38)); }
-.pl-jersey::before { content: ''; position: absolute; inset: -6% -14% 4%; z-index: -1; border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(255,255,255,.34), transparent 72%); }
+/* ---- Maillot NBA en guise d'icône ---- */
+.pl-jersey { position: relative; z-index: 2; width: 100%; margin: 0 auto; filter: drop-shadow(0 12px 10px rgba(0,0,0,.42)); }
+.pl-jersey::before { content: ''; position: absolute; inset: -6% -14% 4%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,255,255,.34), transparent 72%); }
 .nj-svg { display: block; width: 100%; height: auto; overflow: visible; }
-.nj-num { font: 58px 'Bebas Neue', Impact, 'Arial Black', sans-serif; text-anchor: middle;
-  fill: var(--jn); stroke: var(--jno); stroke-width: 1.6px; paint-order: stroke fill; }
+.nj-num { font: 58px 'Bebas Neue', Impact, 'Arial Black', sans-serif; text-anchor: middle; fill: var(--jn); stroke: var(--jno); stroke-width: 1.6px; paint-order: stroke fill; }
 .nj-num.nj-sh { fill: rgba(0,0,0,.3); stroke: rgba(0,0,0,.3); stroke-width: 7px; stroke-linejoin: round; }
 .nj-num.nj-out { fill: var(--jno); stroke: var(--jno); stroke-width: 6px; stroke-linejoin: round; }
 .nj-num.nj-st { fill: none; stroke: #fff; stroke-opacity: .55; stroke-width: .7px; stroke-dasharray: 1.4 1.6; }
-.nj-word { font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif; fill: var(--jn);
-  text-anchor: middle; letter-spacing: 1px; }
-.nj-patch { position: absolute; left: 50%; top: 41.5%; width: 23%; aspect-ratio: 1;
-  transform: translate(-50%, -50%); display: grid; place-items: center; border-radius: 50%;
-  background: #fff; box-shadow: 0 0 0 1.5px var(--jt), 0 2px 5px rgba(0,0,0,.45);
-  font-size: 0; line-height: 0; }
+.nj-word { font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif; fill: var(--jn); text-anchor: middle; letter-spacing: 1px; }
+.nj-patch { position: absolute; left: 50%; top: 41.5%; width: 23%; aspect-ratio: 1; transform: translate(-50%, -50%); display: grid; place-items: center; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 0 1.5px var(--jt), 0 2px 5px rgba(0,0,0,.45); font-size: 0; line-height: 0; }
 .nj-patch .ico { width: 68%; height: 68%; }
 .nj-patch .ico img, .nj-patch .ico svg { width: 100%; height: 100%; }
 .nj-patch .ico-fb { width: 100%; height: 100%; border-radius: 50%; font-size: .5rem; }
 
-/* Le maillot remplace la vignette ronde et le numéro flottant. */
-.player { aspect-ratio: auto; padding: .7rem .5rem .9rem; }
-.player::after { display: none; }
-.player .pl-name { margin-top: .7rem; }
-.bench-card .pl-jersey.sm { width: 3.9rem; margin: 0; flex: none;
-  filter: drop-shadow(0 5px 5px rgba(0,0,0,.4)); }
-.bench-card .pl-jersey.sm .nj-word { display: none; }
-.bench-card .pl-jersey.sm .nj-num { font-size: 44px; }
-.bench-card .pl-jersey.sm .nj-patch { width: 27%; top: 38%; }
-.bench-card .bc-num { display: none; }
+/* ---- Cartes cliquables : ouverture de la fiche documentation ---- */
+.js-tech .locker, .js-tech .rail-item { cursor: pointer; }
+.js-tech .locker:focus-visible, .js-tech .rail-item:focus-visible { outline: 3px solid #ff6a13; outline-offset: 3px; }
 
-@media (min-width: 640px) and (max-width: 1023px) {
-  .pl-jersey { width: 9.5rem; }
+/* ================= VESTIAIRE ================= */
+.lr-label { position: relative; z-index: 3; display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem; font: 700 11px 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: .26em; text-transform: uppercase; color: #f0c987; text-shadow: 0 1px 0 rgba(0,0,0,.6); }
+.lr-label::after { content: ''; flex: 1; height: 1px; background: currentColor; opacity: .3; }
+
+/* mur + plafond + sol */
+.lr-room { position: relative; overflow: hidden; padding: 1.5rem 1.6rem 3.4rem; border: 1px solid #1f2a44; border-top: 0;
+  background:
+    radial-gradient(38% 46% at 14% 0, rgba(255,238,200,.26), transparent 72%),
+    radial-gradient(38% 46% at 50% 0, rgba(255,238,200,.26), transparent 72%),
+    radial-gradient(38% 46% at 86% 0, rgba(255,238,200,.26), transparent 72%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 2px, transparent 2px 140px),
+    linear-gradient(180deg, #0c1322 0%, #131c30 55%, #0a101c 100%); }
+.lr-room::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 6px;
+  background: linear-gradient(90deg, transparent 4%, #fff7df 8% 20%, transparent 24% 40%, #fff7df 44% 56%, transparent 60% 76%, #fff7df 80% 92%, transparent 96%); box-shadow: 0 0 22px 6px rgba(255,236,190,.4); }
+.lr-room::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 74px; z-index: 0;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, transparent 2px 90px), linear-gradient(180deg, #0a0e18, #151d2e); box-shadow: inset 0 16px 22px rgba(0,0,0,.65); }
+
+.lockers { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
+
+/* casier ouvert */
+.locker { position: relative; display: flex; flex-direction: column; container-type: inline-size; }
+.lk-plate { position: relative; z-index: 3; align-self: center; width: 88%; margin-bottom: -4px; padding: .35rem .5rem .4rem; text-align: center; border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #f0dc9c, #b58b34 60%, #9a7428); color: #2a1d05; box-shadow: 0 2px 4px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.55); }
+.lk-plate b { display: block; font: clamp(.85rem, 8.4cqw, 1.3rem)/1 'Bebas Neue', Impact, sans-serif; letter-spacing: .05em; white-space: nowrap; }
+.lk-plate i { display: block; margin-top: .12rem; font: 700 8.5px 'JetBrains Mono', ui-monospace, monospace; font-style: normal; letter-spacing: .06em; text-transform: uppercase; opacity: .85; white-space: normal; line-height: 1.2; }
+.lk-pos { position: absolute; top: -9px; right: -6px; padding: .15rem .45rem; border-radius: 999px; background: #111827; color: #f0c987; font: 700 9px 'JetBrains Mono', monospace; letter-spacing: .1em; box-shadow: 0 2px 4px rgba(0,0,0,.5); }
+.lk-frame { position: relative; padding: 9px; border-radius: 7px 7px 2px 2px; height: 22.5rem;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,.16) 0 2px, transparent 2px 8px), linear-gradient(90deg, #3a2314, #6b4426 20%, #4d2f19 50%, #6b4426 80%, #3a2314);
+  box-shadow: 0 24px 26px -10px rgba(0,0,0,.85), inset 0 2px 0 rgba(255,255,255,.14), inset 0 -2px 0 rgba(0,0,0,.4); }
+.lk-inner { position: relative; height: 100%; overflow: hidden; border-radius: 2px; container-type: inline-size;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 2px, transparent 2px 13px), linear-gradient(180deg, #1c1510 0%, #14100c 70%, #0b0806 100%);
+  box-shadow: inset 0 26px 26px -8px rgba(0,0,0,.9), inset 9px 0 14px rgba(0,0,0,.65), inset -9px 0 14px rgba(0,0,0,.65); }
+.lk-inner::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; transition: opacity .4s;
+  background: radial-gradient(72% 58% at 50% 20%, rgba(255,226,170,.42), transparent 72%); }
+.locker:hover .lk-inner::before { opacity: 1.0; filter: brightness(1.25); }
+.lk-shelf { position: absolute; z-index: 2; left: 0; right: 0; top: 7%; height: 7px; display: flex; align-items: flex-end; gap: .6rem; padding: 0 .7rem;
+  background: linear-gradient(180deg, #7a4f2c, #4a2e19); box-shadow: 0 5px 8px rgba(0,0,0,.7); }
+.lk-shelf .ball-dot { width: 22px; height: 22px; margin-bottom: 7px; box-shadow: 0 3px 5px rgba(0,0,0,.6); }
+.lk-towel { width: 26px; height: 11px; margin-bottom: 7px; margin-left: auto; border-radius: 3px 3px 1px 1px; background: repeating-linear-gradient(90deg, #f1f5f9 0 4px, #cbd5e1 4px 5px); box-shadow: 0 3px 5px rgba(0,0,0,.55); }
+.lk-rod { position: absolute; z-index: 2; left: 8%; right: 8%; top: 17.5%; height: 5px; border-radius: 3px; background: linear-gradient(180deg, #e5e7eb, #6b7280 55%, #374151); box-shadow: 0 3px 5px rgba(0,0,0,.7); }
+.locker .pl-jersey { position: absolute; z-index: 3; left: 50%; top: 17%; width: 78%; margin: 0; transform: translateX(-50%); transform-origin: 50% 0;
+  filter: drop-shadow(0 14px 10px rgba(0,0,0,.65)); }
+.locker .pl-jersey::before { display: none; }
+.locker:hover .pl-jersey { animation: lkSway 2.6s ease-in-out infinite; }
+@keyframes lkSway { 0%, 100% { transform: translateX(-50%) rotate(0); } 25% { transform: translateX(-50%) rotate(1.6deg); } 75% { transform: translateX(-50%) rotate(-1.6deg); } }
+.lk-floor { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; height: 15%; display: grid; place-items: center;
+  background: linear-gradient(180deg, #2b1c11, #4a2f1b); box-shadow: inset 0 8px 10px rgba(0,0,0,.7); }
+.lk-shoes { width: 70%; height: auto; margin-top: -26%; filter: drop-shadow(0 4px 4px rgba(0,0,0,.7)); }
+
+.locker.star .lk-plate { background: linear-gradient(180deg, #fff1b0, #f5c431 60%, #c99413); box-shadow: 0 0 18px rgba(251,191,36,.7), 0 2px 4px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.7); }
+.locker.star .lk-frame { box-shadow: 0 0 0 2px #fbbf24, 0 0 26px rgba(251,191,36,.45), 0 24px 26px -10px rgba(0,0,0,.85); }
+.locker.star .lk-inner::before { background: radial-gradient(75% 62% at 50% 20%, rgba(255,214,120,.65), transparent 72%); }
+
+/* banc de bois devant les casiers */
+.lr-bench { position: relative; z-index: 3; height: 15px; margin: 1.1rem 1% 0; border-radius: 4px;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,.15) 0 2px, transparent 2px 9px), linear-gradient(180deg, #8a5a32, #5a3a20 70%, #3c2514);
+  box-shadow: 0 14px 18px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.25); }
+.lr-bench::before, .lr-bench::after { content: ''; position: absolute; top: 100%; width: 12px; height: 34px; background: linear-gradient(90deg, #2f1d10, #5a3a20, #2f1d10); }
+.lr-bench::before { left: 7%; } .lr-bench::after { right: 7%; }
+
+/* portant du banc */
+.lr-rail { position: relative; overflow: hidden; padding: 1.2rem 1.6rem 1.6rem; border-radius: 0 0 20px 20px; border: 1px solid #1f2a44; border-top: 2px solid #0a0f1a;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 2px, transparent 2px 140px), linear-gradient(180deg, #0f1728, #0a101c); }
+.rail-bar { position: absolute; left: 3%; right: 3%; top: 3.5rem; height: 7px; border-radius: 4px; z-index: 1;
+  background: linear-gradient(180deg, #f3f4f6, #9ca3af 50%, #4b5563); box-shadow: 0 4px 8px rgba(0,0,0,.7); }
+.rail-items { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; padding-top: 1.1rem; }
+.rail-item { display: flex; flex-direction: column; align-items: center; gap: .6rem; transform-origin: 50% 0; }
+.rail-item .pl-jersey.sm { width: 6.2rem; margin: 0; filter: drop-shadow(0 12px 8px rgba(0,0,0,.65)); }
+.rail-item .pl-jersey.sm::before { display: none; }
+.rail-item:hover .pl-jersey.sm { animation: lkSway2 2.6s ease-in-out infinite; transform-origin: 50% 0; }
+@keyframes lkSway2 { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(2deg); } 75% { transform: rotate(-2deg); } }
+.rail-tag { padding: .35rem .6rem; border-radius: 3px; text-align: center; background: #f7f1e1; color: #2a1d05; transform: rotate(-1.5deg); box-shadow: 0 5px 8px rgba(0,0,0,.55); }
+.rail-item:nth-child(even) .rail-tag { transform: rotate(1.5deg); }
+.rail-tag b { display: block; font: 1.05rem/1 'Bebas Neue', Impact, sans-serif; letter-spacing: .05em; }
+.rail-tag span { display: block; margin-top: .12rem; font-size: .62rem; font-weight: 700; opacity: .75; }
+
+/* ---- Entrée : les lumières s'allument casier par casier ---- */
+.js-team .team-panel:not(.is-active) .locker, .js-team .team-panel:not(.is-active) .rail-item { opacity: 0; }
+.js-team .team-panel.is-active .locker { animation: lkIn .8s cubic-bezier(.16,1,.3,1) backwards; animation-delay: calc(var(--i, 0) * 110ms); }
+.js-team .team-panel.is-active .lk-inner::before { animation: lampOn 1s ease-out backwards; animation-delay: calc(var(--i, 0) * 110ms + .25s); }
+.js-team .team-panel.is-active .rail-item { animation: lkIn .7s cubic-bezier(.16,1,.3,1) backwards; animation-delay: calc(var(--i, 0) * 90ms + .2s); }
+@keyframes lkIn { from { opacity: 0; transform: translateY(26px); } }
+@keyframes lampOn { 0% { opacity: 0; } 35% { opacity: .5; } 45% { opacity: .15; } 100% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .js-team .team-panel.is-active .locker, .js-team .team-panel.is-active .lk-inner::before, .js-team .team-panel.is-active .rail-item, .locker:hover .pl-jersey, .rail-item:hover .pl-jersey.sm { animation: none; } }
+
+@media (max-width: 1023px) {
+  .lockers { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 2.2rem; }
+  .rail-items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .team-banner { grid-template-columns: auto 1fr; }
+  .tb-ovr { grid-column: 1 / -1; justify-self: start; }
 }
 @media (max-width: 639px) {
-  .pl-jersey { width: 9rem; }
-  .nj-patch .ico { width: 72%; height: 72%; }
-  .bench-card .pl-jersey.sm { width: 3.4rem; }
+  .lockers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; row-gap: 2rem; }
+  .lk-frame { height: 19rem; }
+  .lr-room { padding: 1.2rem 1rem 3rem; }
+  .team-banner { grid-template-columns: 1fr; padding: 1.2rem 1.2rem 1.8rem; }
+  .tb-num { font-size: 3.6rem; } .tb-name { font-size: 2.1rem; }
+  .team-tab { min-width: 10.5rem; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .pl-jersey, .nj-svg { filter: none; }
-}
+@media (prefers-reduced-motion: reduce) { .pl-jersey, .nj-svg { filter: none; } }
