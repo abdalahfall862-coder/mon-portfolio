@@ -101,28 +101,32 @@ const projectsData = {
         }
     },
     portfolio: {
-        title: "Portfolio Pro",
-        badge: "Site Vitrine · UX/UI",
-        image: "assets/cv-web.jpg",
-        type: "Site vitrine",
+        title: "Mon Portfolio",
+        badge: "Site Vitrine · Full-Stack",
+        image: "assets/portfolio.jpeg",
+        type: "Site vitrine interactif",
         status: "En ligne",
-        role: "Design UI, intégration et développement complet en solo",
-        overview: "Vitrine personnelle conçue comme un outil de conversion : chaque section guide le visiteur vers une action claire, avec une attention particulière portée aux micro-interactions et à la lisibilité en mode clair comme sombre.",
+        role: "Conception, design UI/UX et développement complet en solo",
+        overview: "Vitrine personnelle pensée comme un espace vivant : héro interactif avec balle de basket 3D, compétences présentées en maillots NBA, fiches projets détaillées et documentation des technologies. Une interface clair/sombre, des animations fluides et une navigation accessible, de Dakar jusqu'au pixel.",
         features: [
-            "Design responsive mobile-first avec breakpoints soignés",
-            "Animations au scroll pilotées par Intersection Observer",
-            "Bascule clair/sombre instantanée sans rechargement",
-            "Formulaire de contact structuré et accessible au clavier",
-            "Chargement rapide : aucun framework lourd, uniquement HTML/CSS/JS"
+            "Héro 3D interactif : balle de basket WebGL qui dribble, rebondit et suit le clic (Three.js)",
+            "Compétences organisées en trois équipes avec maillots NBA, onglets accessibles et fiches techniques",
+            "Mode clair/sombre instantané, sans rechargement",
+            "Animations au scroll et révélation progressive des sections (Intersection Observer)",
+            "Modales projets et technologies navigables au clavier, avec le focus restauré à la fermeture",
+            "Performance soignée : sprite SVG local, images compressées, rendu 3D suspendu hors écran"
         ],
-        stack: ["HTML5", "Tailwind CSS", "JavaScript vanilla"],
-        challenge: "Obtenir un rendu premium et des animations fluides sans dépendre d'un framework front-end, afin de garder un temps de chargement minimal sur tous les appareils.",
-        links: [{ label: "Visiter le projet", url: "https://mon-portfolio-ten-topaz.vercel.app" }],
+        stack: ["HTML5", "Tailwind CSS", "JavaScript vanilla", "Three.js", "SVG / CSS"],
+        challenge: "Créer une vitrine immersive sans framework lourd : animer une scène 3D, présenter 33 technologies et conserver un chargement rapide sur mobile comme sur desktop.",
+        links: [
+            { label: "Visiter le projet", url: "https://mon-portfolio-ten-topaz.vercel.app" },
+            { label: "Voir le code source", url: "https://github.com/abdalahfall862-coder/mon-portfolio", variant: "secondary" }
+        ],
         card: {
             match: "MATCH 02", tag: "FINAL", span: "lg:col-span-4", delay: "80ms",
-            imgAlt: "Portfolio Pro", kick: "Site Vitrine · UX/UI",
-            desc: "Vitrine personnelle haut de gamme avec micro-interactions fluides, mode sombre natif et structure UX pensée pour transformer les visiteurs en opportunités.",
-            tags: [{ label: "HTML / Tailwind", primary: true }, { label: "Responsive" }],
+            imgAlt: "Mon Portfolio — développeur full-stack à Dakar", kick: "Site Vitrine · Full-Stack",
+            desc: "Vitrine interactive avec balle 3D, compétitions en maillots NBA, fiches projets détaillées et mode sombre. Fluide, accessible et optimisée.",
+            tags: [{ label: "HTML / Tailwind", primary: true }, { label: "Three.js" }],
             link: { label: "Visiter le projet →", url: "https://mon-portfolio-ten-topaz.vercel.app" }
         }
     },
